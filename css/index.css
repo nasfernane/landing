@@ -21,7 +21,11 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
+  height: auto;
 }
 
 #network-bg {
@@ -35,19 +39,21 @@ body {
 }
 
 .centered-content {
-  width: 100%;
+  width: calc(100% - 2rem);
   max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
+  margin: 0 2rem !important;
+}
+
+body>section {
+  display: flex;
+  position: relative;
+  z-index: 10;
 }
 
 .section-separator {
   width: 100%;
   height: 4px;
-  margin: 48px 0;
+  margin: 2rem 0;
   background: linear-gradient(90deg,
       rgba(0, 209, 255, 0.18) 0%,
       rgba(0, 209, 255, 0.65) 20%,
@@ -64,12 +70,17 @@ body {
 }
 
 header {
+  width: 100%;
   height: 400px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   position: relative;
   border-bottom: 1px solid #a4f4fc74;
   box-shadow: 4px 4px 20px #1a0a928d;
+  margin-bottom: 2rem;
 }
 
 header>.header-background {
@@ -144,13 +155,6 @@ header>.header-content>.description {
 .view-on-discord:hover {
   background: rgba(6, 198, 241, 0.446);
   cursor: pointer;
-}
-
-body>section {
-  display: flex;
-  position: relative;
-  z-index: 10;
-  margin-top: 2rem;
 }
 
 /* CLI Demo Section */
@@ -348,7 +352,7 @@ body>section {
 
 .cta-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   justify-content: center;
 }
 
@@ -401,9 +405,14 @@ body>section {
 }
 
 .getting-started {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   padding: 2rem 0;
   overflow: hidden;
+  margin-top: 2rem;
 }
 
 /* Getting Started Section */
@@ -557,16 +566,4 @@ body>section {
 .npm-terminal .cmd {
   color: #fff;
   letter-spacing: 0.01em;
-}
-
-@media screen and (max-width: 768px) {
-  .cli-demo-terminal {
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 2rem;
-  }
-
-  body>section {
-    flex-direction: column;
-  }
 }
