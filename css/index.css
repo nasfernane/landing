@@ -83,6 +83,12 @@ header {
   margin-bottom: 2rem;
 }
 
+@media only screen and (max-width: 600px) {
+  header>.header-content > img {
+    display: none;
+  }
+}
+
 header>.header-background {
   position: absolute;
   inset: 0;
@@ -168,7 +174,6 @@ header>.header-content>.description {
 .cli-demo-video {
   display: flex;
   flex-grow: 1;
-  flex-shrink: 0;
   flex-basis: 480px;
   position: relative;
   aspect-ratio: 16 / 9;
