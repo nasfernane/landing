@@ -133,6 +133,10 @@ header>.header-content>.description {
   text-shadow: 2px 2px 4px #0c061964;
 }
 
+header>.header-content>.description b {
+  font-weight: bold;
+}
+
 .header-buttons {
   display: flex;
   gap: 1rem;
