@@ -1,5 +1,10 @@
 # landing
-NodeSecure landing page
+A simple HTML/CSS landing page hosted on [GitHub Pages](https://pages.github.com/). Just open `index.html` and you're all set!
+
+## 💡 Why choosing Pages ?
+It's quite simple to maintain and costs nothing, which is convenient since we don't have much funding to invest in it.
+
+At the end of the day: [Just fucking use HTML](https://justfuckingusehtml.com/)
 
 ## Contributors ✨
 
