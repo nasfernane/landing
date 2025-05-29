@@ -138,8 +138,6 @@ I will continue to work to reduce the number of false positives and keep improvi
 
 ---
 
-Please think to drop a star on github ❤️!
-
-{% github NodeSecure/js-x-ray %}
+Please think to drop a star on [github](https://github.com/NodeSecure/js-x-ray) ❤️!
 
 That's it for today! Thanks for reading me 😉

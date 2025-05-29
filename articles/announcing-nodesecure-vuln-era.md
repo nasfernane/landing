@@ -133,6 +133,4 @@ But I don't forget individual contributions 👏
 
 ---
 
-{% github NodeSecure/vulnera %}
-
 Thanks 🙏 for reading me and see you soon for another article!
