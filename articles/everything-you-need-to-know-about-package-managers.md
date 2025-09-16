@@ -1,6 +1,6 @@
 ---
 title: Everything you need to know: package managers
-author: Antoine.C
+author: Antoine
 date: 18/10/2022
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: JS-X-Ray 6.0
-author: Thomas.G
+author: Thomas
 date: 16/01/2023
 ---
 

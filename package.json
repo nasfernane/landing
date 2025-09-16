@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:articles && vite build",
     "preview": "vite preview",
     "build:articles": "node src/build-articles.js"
   },
@@ -26,6 +26,7 @@
     "vite": "^7.0.2"
   },
   "dependencies": {
+    "marked": "^16.3.0",
     "zup": "^0.0.2"
   }
 }
