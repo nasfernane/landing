@@ -1,0 +1,183 @@
+
+    <!DOCTYPE html>
+    <html lang="fr">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>securizing-your-github-org</title>
+        <link rel="stylesheet" href="../public/css/reset.css">
+        <link rel="stylesheet" href="../public/css/blog.css">
+      </head>
+      <body>
+        <header>
+          <a href="../index.html">← Retour à l'accueil</a>
+        </header>
+        <main>
+          <article>
+            <p>---
+title: Securizing your GitHub org
+author: Thomas.G
+date: 19/02/2023
+---
+
+Hello 👋
+
+I started open source a bit naively (like everyone I guess 😊).
+
+But the more I progress and the more important/popular some of my projects become 😎. That's great, but at some point you have to <strong>deal</strong> with a lot of things <strong>related to security</strong> (like Vulnerability disclosure).
+
+You start to hear and see a lot of <strong>scary stories</strong> around you 😱. Not to mention all the <strong>acronyms</strong> where you don't understand anything at first 😵 (VMT, CVE, SAST, SCA, CNA ...).
+
+As I was working on an open source security project, I put pressure on myself to be ready. Also as a member of the <a href="https://github.com/nodejs/security-wg">Node.js Security WG</a> I thought it was an interesting topic and that I was probably not the only one who was worried about not being up to the task 😖.
+
+So I rolled up my sleeves and tackled the problem 💪. Here is my feedback/journey on how I improved the security of my <a href="https://github.com/NodeSecure">NodeSecure</a> GitHub organization.
+
+> 👀 We use Node.js and JavaScript (but most recommendations are valid for other ecosystems).
+
+<h2>Security Policy and Vulnerability Disclosure</h2>
+
+Adding a root `SECURITY.md` file explaining how developers and security researchers should report vulnerability is important. You don't want a security threat to <strong>be turned into a public issue</strong> (This gives you time to analyze and possibly fix <strong>before disclosure</strong>).
+
+> ⚠️ If you are a developer, never report a security threat using a public GitHub issue. <strong>This is a serious mistake</strong>. This could even put your business/team at <strong>risk</strong>.
+
+I don't want to bullshit you, so let me share with you the <strong>OpenSSF guide</strong> that helped me set up my first reporting strategy: <a href="https://github.com/ossf/oss-vulnerability-guide/blob/main/maintainer-guide.md">Guide to implementing a coordinated vulnerability disclosure process for open source projects</a>.
+
+I started from scratch by reading this guide and taking inspiration from <a href="https://github.com/ossf/oss-vulnerability-guide/tree/main/templates">their templates</a> 🐤. As a small open source team we don't especially have DNS or mail servers (not even a defined <strong>V</strong>ulnerability <strong>M</strong>anagement <strong>T</strong>eam A.K.A <strong>VMT</strong>).
+
+I was a bit puzzled to put my personal email as I'm not alone 😟. 
+
+I quickly learned that Github added a new feature <a href="https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability">to report/create private security issue</a> 😍. You can enable it in the `Security` tab (I think it's also now possible to enable it on every repositories at once).
+
+And this is what it finally looks like:
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/imqmjdj2ewiiud0bpmbs.png">NodeSecure SECURITY.md</a>
+
+<h2>Use OpenSSF scorecard</h2>
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7kdfnqxjora14q8eil20.png">scorecard</a>
+
+The <a href="https://securityscorecards.dev/">OSSF scorecard</a> initiative is really good to assess your project against security best practices. <a href="https://devopsjournal.io/blog/2022/12/08/Adding-OSSF-scorecard-action-to-your-repo">I am not the first to write about this</a>.
+
+You can easily setup the GitHub action workflow by following those <a href="https://github.com/ossf/scorecard-action#installation">instructions</a>.
+
+Once configured, you will have a set of alerts available in the `Security` tab.
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/i0tib69edbeitcsoomec.png">Scorecard scanning alerts</a>
+
+This will give you an overview of the different subjects to improve (workflows, dependencies etc). Each of these alerts contains a full description of the actions to be taken to fix the problem.
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/000q8acla8raunyu8kva.png">OSSF Scorecard</a>
+
+I have personally used these recommendations to dig and train myself. The next chapters will help you improve your score.
+
+> 📢 By the way <a href="https://github.com/NodeSecure/cli">NodeSecure CLI</a> has a first-class support of the scorecard.
+
+<h2>🔓 Enable branch protection</h2>
+I am a bad student 😳. Almost all of my projects had no branch protection on the `main` / `master` branch 🙈.
+
+> To set up the protection, go to `Settings` > `Branches` and edit your main branch. 
+
+GitHub has quite a few options on the subject 😵. If you don't know what to choose in terms of options, <strong>don't check anything</strong> (it's <strong>ok</strong> to begin ✔️).
+
+If you want to be more restrictive, be <strong>careful</strong> because it could block you (some options are only viable in projects with many contributors/reviewers).
+
+As far as I am concerned I often choose:
+- Require a pull request before merging
+- Require conversation resolution before merging
+- Require status checks to pass before merging
+
+<h2>🐲 Workflows Hardening</h2>
+I fell down when I saw all that it was necessary to know to secure workflows with GitHub actions 😲.
+
+- You must pay attention to the <a href="https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs">permissions granted to your jobs / GITHUB_TOKEN</a>
+- <a href="https://michaelheap.com/ensure-github-actions-pinned-sha/">Ensure your GitHub Actions are pinned to a SHA</a>
+- Hardening the runner (see the <a href="https://blog.stepsecurity.io/announcing-general-availability-of-harden-runner-a7597a1410da">StepSecurity HardenRunner</a>)
+- Probably a lot of other stuff I haven't had time to see yet 😆
+
+Fortunately there is a <a href="https://app.stepsecurity.io/">great free online tool</a> that help you by doing all the hard work (it will open a pull-request and automatically fix issues).
+
+{% tweet https://twitter.com/fraxken/status/1617557370728767488 %}
+
+The tool was created by <a href="https://www.stepsecurity.io/">StepSecurity</a>. I had the opportunity to talk with the CEO and they listen to the maintainers which is really cool. 
+Thanks to them ❤️!
+
+<h2>Configure Dependabot</h2>
+
+It is recommended to use <a href="https://github.blog/2020-06-01-keep-all-your-packages-up-to-date-with-dependabot/">Dependabot</a> for updating your dependencies and GitHub actions (yes, it also supports updating workflows in a secure way 😍).
+
+You only need to add a `.github/dependabot.yml` config file. Personally I recommend a <strong>weekly</strong> interval (with a lot of projects <strong>daily is a bit horrible</strong>).
+
+<pre><code>yml
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+</code></pre>
+
+The StepSecurity tool we have seen in the previous chapter is also capable of doing it 🚀. 
+
+---
+
+Also, think to enable <a href="https://docs.github.com/en/code-security/dependabot/dependabot-alerts/about-dependabot-alerts">Dependabot alerts</a> in the `Security` tab. This will allow the bot to open pull-request to fix known vulnerabilities by looking at your dependencies (<strong>referenced in package.json or others</strong>).
+
+<h2>🔬 Adding CodeQL scanning</h2>
+
+To enhance security even more you can add a <a href="https://snyk.io/learn/application-security/static-application-security-testing/">SAST</a> tool like <a href="https://codeql.github.com/">CodeQL</a>. Like scorecard it will report security scanning alert but for your codebase.
+
+Here an example:
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/qsycrb5ew1tztvr7rj6z.png">prototype-pollution</a>
+
+A great way to make sure that newly added code does not contain vulnerabilities that were <strong>obvious to detect</strong>.
+
+> 👀 Note that once again StepSecurity can set up the workflow for you.
+
+<h2>📜 Enable Security advisories (and others)</h2>
+
+Github Security tab as a lot of cool features that help you maintain the security of your project. If you have followed all my previous chapters, most of them should be enabled now.
+
+Make sure to also enable `Secret scanning alerts`.
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/utrx752lf9m382tbpunn.png">Github Security</a>
+
+For an organization many of these parameters can be forced on all repositories. Go to `Settings` > `Code security and analysis`. You will have the options to enable/disable all.
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/a8f5cpwva9te0m15yb0s.png">Github Security</a>
+
+<h2>💡 OpenSSF Best Pratices program</h2>
+
+Previously known as CII-Best-Practices, this program indicates that the project uses a set of security-focused best development practices for open source software.
+
+So I registered my first project on the <a href="https://bestpractices.coreinfrastructure.org/en">website</a>. It was a good surprise because it allowed me to question the quality of my documentation and tests 😬.
+
+Seeing the different levels and questions really helps you think about what you're missing (and possibly learn about the concepts you don't know about yet.. Like <a href="https://snyk.io/blog/building-sbom-open-source-supply-chain-security/">SBOM</a>).
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pn6g2gcoyelkniwopy0.png">CII-Best-Practices</a>
+
+I am still working on completing the first step/badge for the CLI project which now has a score of <strong>8.7</strong> out of <strong>10</strong> 🎉 on the OpenSSF scorecard.
+
+<h2>🎯 Conclusion</h2>
+
+That's it for this article. I've covered what I've done/learned in the last couple of months. Here are some really cool additional links 💃:
+
+- <a href="https://github.com/ossf/wg-best-practices-os-developers/blob/main/docs/Concise-Guide-for-Evaluating-Open-Source-Software.md#readme">Concise Guide for Evaluating Open Source Software 2023-01-03</a>
+- <a href="https://github.com/ossf/wg-best-practices-os-developers/blob/main/docs/Concise-Guide-for-Developing-More-Secure-Software.md#readme">Concise Guide for Developing More Secure Software 2023-01-03</a>
+
+If you work with NPM, I invite you to read our latest article about package managers:
+
+{% link https://dev.to/nodesecure/everything-you-need-to-know-package-managers-286c %}
+
+Obviously, I probably <strong>still have a lot to learn</strong>. But I hope this will help other maintainers/developers ❤️.
+
+🙏 Thanks for reading me 🙏
+</p>
+          </article>
+        </main>
+      </body>
+    </html>
+  

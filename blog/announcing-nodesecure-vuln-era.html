@@ -1,0 +1,158 @@
+
+    <!DOCTYPE html>
+    <html lang="fr">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>announcing-nodesecure-vuln-era</title>
+        <link rel="stylesheet" href="../public/css/reset.css">
+        <link rel="stylesheet" href="../public/css/blog.css">
+      </head>
+      <body>
+        <header>
+          <a href="../index.html">← Retour à l'accueil</a>
+        </header>
+        <main>
+          <article>
+            <p>---
+title: NodeSecure Vuln-era
+author: Thomas.G
+date: 21/07/2022
+---
+
+Hello 👋,
+
+Back for a little article about the rebranding of one of the NodeSecure tools: <a href="https://github.com/NodeSecure/vuln">Vulnera</a> (previously <em>vuln</em>, the <strong>vuln-era</strong> has begun!).
+
+An opportunity for me to also write about this wonderful project that was born with the redesign of the back-end less than a year ago ⌚. If you don't remember I wrote an article:
+
+{% link https://dev.to/fraxken/announcing-new-node-secure-back-end-1dp9 %}
+
+Don't wait and dive in 🌊 with me to discover this tool 💃.
+
+<h2>What is Vulnera ? 👀</h2>
+
+Vulnera is a package that allows you to <strong>programmatically</strong> fetch your Node.js project vulnerabilities from <strong>multiple sources or strategies</strong>:
+
+- NPM Audit (<a href="https://github.com/advisories">Github Advisory Database</a>)
+- <a href="https://ossindex.sonatype.org/">Sonatype OSS Index</a>
+- `deprecated` <a href="https://github.com/nodejs/security-wg/tree/main/vuln">Node.js Security WG Database</a>
+- Snyk
+
+> 📢 Feel free to push new sources (we have <a href="https://github.com/NodeSecure/vuln/blob/main/docs/adding_new_strategy.md">a guide</a> on how to add/contribute one).
+
+The code was originally designed for vulnerability management within the <a href="https://github.com/NodeSecure/scanner">Scanner</a>. Yet, its API is <strong>evolving</strong> with the objective of making it a <strong>full-fledged project</strong>.
+
+<pre><code>js
+import * as vulnera from "@nodesecure/vulnera";
+
+const def = await vulnera.setStrategy(
+  vulnera.strategies.NPM_AUDIT
+);
+
+const vulnerabilities = await def.getVulnerabilities(process.cwd(), {
+  useStandardFormat: true
+});
+console.log(vulnerabilities);
+</code></pre>
+
+<h3>Standard vulnerability format 👯</h3>
+
+We have created a standard format to reconcile the different sources.
+
+<pre><code>ts
+export interface StandardVulnerability {
+  /<strong> Unique identifier for the vulnerability </strong>/
+  id?: string;
+  /<strong> Vulnerability origin, either Snyk, NPM or NodeSWG </strong>/
+  origin: Origin;
+  /<strong> Package associated with the vulnerability </strong>/
+  package: string;
+  /<strong> Vulnerability title </strong>/
+  title: string;
+  /<strong> Vulnerability description </strong>/
+  description?: string;
+  /<strong> Vulnerability link references on origin's website </strong>/
+  url?: string;
+  /<strong> Vulnerability severity levels given the strategy </strong>/
+  severity?: Severity;
+  /<em></em> Common Vulnerabilities and Exposures dictionary */
+  cves?: string[];
+  /<strong> Common Vulnerability Scoring System (CVSS) </strong>/
+  cvssVector?: string;
+  /<strong> CVSS Score </strong>/
+  cvssScore?: number;
+  /<em></em> The range of vulnerable versions */
+  vulnerableRanges: string[];
+  /<strong> The set of versions that are vulnerable </strong>/
+  vulnerableVersions: string[];
+  /<strong> The set of versions that are patched </strong>/
+  patchedVersions?: string;
+  /<strong> Overview of available patches </strong>/
+  patches?: Patch[];
+}
+</code></pre>
+
+You can always use the original formats of each source of course 😊. We have implemented and exposed <strong>TypeScript interfaces</strong> for each of them.
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0eqb67gqp772iawr10gp.png">NodeSecure types</a>
+
+<h2>Usage in Scanner 🔬</h2>
+
+On the scanner we have all the necessary information because we go through the dependency tree 🎄. At <a href="https://github.com/NodeSecure/scanner/blob/master/src/depWalker.js#L297">the end of the process</a>, we recover all vulnerabilities by iterating <strong>spec</strong> by <strong>spec</strong> within the <strong>hydratePayloadDependencies</strong> strategy method.
+
+<pre><code>js
+const {
+  hydratePayloadDependencies,
+  strategy
+} = await vulnera.setStrategy(
+  userStrategyName // SNYK for example
+);
+await hydratePayloadDependencies(dependencies, {
+  useStandardFormat: true,
+  path: location
+});
+
+payload.vulnerabilityStrategy = strategy;
+</code></pre>
+
+The following diagram explains the overall behavior and interactions between the Scanner and Vulnera.
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6x76ry38w7qcitdulayh.png">NodeSecure</a>
+
+If you want to learn more about the Payload you can check the TypeScript interface <a href="https://github.com/NodeSecure/scanner/blob/master/types/scanner.d.ts#L132">here</a>.
+ 
+<h2>What's next ? 🚀</h2>
+
+Some sources are more difficult to exploit than others (for NPM we use <a href="https://www.npmjs.com/package/@npmcli/arborist">Arborist</a> which simplifies our lives).
+
+<pre><code>js
+const { vulnerabilities } = (await arborist.audit()).toJSON();
+</code></pre>
+
+However, we have to think and create mechanics to exploit sources like Sonatype 😨. This is required for API like `getVulnerabilities()`.
+
+Among the major subjects and <strong>ideas</strong> we are working on:
+- Create a <strong>private</strong> database to benchmark the sources between them (see <a href="https://github.com/NodeSecure/vulnera/issues/29">#29</a>).
+- Merging multiple sources in one (see <a href="https://github.com/NodeSecure/vulnera/issues/25">#25</a>).
+- Fetch vulnerabilities of a given remote package (with support for private registry like <a href="https://verdaccio.org/">verdaccio</a>). At the moment we only support the analysis of a local manifest or a payload of the scanner.
+
+<h2>Credits 🙇</h2>
+
+This project owes much to our core collaborator <a href="https://www.linkedin.com/in/antoine-coulon-b29934153/">Antoine COULON</a> who invested a lot of energy to improve it 💪.
+
+> <strong>Fun fact:</strong> <a href="https://github.com/NodeSecure/cli/commit/236c7333720b14878b5f620f3a814c045a375a45">its first contribution</a> 🐤 on NodeSecure was also on the old version of the code Scanner that managed vulnerabilities.
+
+But I don't forget individual contributions 👏
+- <a href="https://www.linkedin.com/in/mathieu-kahlaoui-0887a1158/">Mathieu Kahlaoui</a> for adding <a href="https://github.com/NodeSecure/vuln/pull/33">the getVulnerabilities() API</a>
+- <a href="https://www.linkedin.com/in/oleh-sych-41245116a/">Oleh Sych</a> for adding <a href="https://github.com/NodeSecure/vuln/pull/11">Snyk strategy</a>
+- Medhi for his work on the logo
+
+---
+
+Thanks 🙏 for reading me and see you soon for another article!
+</p>
+          </article>
+        </main>
+      </body>
+    </html>
+  
