@@ -1,6 +1,6 @@
 ---
 title: Securizing your GitHub org
-author: Thomas.G
+author: Thomas
 date: 19/02/2023
 ---
 

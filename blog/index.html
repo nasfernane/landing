@@ -1,26 +1,150 @@
-
-    <!DOCTYPE html>
-    <html lang="fr">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Blog - NodeSecure</title>
-        <link rel="stylesheet" href="../public/css/reset.css">
-        <link rel="stylesheet" href="../public/css/blog.css">
-      </head>
-      <body>
-        <header>
-          <a href="../index.html">← Retour à l'accueil</a>
-          <h1>Articles de blog</h1>
-        </header>
-        <main>
-          <ul class="articles-list">
-            <li><a href="announcing-nodesecure-vuln-era.html">announcing-nodesecure-vuln-era</a></li>
-    <li><a href="everything-you-need-to-know-about-package-managers.html">everything-you-need-to-know-about-package-managers</a></li>
-    <li><a href="JS-X-Ray-6.0.html">JS-X-Ray-6.0</a></li>
-    <li><a href="securizing-your-github-org.html">securizing-your-github-org</a></li>
-          </ul>
-        </main>
-      </body>
-    </html>
+<!DOCTYPE html>
+<html lang="en">
   
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <link rel="stylesheet" href="../css/blog.css" />
+  <title>NodeSecure - Blog</title>
+</head>
+
+<body>
+  <canvas id="network-bg"></canvas>
+
+  <header class="blogHeader">
+    <div class="header-background"></div>
+    <div class="header-content centered-content">
+      <img src="https://avatars.githubusercontent.com/u/85318671?s=200&v=4" alt="NodeSecure Logo"
+        style="width:80px;height:80px;border-radius:20px;background:#fff2;box-shadow:0 2px 8px #0002;margin-bottom:1.2rem;">
+      <h1>
+        NodeSecure Blog
+      </h1>
+      <p class="subtitle">
+        Building a safer Node.js and JavaScript ecosystem
+      </p>
+      <p class="description">We are a community of developers building free open source tools to secure the Node.js & JavaScript ecosystem. Our area of expertise is <b>SCA</b> (Software Composition Analysis).</p>
+      <div class="header-buttons">
+        <a href="https://github.com/NodeSecure" target="_blank" title="NodeSecure on GitHub" class="view-on-github">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>View on GitHub</span>
+        </a>
+        <a href="https://discord.gg/4Wn8rjAtB4" target="_blank" title="Join our Discord" class="view-on-discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>Join Discord</span>
+        </a>
+        <a href="../index.html" title="Visit our blog" class="view-on-discord">
+          <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/circled-left-2.png"   style="width:28px;height:28px;filter:invert(1) brightness(2);" alt="Back to landing"/>
+          <span>Back to site</span>
+        </a>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    
+    <section class="articles-list">
+      
+      <div class="article-card">
+        <div class="article-card-content">
+          <div class="article-card-header">
+            <a>
+              <img src="https://github.com/fraxken.png" alt="Thomas">
+            </a>
+            <div class="article-card-header-infos">
+              <span>Thomas</span>
+              <span>21/07/2022</span>
+            </div>
+          </div>
+          <a 
+            href="announcing-nodesecure-vuln-era.html" 
+            title="NodeSecure Vuln-era" 
+            class="article-link">
+            <span>NodeSecure Vuln-era</span>
+          </a>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit.</p>
+      </div>
+      </div>
+      
+    
+      <div class="article-card">
+        <div class="article-card-content">
+          <div class="article-card-header">
+            <a>
+              <img src="https://github.com/antoine-coulon.png" alt="Thomas">
+            </a>
+            <div class="article-card-header-infos">
+              <span>Antoine</span>
+              <span>18/10/2022</span>
+            </div>
+          </div>
+          <a 
+            href="everything-you-need-to-know-about-package-managers.html" 
+            title="Everything you need to know: package managers" 
+            class="article-link">
+            <span>Everything you need to know: package managers</span>
+          </a>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit.</p>
+      </div>
+      </div>
+      
+    
+      <div class="article-card">
+        <div class="article-card-content">
+          <div class="article-card-header">
+            <a>
+              <img src="https://github.com/fraxken.png" alt="Thomas">
+            </a>
+            <div class="article-card-header-infos">
+              <span>Thomas</span>
+              <span>16/01/2023</span>
+            </div>
+          </div>
+          <a 
+            href="JS-X-Ray-6.0.html" 
+            title="JS-X-Ray 6.0" 
+            class="article-link">
+            <span>JS-X-Ray 6.0</span>
+          </a>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit.</p>
+      </div>
+      </div>
+      
+    
+      <div class="article-card">
+        <div class="article-card-content">
+          <div class="article-card-header">
+            <a>
+              <img src="https://github.com/fraxken.png" alt="Thomas">
+            </a>
+            <div class="article-card-header-infos">
+              <span>Thomas</span>
+              <span>19/02/2023</span>
+            </div>
+          </div>
+          <a 
+            href="securizing-your-github-org.html" 
+            title="Securizing your GitHub org" 
+            class="article-link">
+            <span>Securizing your GitHub org</span>
+          </a>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit.</p>
+      </div>
+      </div>
+      
+    </section>
+  </main>
+  
+  <script type="module" src="../src/particules.js"></script>
+</body>
+
+</html>
