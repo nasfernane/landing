@@ -1,0 +1,165 @@
+
+    <!DOCTYPE html>
+    <html lang="fr">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JS-X-Ray-6.0</title>
+        <link rel="stylesheet" href="../public/css/reset.css">
+        <link rel="stylesheet" href="../public/css/blog.css">
+      </head>
+      <body>
+        <header>
+          <a href="../index.html">← Retour à l'accueil</a>
+        </header>
+        <main>
+          <article>
+            <p>---
+title: JS-X-Ray 6.0
+author: Thomas.G
+date: 16/01/2023
+---
+
+Hello 👋
+
+It's been a while since the <strong>last article</strong> on JS-X-Ray 😲!
+
+{% link https://dev.to/nodesecure/js-x-ray-3-0-0-3ddn %}
+
+In this article I will present you the latest major version 👀. I didn't do an article on version 4 and 5 because they didn't introduce new features (only breaking changes on the API).
+
+<h2>📢 What is JS-X-Ray ?</h2>
+
+If you are new in town, <a href="https://github.com/NodeSecure/js-x-ray">JS-X-Ray</a> is an open source JavaScript SAST (Static Application Security Testing). The tool analyzes your JavaScript sources for patterns that may affect the security and quality of your project 😎.
+
+Among the notable features:
+
+- Retrieving dependencies (CJS & ESM support) and detecting suspicious import/require.
+- Detecting unsafe RegEx.
+- Detecting obfuscated source (and provide hints on the tool used).
+
+As well as a lot of <a href="https://github.com/NodeSecure/js-x-ray#warnings-legends">other detections</a>.
+
+<h2>Major release 4 and 5</h2>
+
+These versions introduced changes on warnings (and we improved how we manage them in the codebase). We added new descriptors for each of them:
+
+- i18n (for translation in <a href="https://github.com/NodeSecure/ci">CI</a> or <a href="https://github.com/NodeSecure/cli">CLI</a>).
+- experimental
+- severity (Information, Warning, Critical)
+
+Those information are visible in the <a href="https://github.com/NodeSecure/cli">NodeSecure CLI</a> interface:
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0xjxew9sh7xm07wxhkef.png">NodeSecure</a>
+
+<h2>Major release 6</h2>
+
+🐬 Ok, let's dive into this major release to discover the surprises 🎉 it has in store for us.
+
+<h3>🚀 Introducing VariableTracer</h3>
+
+Almost a year of work on this <a href="https://github.com/NodeSecure/estree-ast-utils/blob/main/src/utils/VariableTracer.js">new mechanism / class</a> that brings a whole new dimension to JS-X-Ray.
+
+<pre><code>js
+const tracer = new VariableTracer()
+  .enableDefaultTracing()
+  .trace("crypto.createHash", {
+    followConsecutiveAssignment: true, moduleName: "crypto"
+  });
+
+tracer.walk(node);
+</code></pre>
+
+This class is able to follow all declarations, assignments and patterns (and those even through very obscure patterns). 
+
+<pre><code>js
+const aA = Function.prototype.call;
+const bB = require;
+
+const crypto = aA.call(bB, bB, "crypto");
+const cr = crypto.createHash;
+cr("md5"); // weak-crypto warning is throw here
+</code></pre>
+
+This allows us to implement Probes in a much simpler way (which makes maintenance and testing much easier).
+
+Here an example with the `isWeakCrypto` probe:
+
+<pre><code>js
+function validateNode(node, { tracer }) {
+  const id = getCallExpressionIdentifier(node);
+  if (id === null || !tracer.importedModules.has("crypto")) {
+    return [false];
+  }
+
+  const data = tracer.getDataFromIdentifier(id);
+
+  return [
+    data !== null &&
+    data.identifierOrMemberExpr === "crypto.createHash"
+  ];
+}
+</code></pre>
+
+By default the Tracer follows all ways of `requiring` dependencies with CJS and also usage of `eval` or `Function`.
+
+
+<h3>🚧 Removing unsafe-assign warning</h3>
+
+This warning was required at the beginning of the project because it was difficult for me to correctly identify some malicious patterns.
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wscxxpedjz513w9rtxds.png">NodeSecure</a>
+
+However, with the introduction of the new Tracer, which is very complete and precise, this warning no longer makes sense has it only generates unnecessary noise and false positives.
+
+<h3>📜 Better ESM source parsing</h3>
+
+We previously had a lot of `parsing-error` warnings because the NodeSecure scanner failed to detect if the file was using either CJS or ESM. 
+
+That new version will automatically retry with ESM enabled if it fails with CJS.
+
+<h3>📉 Reducing false positives</h3>
+
+To continue the momentum of the previous sections. This version drops a lot of warnings and significantly improves others.
+
+- Reducing false positives for `encoded-literal` warning by introducing new way of detecting safe values.
+- Improve `short-identifiers` by also storing ClassDeclaration, MethodDefinition and Function parameters.
+
+We are also introducing a new `suspicious-file` warning when a file contain more than 10 encoded-literal warnings to avoid having file with hundreds or thousands of warnings.
+
+Of the <strong>500</strong> most popular NPM packages, we previously had <strong>24k</strong> warnings with version 5. The latest version brings that number down to approximatively <strong>5k</strong> warnings.
+
+<h3>🔬 Improving coverage</h3>
+
+A lot of work has been done to add unit tests on all the probes of the project. We are near 100% of coverage 💪.
+
+!<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/07uejv3fgthptaymwj5j.png">NodeSecure</a>
+
+Thanks to the amazing work of our contributors:
+
+- <a href="https://github.com/Kawacrepe">Vincent DHENNIN</a> - @kawacrepe
+- <a href="https://github.com/PierreDemailly">Pierre DEMAILLY</a>
+- <a href="https://www.linkedin.com/in/mathieu-kahlaoui-0887a1158/">Mathieu KA</a>
+- <a href="https://github.com/M4gie">M4gie</a>
+
+<h2>👀 What's next ?</h2>
+
+Here what I'm working for the next major release:
+
+- Adding support of TypeScript sources (probably by allowing a customization of the parser).
+- A new API that allows to dynamically extend the SAST with new custom probes (and custom warnings).
+- Introducing new built-in detections and warnings (unsafe URL etc).
+
+I will continue to work to reduce the number of false positives and keep improving obfuscated codes detection.
+
+---
+
+Please think to drop a star on <a href="https://github.com/NodeSecure/js-x-ray">github</a> ❤️!
+
+That's it for today! Thanks for reading me 😉
+</p>
+          </article>
+        </main>
+      </body>
+    </html>
+  
