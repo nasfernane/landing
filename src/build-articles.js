@@ -137,7 +137,8 @@ export function convertAllMarkdownArticles() {
 
 function generateBlogIndex(articles) {
   const articlesList = articles.map((article) => {
-    const coreContributor = coreContributors.filter((c) => c.name === article.author)?.[0];
+    const coreContributor = coreContributors.filter((c) => c.github === article.author)?.[0];
+    console.log("coreContributors", coreContributors);
 
     const imgSource = coreContributor?.github
       ? `https://github.com/${coreContributor.github}.png`
@@ -151,7 +152,7 @@ function generateBlogIndex(articles) {
               <img src="${imgSource}" alt="Thomas">
             </a>
             <div class="article-card-header-infos">
-              <span>${article.author}</span>
+              <span>${coreContributor?.name || article.author}</span>
               <span>${article.date}</span>
             </div>
           </div>
@@ -161,7 +162,7 @@ function generateBlogIndex(articles) {
             class="article-link">
             <span>${article.title}</span>
           </a>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit.</p>
+          <p>${article.description}</p>
       </div>
       </div>
       `;
