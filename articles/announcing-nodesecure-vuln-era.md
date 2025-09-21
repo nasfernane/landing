@@ -21,7 +21,7 @@ Vulnera is a package that allows you to **programmatically** fetch your Node.js 
 
 - NPM Audit ([Github Advisory Database](https://github.com/advisories))
 - [Sonatype OSS Index](https://ossindex.sonatype.org/)
-- deprecated [Node.js Security WG Database](https://github.com/nodejs/security-wg/tree/main/vuln)
+- `deprecated` [Node.js Security WG Database](https://github.com/nodejs/security-wg/tree/main/vuln)
 - Snyk
 
 > 📢 Feel free to push new sources (we have [a guide](https://github.com/NodeSecure/vuln/blob/main/docs/adding_new_strategy.md) on how to add/contribute one).
