@@ -5,9 +5,26 @@
 .articles-list {
   padding: 30px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 40px;
   z-index: 2;
+  margin: auto;
+  max-width: 70%;
+}
+
+@media (max-width: 1600px) {
+  .articles-list {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .articles-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .article {
@@ -41,8 +58,9 @@ article {
 }
 
 .article-content {
+  margin: 40px 0;
   max-width: 60%;
-  padding: 040px;
+  padding: 40px;
   background: linear-gradient(135deg, rgba(90, 68, 218, 0.5) 0%, rgba(55, 34, 175, 0.5) 100%);
   z-index: 2;
 }
@@ -156,20 +174,17 @@ h1.article-title {
   box-shadow: 0 6px 32px #0003;
   background: var(--bg-img) center/cover no-repeat, #3722AF;
   display: flex;
-  align-items: flex-end;
-  transform: skew(-4deg);
   transition: transform 0.2s;
   z-index: 2;
 }
 
 .article-card:hover {
-  transform: skew(-4deg) scale(1.04);
+  transform: scale(1.04);
   box-shadow: 0 12px 40px #0005;
 }
 
 .article-card-content {
   min-height: 76%;
-  transform: skew(4deg);
   padding: 2rem;
   background: linear-gradient(0deg, #3722AFee 80%, #00D1FF44 100%);
   border-radius: 12px;
