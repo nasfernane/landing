@@ -146,6 +146,24 @@ h1.article-title {
   content: 'BASH'
 }
 
+.article-content code {
+  background: #23272f;
+  color: #ffecb3;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.95em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  box-shadow: 0 1px 2px #0002;
+  white-space: break-spaces;
+}
+
+.article-content li {
+  list-style: disc inside;
+  margin-left: 1.5em;
+  margin-bottom: 0.5em;
+}
+
 .article-content > table {
   border: 1px solid #ccc;
   border-collapse: collapse;
