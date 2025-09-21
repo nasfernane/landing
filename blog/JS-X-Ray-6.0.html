@@ -55,9 +55,9 @@
       <div class="article-content">
         <h1 class="article-title">JS-X-Ray 6.0</h1>
         <p>Hello 👋</p>
-<p>It&#39;s been a while since the <strong>last article</strong> on JS-X-Ray 😲!</p>
+<p>It's been a while since the <strong>last article</strong> on JS-X-Ray 😲!</p>
 <p>{% link <a href="https://dev.to/nodesecure/js-x-ray-3-0-0-3ddn">https://dev.to/nodesecure/js-x-ray-3-0-0-3ddn</a> %}</p>
-<p>In this article I will present you the latest major version 👀. I didn&#39;t do an article on version 4 and 5 because they didn&#39;t introduce new features (only breaking changes on the API).</p>
+<p>In this article I will present you the latest major version 👀. I didn't do an article on version 4 and 5 because they didn't introduce new features (only breaking changes on the API).</p>
 <h2>📢 What is JS-X-Ray ?</h2>
 <p>If you are new in town, <a href="https://github.com/NodeSecure/js-x-ray">JS-X-Ray</a> is an open source JavaScript SAST (Static Application Security Testing). The tool analyzes your JavaScript sources for patterns that may affect the security and quality of your project 😎.</p>
 <p>Among the notable features:</p>
@@ -77,13 +77,13 @@
 <p>Those information are visible in the <a href="https://github.com/NodeSecure/cli">NodeSecure CLI</a> interface:</p>
 <p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0xjxew9sh7xm07wxhkef.png" alt="NodeSecure"></p>
 <h2>Major release 6</h2>
-<p>🐬 Ok, let&#39;s dive into this major release to discover the surprises 🎉 it has in store for us.</p>
+<p>🐬 Ok, let's dive into this major release to discover the surprises 🎉 it has in store for us.</p>
 <h3>🚀 Introducing VariableTracer</h3>
 <p>Almost a year of work on this <a href="https://github.com/NodeSecure/estree-ast-utils/blob/main/src/utils/VariableTracer.js">new mechanism / class</a> that brings a whole new dimension to JS-X-Ray.</p>
 <pre><code class="language-js">const tracer = new VariableTracer()
   .enableDefaultTracing()
-  .trace(&quot;crypto.createHash&quot;, {
-    followConsecutiveAssignment: true, moduleName: &quot;crypto&quot;
+  .trace("crypto.createHash", {
+    followConsecutiveAssignment: true, moduleName: "crypto"
   });
 
 tracer.walk(node);
@@ -92,15 +92,15 @@ tracer.walk(node);
 <pre><code class="language-js">const aA = Function.prototype.call;
 const bB = require;
 
-const crypto = aA.call(bB, bB, &quot;crypto&quot;);
+const crypto = aA.call(bB, bB, "crypto");
 const cr = crypto.createHash;
-cr(&quot;md5&quot;); // weak-crypto warning is throw here
+cr("md5"); // weak-crypto warning is throw here
 </code></pre>
 <p>This allows us to implement Probes in a much simpler way (which makes maintenance and testing much easier).</p>
 <p>Here an example with the <code>isWeakCrypto</code> probe:</p>
 <pre><code class="language-js">function validateNode(node, { tracer }) {
   const id = getCallExpressionIdentifier(node);
-  if (id === null || !tracer.importedModules.has(&quot;crypto&quot;)) {
+  if (id === null || !tracer.importedModules.has("crypto")) {
     return [false];
   }
 
@@ -108,7 +108,7 @@ cr(&quot;md5&quot;); // weak-crypto warning is throw here
 
   return [
     data !== null &amp;&amp;
-    data.identifierOrMemberExpr === &quot;crypto.createHash&quot;
+    data.identifierOrMemberExpr === "crypto.createHash"
   ];
 }
 </code></pre>
@@ -138,8 +138,8 @@ cr(&quot;md5&quot;); // weak-crypto warning is throw here
 <li><a href="https://www.linkedin.com/in/mathieu-kahlaoui-0887a1158/">Mathieu KA</a></li>
 <li><a href="https://github.com/M4gie">M4gie</a></li>
 </ul>
-<h2>👀 What&#39;s next ?</h2>
-<p>Here what I&#39;m working for the next major release:</p>
+<h2>👀 What's next ?</h2>
+<p>Here what I'm working for the next major release:</p>
 <ul>
 <li>Adding support of TypeScript sources (probably by allowing a customization of the parser).</li>
 <li>A new API that allows to dynamically extend the SAST with new custom probes (and custom warnings).</li>
@@ -148,7 +148,7 @@ cr(&quot;md5&quot;); // weak-crypto warning is throw here
 <p>I will continue to work to reduce the number of false positives and keep improving obfuscated codes detection.</p>
 <hr>
 <p>Please think to drop a star on <a href="https://github.com/NodeSecure/js-x-ray">github</a> ❤️!</p>
-<p>That&#39;s it for today! Thanks for reading me 😉</p>
+<p>That's it for today! Thanks for reading me 😉</p>
 
       </div>
     </article>

@@ -56,22 +56,22 @@
         <h1 class="article-title">Securizing your GitHub org</h1>
         <p>Hello 👋</p>
 <p>I started open source a bit naively (like everyone I guess 😊).</p>
-<p>But the more I progress and the more important/popular some of my projects become 😎. That&#39;s great, but at some point you have to <strong>deal</strong> with a lot of things <strong>related to security</strong> (like Vulnerability disclosure).</p>
-<p>You start to hear and see a lot of <strong>scary stories</strong> around you 😱. Not to mention all the <strong>acronyms</strong> where you don&#39;t understand anything at first 😵 (VMT, CVE, SAST, SCA, CNA ...).</p>
+<p>But the more I progress and the more important/popular some of my projects become 😎. That's great, but at some point you have to <strong>deal</strong> with a lot of things <strong>related to security</strong> (like Vulnerability disclosure).</p>
+<p>You start to hear and see a lot of <strong>scary stories</strong> around you 😱. Not to mention all the <strong>acronyms</strong> where you don't understand anything at first 😵 (VMT, CVE, SAST, SCA, CNA ...).</p>
 <p>As I was working on an open source security project, I put pressure on myself to be ready. Also as a member of the <a href="https://github.com/nodejs/security-wg">Node.js Security WG</a> I thought it was an interesting topic and that I was probably not the only one who was worried about not being up to the task 😖.</p>
 <p>So I rolled up my sleeves and tackled the problem 💪. Here is my feedback/journey on how I improved the security of my <a href="https://github.com/NodeSecure">NodeSecure</a> GitHub organization.</p>
 <blockquote>
 <p>👀 We use Node.js and JavaScript (but most recommendations are valid for other ecosystems).</p>
 </blockquote>
 <h2>Security Policy and Vulnerability Disclosure</h2>
-<p>Adding a root <code>SECURITY.md</code> file explaining how developers and security researchers should report vulnerability is important. You don&#39;t want a security threat to <strong>be turned into a public issue</strong> (This gives you time to analyze and possibly fix <strong>before disclosure</strong>).</p>
+<p>Adding a root <code>SECURITY.md</code> file explaining how developers and security researchers should report vulnerability is important. You don't want a security threat to <strong>be turned into a public issue</strong> (This gives you time to analyze and possibly fix <strong>before disclosure</strong>).</p>
 <blockquote>
 <p>⚠️ If you are a developer, never report a security threat using a public GitHub issue. <strong>This is a serious mistake</strong>. This could even put your business/team at <strong>risk</strong>.</p>
 </blockquote>
-<p>I don&#39;t want to bullshit you, so let me share with you the <strong>OpenSSF guide</strong> that helped me set up my first reporting strategy: <a href="https://github.com/ossf/oss-vulnerability-guide/blob/main/maintainer-guide.md">Guide to implementing a coordinated vulnerability disclosure process for open source projects</a>.</p>
-<p>I started from scratch by reading this guide and taking inspiration from <a href="https://github.com/ossf/oss-vulnerability-guide/tree/main/templates">their templates</a> 🐤. As a small open source team we don&#39;t especially have DNS or mail servers (not even a defined <strong>V</strong>ulnerability <strong>M</strong>anagement <strong>T</strong>eam A.K.A <strong>VMT</strong>).</p>
-<p>I was a bit puzzled to put my personal email as I&#39;m not alone 😟. </p>
-<p>I quickly learned that Github added a new feature <a href="https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability">to report/create private security issue</a> 😍. You can enable it in the <code>Security</code> tab (I think it&#39;s also now possible to enable it on every repositories at once).</p>
+<p>I don't want to bullshit you, so let me share with you the <strong>OpenSSF guide</strong> that helped me set up my first reporting strategy: <a href="https://github.com/ossf/oss-vulnerability-guide/blob/main/maintainer-guide.md">Guide to implementing a coordinated vulnerability disclosure process for open source projects</a>.</p>
+<p>I started from scratch by reading this guide and taking inspiration from <a href="https://github.com/ossf/oss-vulnerability-guide/tree/main/templates">their templates</a> 🐤. As a small open source team we don't especially have DNS or mail servers (not even a defined <strong>V</strong>ulnerability <strong>M</strong>anagement <strong>T</strong>eam A.K.A <strong>VMT</strong>).</p>
+<p>I was a bit puzzled to put my personal email as I'm not alone 😟. </p>
+<p>I quickly learned that Github added a new feature <a href="https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability">to report/create private security issue</a> 😍. You can enable it in the <code>Security</code> tab (I think it's also now possible to enable it on every repositories at once).</p>
 <p>And this is what it finally looks like:
 <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/imqmjdj2ewiiud0bpmbs.png" alt="NodeSecure SECURITY.md"></p>
 <h2>Use OpenSSF scorecard</h2>
@@ -91,7 +91,7 @@
 <blockquote>
 <p>To set up the protection, go to <code>Settings</code> &gt; <code>Branches</code> and edit your main branch. </p>
 </blockquote>
-<p>GitHub has quite a few options on the subject 😵. If you don&#39;t know what to choose in terms of options, <strong>don&#39;t check anything</strong> (it&#39;s <strong>ok</strong> to begin ✔️).</p>
+<p>GitHub has quite a few options on the subject 😵. If you don't know what to choose in terms of options, <strong>don't check anything</strong> (it's <strong>ok</strong> to begin ✔️).</p>
 <p>If you want to be more restrictive, be <strong>careful</strong> because it could block you (some options are only viable in projects with many contributors/reviewers).</p>
 <p>As far as I am concerned I often choose:</p>
 <ul>
@@ -105,7 +105,7 @@
 <li>You must pay attention to the <a href="https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs">permissions granted to your jobs / GITHUB_TOKEN</a></li>
 <li><a href="https://michaelheap.com/ensure-github-actions-pinned-sha/">Ensure your GitHub Actions are pinned to a SHA</a></li>
 <li>Hardening the runner (see the <a href="https://blog.stepsecurity.io/announcing-general-availability-of-harden-runner-a7597a1410da">StepSecurity HardenRunner</a>)</li>
-<li>Probably a lot of other stuff I haven&#39;t had time to see yet 😆</li>
+<li>Probably a lot of other stuff I haven't had time to see yet 😆</li>
 </ul>
 <p>Fortunately there is a <a href="https://app.stepsecurity.io/">great free online tool</a> that help you by doing all the hard work (it will open a pull-request and automatically fix issues).</p>
 <p>{% tweet <a href="https://twitter.com/fraxken/status/1617557370728767488">https://twitter.com/fraxken/status/1617557370728767488</a> %}</p>
@@ -146,11 +146,11 @@ updates:
 <h2>💡 OpenSSF Best Pratices program</h2>
 <p>Previously known as CII-Best-Practices, this program indicates that the project uses a set of security-focused best development practices for open source software.</p>
 <p>So I registered my first project on the <a href="https://bestpractices.coreinfrastructure.org/en">website</a>. It was a good surprise because it allowed me to question the quality of my documentation and tests 😬.</p>
-<p>Seeing the different levels and questions really helps you think about what you&#39;re missing (and possibly learn about the concepts you don&#39;t know about yet.. Like <a href="https://snyk.io/blog/building-sbom-open-source-supply-chain-security/">SBOM</a>).</p>
+<p>Seeing the different levels and questions really helps you think about what you're missing (and possibly learn about the concepts you don't know about yet.. Like <a href="https://snyk.io/blog/building-sbom-open-source-supply-chain-security/">SBOM</a>).</p>
 <p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pn6g2gcoyelkniwopy0.png" alt="CII-Best-Practices"></p>
 <p>I am still working on completing the first step/badge for the CLI project which now has a score of <strong>8.7</strong> out of <strong>10</strong> 🎉 on the OpenSSF scorecard.</p>
 <h2>🎯 Conclusion</h2>
-<p>That&#39;s it for this article. I&#39;ve covered what I&#39;ve done/learned in the last couple of months. Here are some really cool additional links 💃:</p>
+<p>That's it for this article. I've covered what I've done/learned in the last couple of months. Here are some really cool additional links 💃:</p>
 <ul>
 <li><a href="https://github.com/ossf/wg-best-practices-os-developers/blob/main/docs/Concise-Guide-for-Evaluating-Open-Source-Software.md#readme">Concise Guide for Evaluating Open Source Software 2023-01-03</a></li>
 <li><a href="https://github.com/ossf/wg-best-practices-os-developers/blob/main/docs/Concise-Guide-for-Developing-More-Secure-Software.md#readme">Concise Guide for Developing More Secure Software 2023-01-03</a></li>

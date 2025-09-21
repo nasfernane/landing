@@ -83,9 +83,11 @@ h1.article-title {
 
 .article-content > p:has(img) {
   display: flex;
+  flex-direction: column;
   justify-content: start;
   align-items: center;
   gap: 20px;
+  max-width: 100%;
 }
 
 .article-content > pre {
@@ -186,7 +188,7 @@ h1.article-title {
   margin-bottom: 1rem;
 }
 
-.article-card-header img {
+.article-card-header .authorImg {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -194,8 +196,16 @@ h1.article-title {
     0 0 0 6px rgba(0, 209, 255, 0.18),
     0 0 24px 8px #00d1ff55,
     0 0 48px 8px #3722af33;
+  transition: transform 0.3s, box-shadow 0.3s;
   background: linear-gradient(120deg, #261877 0%, #3722AF 100%);
   object-fit: cover;
+}
+
+.article-card-header .authorImg:hover {
+  box-shadow:
+    0 0 0 8px #00d1ff88,
+    0 0 32px 12px #00d1ff77,
+    0 0 64px 16px #3722af55;
 }
 
 .article-card-header-infos {

@@ -56,9 +56,9 @@
         <h1 class="article-title">NodeSecure Vuln-era</h1>
         <p>Hello 👋,</p>
 <p>Back for a little article about the rebranding of one of the NodeSecure tools: <a href="https://github.com/NodeSecure/vuln">Vulnera</a> (previously <em>vuln</em>, the <strong>vuln-era</strong> has begun!).</p>
-<p>An opportunity for me to also write about this wonderful project that was born with the redesign of the back-end less than a year ago ⌚. If you don&#39;t remember I wrote an article:</p>
+<p>An opportunity for me to also write about this wonderful project that was born with the redesign of the back-end less than a year ago ⌚. If you don't remember I wrote an article:</p>
 <p>{% link <a href="https://dev.to/fraxken/announcing-new-node-secure-back-end-1dp9">https://dev.to/fraxken/announcing-new-node-secure-back-end-1dp9</a> %}</p>
-<p>Don&#39;t wait and dive in 🌊 with me to discover this tool 💃.</p>
+<p>Don't wait and dive in 🌊 with me to discover this tool 💃.</p>
 <h2>What is Vulnera ? 👀</h2>
 <p>Vulnera is a package that allows you to <strong>programmatically</strong> fetch your Node.js project vulnerabilities from <strong>multiple sources or strategies</strong>:</p>
 <ul>
@@ -71,7 +71,7 @@
 <p>📢 Feel free to push new sources (we have <a href="https://github.com/NodeSecure/vuln/blob/main/docs/adding_new_strategy.md">a guide</a> on how to add/contribute one).</p>
 </blockquote>
 <p>The code was originally designed for vulnerability management within the <a href="https://github.com/NodeSecure/scanner">Scanner</a>. Yet, its API is <strong>evolving</strong> with the objective of making it a <strong>full-fledged project</strong>.</p>
-<pre><code class="language-js">import * as vulnera from &quot;@nodesecure/vulnera&quot;;
+<pre><code class="language-js">import * as vulnera from "@nodesecure/vulnera";
 
 const def = await vulnera.setStrategy(
   vulnera.strategies.NPM_AUDIT
@@ -95,7 +95,7 @@ console.log(vulnerabilities);
   title: string;
   /** Vulnerability description **/
   description?: string;
-  /** Vulnerability link references on origin&#39;s website **/
+  /** Vulnerability link references on origin's website **/
   url?: string;
   /** Vulnerability severity levels given the strategy **/
   severity?: Severity;
@@ -135,7 +135,7 @@ payload.vulnerabilityStrategy = strategy;
 <p>The following diagram explains the overall behavior and interactions between the Scanner and Vulnera.
 <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6x76ry38w7qcitdulayh.png" alt="NodeSecure"></p>
 <p>If you want to learn more about the Payload you can check the TypeScript interface <a href="https://github.com/NodeSecure/scanner/blob/master/types/scanner.d.ts#L132">here</a>.</p>
-<h2>What&#39;s next ? 🚀</h2>
+<h2>What's next ? 🚀</h2>
 <p>Some sources are more difficult to exploit than others (for NPM we use <a href="https://www.npmjs.com/package/@npmcli/arborist">Arborist</a> which simplifies our lives).</p>
 <pre><code class="language-js">const { vulnerabilities } = (await arborist.audit()).toJSON();
 </code></pre>
@@ -151,7 +151,7 @@ payload.vulnerabilityStrategy = strategy;
 <blockquote>
 <p><strong>Fun fact:</strong> <a href="https://github.com/NodeSecure/cli/commit/236c7333720b14878b5f620f3a814c045a375a45">its first contribution</a> 🐤 on NodeSecure was also on the old version of the code Scanner that managed vulnerabilities.</p>
 </blockquote>
-<p>But I don&#39;t forget individual contributions 👏</p>
+<p>But I don't forget individual contributions 👏</p>
 <ul>
 <li><a href="https://www.linkedin.com/in/mathieu-kahlaoui-0887a1158/">Mathieu Kahlaoui</a> for adding <a href="https://github.com/NodeSecure/vuln/pull/33">the getVulnerabilities() API</a></li>
 <li><a href="https://www.linkedin.com/in/oleh-sych-41245116a/">Oleh Sych</a> for adding <a href="https://github.com/NodeSecure/vuln/pull/11">Snyk strategy</a></li>

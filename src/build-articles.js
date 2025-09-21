@@ -4,66 +4,43 @@ import path from "node:path";
 
 // Import Third-party Dependencies
 import { marked } from "marked";
+import createDOMPurify from "dompurify";
+import { JSDOM } from "jsdom";
 
 const inputDir = "./articles";
 const outputDir = "./blog";
 const coreContributors = [];
 
-// function markdownToHtml(markdown) {
-//   let html = markdown;
-
-//   // escapes "<" that are not html tags
-//   html = html.replace(/</g, "&lt;");
-
-//   // headers
-//   html = html.replace(/^### (.*$)/gim, "<h3>$1</h3>");
-//   html = html.replace(/^## (.*$)/gim, "<h2>$1</h2>");
-//   html = html.replace(/^# (.*$)/gim, "<h1>$1</h1>");
-
-//   // bold text
-//   html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-
-//   // italic text
-//   html = html.replace(/\*(.*?)\*/g, "<em>$1</em>");
-
-//   // links [text](url)
-//   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
-
-//   // code blocks ```
-//   const usedLangages = ["json", "js", "ts", "css"];
-
-//   for (const lang of usedLangages) {
-//     const regex = new RegExp(`\`\`\`${lang}([\\s\\S]*?)\`\`\``, "g");
-//     html = html.replace(regex, "<pre><code>$1</code></pre>");
-//   }
-
-//   // line breaks
-//   html = html.replace(/\n\n/g, "</p><p>");
-//   html = "<p>" + html + "</p>";
-
-//   // empty paragraphs
-//   // html = html.replace(/<p><\/p>/g, "");
-
-//   return html;
-// }
-
 function generateBlogPost(markdownFile) {
   const markdownContent = fs.readFileSync(markdownFile, "utf8");
   const fileName = path.basename(markdownFile, ".md");
 
+  // retrieve metadata and dirty html from yaml file
   const { metadata, content } = parseYamlFile(markdownContent);
-  // const htmlContent = markdownToHtml(content);
   const htmlContent = marked.parse(content);
 
-  const baseArticleTemplate = fs.readFileSync(`${outputDir}/article-base-template.html`, "utf-8");
+  // sanitize html
+  const window = new JSDOM("").window;
+  const DOMPurify = createDOMPurify(window);
+  const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
 
-  const articleTemplate = baseArticleTemplate.replace("<article></article>", `
+  metadata.readTime = getReadTimeEstimation(sanitizedHtmlContent);
+
+  const baseArticleTemplate = fs.readFileSync(
+    `${outputDir}/article-base-template.html`,
+    "utf-8"
+  );
+
+  const articleTemplate = baseArticleTemplate.replace(
+    "<article></article>",
+    `
     <article>
       <div class="article-content">
         <h1 class="article-title">${metadata.title}</h1>
-        ${htmlContent}
+        ${sanitizedHtmlContent}
       </div>
-    </article>`);
+    </article>`
+  );
 
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
@@ -108,8 +85,18 @@ function parseYamlFile(content) {
     const trimmedLine = line.trim();
     if (trimmedLine && trimmedLine.includes(":")) {
       const [key, ...valueParts] = trimmedLine.split(":");
-      const value = valueParts.join(":").trim();
-      metadata[key.trim()] = value;
+
+      const dataKey = key.trim();
+      const dataValue = valueParts.join(":").trim();
+
+      if (dataKey === "date") {
+        const [day, month, year] = dataValue.split("/").map(Number);
+        const date = new Date(year, month - 1, day);
+        metadata[dataKey] = date;
+      }
+      else {
+        metadata[dataKey] = dataValue;
+      }
     }
   }
 
@@ -122,8 +109,7 @@ export function convertAllMarkdownArticles() {
     throw new Error(`${inputDir} directory does not exist`);
   }
 
-  const files = fs.readdirSync(inputDir)
-    .filter((file) => file.endsWith(".md"));
+  const files = fs.readdirSync(inputDir).filter((file) => file.endsWith(".md"));
 
   const articles = files.map((file) => {
     const filePath = path.join(inputDir, file);
@@ -136,24 +122,44 @@ export function convertAllMarkdownArticles() {
 }
 
 function generateBlogIndex(articles) {
-  const articlesList = articles.map((article) => {
-    const coreContributor = coreContributors.filter((c) => c.github === article.author)?.[0];
-    console.log("coreContributors", coreContributors);
+  const articlesList = articles
+    .sort((articleA, articleB) => articleB.date - articleA.date)
+    .map((article) => {
+      const coreContributor = coreContributors.filter(
+        (c) => c.github === article.author
+      )?.[0];
 
-    const imgSource = coreContributor?.github
-      ? `https://github.com/${coreContributor.github}.png`
-      : "https://img.icons8.com/ios-glyphs/30/test-account.png";
+      const imgSource = coreContributor?.github
+        ? `https://github.com/${coreContributor.github}.png`
+        : "https://img.icons8.com/ios-glyphs/30/test-account.png";
 
-    return `
+      return `
       <div class="article-card">
         <div class="article-card-content">
           <div class="article-card-header">
             <a>
-              <img src="${imgSource}" alt="Thomas">
+              <img class="authorImg" src="${imgSource}" alt="Thomas">
             </a>
             <div class="article-card-header-infos">
               <span>${coreContributor?.name || article.author}</span>
-              <span>${article.date}</span>
+              <span style="display: flex; align-items: center; gap: 10px;">
+                <span style="display: flex; align-items: center; gap: 5px;">
+                  <img 
+                    src="https://img.icons8.com/material-rounded/24/calendar--v1.png" 
+                    alt="calendar" 
+                    style="width:18px;height:18px;filter:invert(1) brightness(2);"
+                  />
+                  <span>${formatDate(article.date)}</span>
+                </span>
+                <span style="display: flex; align-items: center; gap: 5px;"> 
+                  <img 
+                    src="https://img.icons8.com/forma-regular/24/clock.png" 
+                    alt="clock" 
+                    style="width:18px;height:18px;filter:invert(1) brightness(2);"
+                  />
+                  <span>${article.readTime} min read</span>
+                </span>
+              </span>
             </div>
           </div>
           <a 
@@ -166,24 +172,58 @@ function generateBlogIndex(articles) {
       </div>
       </div>
       `;
-  }).join("\n    ");
+    })
+    .join("\n    ");
 
-  const baseTemplate = fs.readFileSync(`${outputDir}/index-base-template.html`, "utf-8");
+  const baseTemplate = fs.readFileSync(
+    `${outputDir}/index-base-template.html`,
+    "utf-8"
+  );
 
-  const indexTemplate = baseTemplate.replace('<section class="articles-list"></section>', `
+  const indexTemplate = baseTemplate.replace(
+    '<section class="articles-list"></section>',
+    `
     <section class="articles-list">
       ${articlesList}
-    </section>`);
+    </section>`
+  );
 
   const indexPath = path.join(outputDir, "index.html");
   fs.writeFileSync(indexPath, indexTemplate);
 }
 
+function formatDate(date) {
+  if (!(date instanceof Date)) {
+    return date;
+  }
+
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "short" });
+  const year = date.getFullYear();
+
+  return `${month} ${day}, ${year}`;
+}
+
+function getReadTimeEstimation(content) {
+  // remove HTML tags to get plain text, regroup white spaces
+  const text = content.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+
+  // get words count filtering empty elements out
+  const wordCount = text.split(" ").filter(Boolean).length;
+
+  // calculate minutes, round up to nearest integer - min is one minute
+  return Math.max(1, Math.ceil(wordCount / 200));
+}
+
 (async() => {
-  const response = await fetch("https://raw.githubusercontent.com/NodeSecure/Governance/main/contributors.json");
+  const response = await fetch(
+    "https://raw.githubusercontent.com/NodeSecure/Governance/main/contributors.json"
+  );
 
   if (!response.ok) {
-    throw new Error(`Error while fetching contributors list: ${response.status}`);
+    throw new Error(
+      `Error while fetching contributors list: ${response.status}`
+    );
   }
 
   const contributors = await response.json();
@@ -194,4 +234,3 @@ function generateBlogIndex(articles) {
 
   convertAllMarkdownArticles();
 })();
-
