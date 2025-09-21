@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <link rel="stylesheet" href="../css/blog.css" />
+  <title>NodeSecure - Blog</title>
+</head>
+
+<body>
+  <canvas id="network-bg"></canvas>
+
+  <header class="blogHeader">
+    <div class="header-background"></div>
+    <div class="header-content centered-content">
+      <img src="https://avatars.githubusercontent.com/u/85318671?s=200&v=4" alt="NodeSecure Logo"
+        style="width:80px;height:80px;border-radius:20px;background:#fff2;box-shadow:0 2px 8px #0002;margin-bottom:1.2rem;">
+      <h1>
+        NodeSecure Blog
+      </h1>
+      <p class="subtitle">
+        Building a safer Node.js and JavaScript ecosystem
+      </p>
+      <p class="description">We are a community of developers building free open source tools to secure the Node.js & JavaScript ecosystem. Our area of expertise is <b>SCA</b> (Software Composition Analysis).</p>
+      <div class="header-buttons">
+        <a href="https://github.com/NodeSecure" target="_blank" title="NodeSecure on GitHub" class="view-on-github">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>View on GitHub</span>
+        </a>
+        <a href="https://discord.gg/4Wn8rjAtB4" target="_blank" title="Join our Discord" class="view-on-discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>Join Discord</span>
+        </a>
+        <a href="./index.html" title="Visit our blog" class="view-on-discord">
+          <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/circled-left-2.png"   style="width:28px;height:28px;filter:invert(1) brightness(2);" alt="Back to blog"/>
+          <span>Back to blog</span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">NodeSecure CLI v2.0.0</h1>
+        <p>Hello 👋,</p>
+<p>I am writing this article with excitement and after several months of work. With the <a href="https://github.com/NodeSecure/Governance#team">core team</a> we are thrilled to announce that we are publishing a <strong>new version</strong> of the UI.🚀.</p>
+<p>As you are reading these lines I am probably under the sun ☀️ of Tel Aviv for the <a href="https://www.nodetlv.com/">NodeTLV</a> conference where I will give a talk about <strong>NodeSecure</strong> and some other tools.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3wspz0krx3g44jicz6v6.JPG" alt="NodeSecure"> </p>
+<p>What an incredible journey 😍. Four years ago I was working on my tool alone 😥... But now more than a dozen developers are contributing to the project and I can only thank all of you for your precious support 🙏.</p>
+<p>If you are new, then let me introduce you to the project</p>
+<h2>🐤 Getting started with NodeSecure</h2>
+<p>NodeSecure is an organization gathering a lot of individual projects that will allow you to improve the <strong>security</strong> and <strong>quality</strong> of your projects 💪. With our tools you can <strong>visually</strong> discover the dependencies you use on a daily basis and <strong>learn</strong> more about them 📚.</p>
+<p>Our most notable project is:
+<a href="https://github.com/NodeSecure/cli" target="_blank" rel="noopener" class="external-article-link">🔗 GitHub: NodeSecure/cli</a></p>
+<p>How can you use it? It's easy, you just have to install globally the CLI with npm:</p>
+<pre><code class="language-bash">$ npm i @nodesecure/cli -g
+
+# Analyze a remote package on the NPM Registry.
+# Note: also work with a private registry like gitlab or verdaccio
+$ nsecure auto fastify
+
+# Analyze a local manifest (or local project).
+# -&gt; omit the package name to run it at the cwd.
+$ cd /myproject
+$ nsecure auto
+</code></pre>
+<p>We have many other projects and <a href="https://github.com/orgs/NodeSecure/projects/2/views/1?filterQuery=label%3A%22good+first+issue%22">many opportunities</a> for you to contribute. <a href="https://github.com/NodeSecure/Governance/blob/main/guides/contributor-en.md">Feel free to join us on Discord to discuss</a>.</p>
+<h2>👀 What's changed in v2.0.0 ?</h2>
+<p>A lot to be honest 😆. Our initial idea was simply to improve and complete the interface (We went a bit overboard I guess 😅).</p>
+<p>One of the things that became problematic was the lack of space in the interface 😨. So we had to completely redesign the UX. I have to thank <a href="https://www.linkedin.com/in/mehdi-bouchard/">Medhi Bouchard</a>, who spent dozens of hours designing UI on figma (Without him all this would have been much more difficult to achieve 💪).</p>
+<h3>Multiple views</h3>
+<p>This new interface offers several distinct views:</p>
+<ul>
+<li><strong>Home</strong> (global informations about the project you asked to analyze).</li>
+<li><strong>Network</strong> (where we are drawing the dependency tree).</li>
+<li><strong>Settings</strong> (which allows you to customize your experience with the tool)</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>: It is also possible to switch between each view with a keyboard shortcut (which corresponds to the capitalized character).</p>
+</blockquote>
+<h3>Home view</h3>
+<p>The home view is a replacement for the old <code>Global stats</code> button. We have been working to bring more attention to the information.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/tk892c9ocf8de9poqduf.PNG" alt="NodeSecure UI"></p>
+<p>To summarize the information we find in this view;</p>
+<ul>
+<li>Global stats on the project (direct vs indirect, size, downloads)</li>
+<li>Licenses and Extensions</li>
+<li>Authors</li>
+<li>Global warnings (not visible in the screenshot since there is none).</li>
+<li>Links to Github and NPM.</li>
+</ul>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/k5m1fkg4f5zlf2xbgyum.png" alt="NodeSecure UI"></p>
+<p>We plan to expand this view with even more information and really cool gadgets. We also want to bring more attention and information around the creators and maintainers.</p>
+<h3>🔧 Settings view</h3>
+<p>This is the new kid in the town. There is not much to customize yet but that will come with time.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/tqarzdl92u1p6cf5268z.png" alt="NodeSecure UI"></p>
+<p>One of the key ideas of NodeSecure is that each developer and maintainer can customize their experience with the tool.</p>
+<blockquote>
+<p>Some of our warnings have a lot of false positives that is real, so you will be able to ignore them if you don't find them relevant.</p>
+</blockquote>
+<p>Eventually the options will allow to make more clear-cut decisions like tagging a maintainer's library (which will be useful during incidents like the one with <code>Faker.js</code> or <code>node-ipc</code>).</p>
+<h3>🌎 Network view</h3>
+<p>We have slightly improved the network view and updated the colors for something more pleasant.</p>
+<p>In version <a href="https://github.com/NodeSecure/vis-network/releases/tag/v1.4.0">1.4.0 of our Vis-network</a> implementation, we have also implemented different theme for parent and child nodes (What you can see in the screenshot below).</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kbgwnevxd152hdz6rg8m.png" alt="NodeSecure UI"></p>
+<blockquote>
+<p><strong>Note</strong>: We have not abandoned the "Dark" theme. Eventually it will be possible to switch from a light to a dark theme in the settings.</p>
+</blockquote>
+<h3>🚀 New left pannel</h3>
+<p>We wanted to keep the spirit of the old interface where we could retrieve information about a package very quickly. However we want to avoid as much as possible the need to scroll to get the information.</p>
+<p>No more popup 💃. All information is now directly accessible in this new panel.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/judw5hs384em1zcws0f5.png" alt="NodeSecure UI"></p>
+<p>This new design is divided into the following sub-panels:</p>
+<ul>
+<li>Overview (Package informations, github stats, etc).</li>
+<li>Files and size (with bundlephobia).</li>
+<li>Scripts and Dependencies.</li>
+<li>Threats and issues in JavaScript source.</li>
+<li>Vulnerabilities.</li>
+<li>Licenses conformance (SPDX).</li>
+</ul>
+<p>There is also much more information than before. For example, I've been wanting to implement vulnerabilities in the interface for two years and it's now done:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/a3t9ucd7s18r24i3vqxm.png" alt="NodeSecure vulnerabilities"></p>
+<blockquote>
+<p><strong>Note</strong>: I remind you that we support multiple strategy for vulnerabilities like <a href="https://www.sonatype.com/?smtNoRedir=1">Sonatype</a> or <a href="https://snyk.io/">Snyk</a>.</p>
+</blockquote>
+<h4>Scripts</h4>
+<p>This new version allows you to consult the scripts of a package. Really cool combined with the 📦 hasScript flag. Most supply chain attack uses a malicious script ... so it became important for us to be able to consult them in the UI.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/goeixyvdq7jym4pbt4sp.png" alt="NodeSecure scripts"></p>
+<h4>Threats in source code</h4>
+<p>This version implements the latest release of JS-X-Ray which includes new features;</p>
+<ul>
+<li>Detecting weak crypto algorithm (md5, sha1 ...).</li>
+<li>Warnings now have a level of severity (like vulnerabilities).</li>
+</ul>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/adl4ge6u60js1nrbkiel.png" alt="NodeSecure UI"></p>
+<p>There is still a lot of work to be done on the interface, especially to better visualize the faulty code. You will notice that the links to access NPM and Unpkg are now always present in the header.</p>
+<h4>Licenses conformance</h4>
+<p>The information is still the same, but the design is a little more enjoyable. We have also added a small tooltip if you want to know more about SPDX.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/1b3hyjff9ebiwj1uuenq.png" alt="NodeSecure SPDX"></p>
+<p>The title and file name are clickable. The first one will open the license page on the SPDX website and the second one the file itself on unpkg.</p>
+<h4>Others</h4>
+<p>We have slightly improved the short descriptions of the flags and they are now clickable (this will open the wiki directly to the relevant flag).</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ixmeu1439x3od874cl3b.png" alt="NodeSecure UI"></p>
+<hr>
+<p>Also in the <code>scripts &amp; dependencies</code> section you will find a show/hide button on the third-party dependencies.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cje8dlyb26ex0pkpy6ys.png" alt="NodeSecure UI"></p>
+<p>Still the same behavior as in the old version, it will hide in the network all the children of the package.</p>
+<h3>New documentation/wiki</h3>
+<p>We have developed a <a href="https://github.com/NodeSecure/documentation-ui">brand new documentation-ui module</a> that allows us to implement a wiki on any of our projects.</p>
+<p>In this new version you can open the wiki by clicking on the button with the book icon on the right side of the screen. We now also have documentation on the warnings of our static analyzer <a href="https://github.com/NodeSecure/js-x-ray">JS-X-RAY</a> accessible in the <code>SAST Warnings</code> pannel of the wiki.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ib5updz7sfmgr64yuen6.png" alt="NodeSecure wiki"></p>
+<h2>👯 Credits</h2>
+<p>All this work is possible thanks to the different contributors and contributions they made those last few months.</p>
+<ul>
+<li><a href="https://twitter.com/tonygo_">Tony Gorez</a></li>
+<li><a href="https://www.linkedin.com/in/vincentdhennin/">Vincent Dhennin</a></li>
+<li><a href="https://www.linkedin.com/in/vincentdhennin/">Antoine Coulon</a></li>
+<li><a href="https://github.com/im-codebreaker">Medhi Bouchard</a></li>
+<li><a href="https://www.linkedin.com/in/mathieu-kahlaoui-0887a1158/">Mathieu Kahlaoui</a></li>
+<li><a href="https://www.linkedin.com/in/blandine-r-733b34a9/">Blandine Rondel</a></li>
+<li><a href="https://www.linkedin.com/in/pierre-demailly/">Pierre demailly</a></li>
+<li><a href="https://www.linkedin.com/in/nicolas-hallaert/">Nicolas Hallaert</a></li>
+<li><a href="https://www.linkedin.com/in/mikael-w/">Mikael Wawrziczny</a></li>
+<li><a href="https://github.com/mbalabash">Maksim Balabash</a></li>
+</ul>
+<p>Their simple presence, good mood and spirit were a source of inspiration and motivation for me. Thanks you very much ❤️</p>
+<h2>Conclusion</h2>
+<p>As always we move forward and evolve. We continue to work hard to improve security in the JavaScript ecosystem and we look forward to being joined by other developers with the same commitment.</p>
+<p>Thanks for reading me and see you soon for another great story!</p>
+
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="../src/particules.js"></script>
+</body>
+
+</html>

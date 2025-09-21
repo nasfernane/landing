@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <link rel="stylesheet" href="../css/blog.css" />
+  <title>NodeSecure - Blog</title>
+</head>
+
+<body>
+  <canvas id="network-bg"></canvas>
+
+  <header class="blogHeader">
+    <div class="header-background"></div>
+    <div class="header-content centered-content">
+      <img src="https://avatars.githubusercontent.com/u/85318671?s=200&v=4" alt="NodeSecure Logo"
+        style="width:80px;height:80px;border-radius:20px;background:#fff2;box-shadow:0 2px 8px #0002;margin-bottom:1.2rem;">
+      <h1>
+        NodeSecure Blog
+      </h1>
+      <p class="subtitle">
+        Building a safer Node.js and JavaScript ecosystem
+      </p>
+      <p class="description">We are a community of developers building free open source tools to secure the Node.js & JavaScript ecosystem. Our area of expertise is <b>SCA</b> (Software Composition Analysis).</p>
+      <div class="header-buttons">
+        <a href="https://github.com/NodeSecure" target="_blank" title="NodeSecure on GitHub" class="view-on-github">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>View on GitHub</span>
+        </a>
+        <a href="https://discord.gg/4Wn8rjAtB4" target="_blank" title="Join our Discord" class="view-on-discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>Join Discord</span>
+        </a>
+        <a href="./index.html" title="Visit our blog" class="view-on-discord">
+          <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/circled-left-2.png"   style="width:28px;height:28px;filter:invert(1) brightness(2);" alt="Back to blog"/>
+          <span>Back to blog</span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">NodeSecure v0.7.0 and v0.8.0@next</h1>
+        <p>Hi,</p>
+<p>I'm writing this article a bit late because version 0.7.0 has already been published 3 months ago. So I'm going to take this opportunity to make the link with the next version already testable with the <strong>@next</strong> tag.</p>
+<p>For those who don't know the tool yet: <a href="https://github.com/ES-Community/nsecure#about">https://github.com/ES-Community/nsecure#about</a></p>
+<h1>Version 0.7.0</h1>
+<p>Let's discover the new features of version 0.7.0</p>
+<h2>verify command CLI output</h2>
+<p>The command now work with CLI. Although it will certainly require some iteration and long-term work to improve the stdout.</p>
+<blockquote>
+<p>As a reminder, this command allows you to have a much more complete report of the result of the AST analysis for a given npm package.</p>
+</blockquote>
+<p><img src="https://i.imgur.com/pdSXZS5.png" alt=""></p>
+<h2>Popups improvement</h2>
+<p>Warnings and licenses popups design has been enhanced. Also the tables in these popups will now by default be filterable when clicking on a column name.</p>
+<h2>Warnings popup new features</h2>
+<p>The warnings popup has been greatly improved with:</p>
+<ul>
+<li>New top buttons to allow you to quickly browse the sources on npm and unpkg.</li>
+<li>A search input when there a lot of warnings.</li>
+<li>Clicking on the name of the file now opens it on unpkg..</li>
+</ul>
+<p><img src="https://i.imgur.com/oYcARuk.png" alt=""></p>
+<h2>New way to walk the tree with cwd command</h2>
+<p>Before the <strong>cwd</strong> command was walking the tree in the same way as the <strong>from</strong> command. It was however impossible to get the tree from the package-lock.json file.</p>
+<p>This release will now read and walk with the local package-lock.json by default (can always be disabled using an option).</p>
+<h2>Lot of hotfix and code refactoring</h2>
+<p>This version includes a lot of bugfixes and code improvements of all kinds.</p>
+<hr>
+<h1>Version @next (v0.8.0)</h1>
+<p>This version is still under development but brings important improvements.</p>
+<h2>@npmcli/arborist</h2>
+<p>In the previous version we used a home-made implementation to browse package-lock.json. But now we use one of the new npm packages: <a href="https://www.npmjs.com/package/@npmcli/arborist">@npmcli/arborist</a>.</p>
+<p>The implementation of this version is much faster and accurate.</p>
+<h2>It never end</h2>
+<p>We corrected an issue that caused CLI in some cases to never complete the analysis. The process was blocked indefinitely and the counters stopped moving.</p>
+<h2>JS-X-Ray 2.0</h2>
+<p>😱😱😱! This new version of Node-secure includes the latest version of JS-X-Ray.</p>
+<p>I wrote a whole article recently about this new version that I highly recommend you to read if you haven't already done so: <a href="https://dev.to/fraxken/js-x-ray-2-0-1mk0">https://dev.to/fraxken/js-x-ray-2-0-1mk0</a></p>
+<hr>
+<h1>What's next ?</h1>
+<ul>
+<li>New <code>:size</code> filter for the searchbar (already implemented on master).</li>
+<li>Verify command now work for local project too (already implemented on master).</li>
+<li>I'm working on the possibility to draw the network tree with D3.js instead of Vis.js (The idea is to achieve a much more complete experience).</li>
+<li>Maybe a new flag to identify native addon.</li>
+<li>Continue to iterate on all current features.</li>
+</ul>
+<blockquote>
+<p>Don't hesitate to provide us feedbacks which are precious to us to improve or invent functionalities.</p>
+</blockquote>
+<h1>Conclusion</h1>
+<p>The project continues to move forward little by little and I'm still very satisfied with the tool.. And I hope that the people who follow and use it are are also satisfied.</p>
+<p>Thanks for reading !</p>
+<p>Best Regards,
+Thomas</p>
+
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="../src/particules.js"></script>
+</body>
+
+</html>

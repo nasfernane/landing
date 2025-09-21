@@ -1,7 +1,7 @@
 {
   "name": "landing_git",
   "version": "1.0.0",
-  "description": "A simple HTML/CSS landing page hosted on [GitHub Pages](https://pages.github.com/). Just open `index.html` and you're all set!",
+  "description": "NodeSecure Landing Page",
   "main": "index.js",
   "type": "module",
   "scripts": {

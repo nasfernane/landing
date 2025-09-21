@@ -9,7 +9,24 @@ import { JSDOM } from "jsdom";
 
 const inputDir = "./articles";
 const outputDir = "./blog";
-const coreContributors = [];
+
+// processes all markdown files in articles directory
+export function convertAllMarkdownArticles(authors) {
+  if (!fs.existsSync(inputDir)) {
+    throw new Error(`${inputDir} directory does not exist`);
+  }
+
+  const files = fs.readdirSync(inputDir).filter((file) => file.endsWith(".md"));
+
+  const articles = files.map((file) => {
+    const filePath = path.join(inputDir, file);
+
+    return generateBlogPost(filePath, outputDir);
+  });
+
+  // Generate index page
+  generateBlogIndex(articles, authors);
+}
 
 function generateBlogPost(markdownFile) {
   const markdownContent = fs.readFileSync(markdownFile, "utf8");
@@ -17,11 +34,29 @@ function generateBlogPost(markdownFile) {
 
   // retrieve metadata and dirty html from yaml file
   const { metadata, content } = parseYamlFile(markdownContent);
-  // replace dev.to articles links
-  const contentWithLinks = content.replace(
-    /{%\s*link\s+(https?:\/\/[^\s%]+)\s*%}/g,
-    '<a href="$1" target="_blank" rel="noopener" class="external-article-link">↪ Read article</a>'
-  );
+
+  // replace external links tags
+  const contentWithLinks = content
+    // 1. dev.to articles
+    .replace(
+      /{%\s*link\s+(https?:\/\/[^\s%]+)\s*%}/g,
+      '<a href="$1" target="_blank" rel="noopener" class="external-article-link">↪ Read article</a>'
+    )
+    // 2. youtube videos
+    .replace(
+      /{%\s*youtube\s+([a-zA-Z0-9_-]{11})\s*%}/g,
+      `<a href="https://www.youtube.com/watch?v=$1" 
+        target="_blank" 
+        rel="noopener" 
+        class="external-article-link">
+        ▶ Watch on YouTube
+      </a>`
+    // 2. github links
+    ).replace(
+      /{%\s*github\s+([a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+)\s*%}/g,
+      '<a href="https://github.com/$1" target="_blank" rel="noopener" class="external-article-link">🔗 GitHub: $1</a>'
+    );
+
   const htmlContent = marked.parse(contentWithLinks);
 
   // sanitize html
@@ -78,14 +113,12 @@ function parseYamlFile(content) {
     return { metadata: {}, content };
   }
 
-  // Extraire le frontmatter (entre les deux ---)
+  // extract frontformatter
   const frontmatterLines = lines.slice(1, endLineIndex);
   const markdownLines = lines.slice(endLineIndex + 1);
 
-  // const frontmatterText = frontmatterLines.join("\n");
   const markdownContent = markdownLines.join("\n").trim();
 
-  // Parser le YAML simple (clé: valeur)
   const metadata = {};
 
   for (const line of frontmatterLines) {
@@ -110,29 +143,11 @@ function parseYamlFile(content) {
   return { metadata, content: markdownContent };
 }
 
-// processes all markdown files in articles directory
-export function convertAllMarkdownArticles() {
-  if (!fs.existsSync(inputDir)) {
-    throw new Error(`${inputDir} directory does not exist`);
-  }
-
-  const files = fs.readdirSync(inputDir).filter((file) => file.endsWith(".md"));
-
-  const articles = files.map((file) => {
-    const filePath = path.join(inputDir, file);
-
-    return generateBlogPost(filePath, outputDir);
-  });
-
-  // Generate index page
-  generateBlogIndex(articles);
-}
-
-function generateBlogIndex(articles) {
+function generateBlogIndex(articles, authors) {
   const articlesList = articles
     .sort((articleA, articleB) => articleB.date - articleA.date)
     .map((article) => {
-      const coreContributor = coreContributors.filter(
+      const coreContributor = authors.filter(
         (c) => c.github === article.author
       )?.[0];
 
@@ -234,10 +249,7 @@ function getReadTimeEstimation(content) {
   }
 
   const contributors = await response.json();
+  const authors = contributors.core;
 
-  if (contributors.core) {
-    coreContributors.push(...contributors.core);
-  }
-
-  convertAllMarkdownArticles();
+  convertAllMarkdownArticles(authors);
 })();
