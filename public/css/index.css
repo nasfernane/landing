@@ -113,12 +113,12 @@ header {
 header>.header-background {
   position: absolute;
   inset: 0;
-  z-index: 1 !important;
+  z-index: 1;
   background: linear-gradient(120deg, rgba(38, 24, 119, 0.75) 0%, rgba(34, 100, 175, 0.90) 100%), url('../images/header-cover.PNG') center/cover no-repeat;
 }
 
 header>.header-content {
-  z-index: 2 !important;
+  z-index: 2;
   max-width: 800px !important;
   display: flex;
   flex-direction: column;

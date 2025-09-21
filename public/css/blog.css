@@ -149,7 +149,7 @@ h1.article-title {
 .article-content code {
   background: #23272f;
   color: #ffecb3;
-  padding: 2px 6px;
+  padding: 1px 6px;
   border-radius: 4px;
   font-size: 0.95em;
   font-family: 'JetBrains Mono', monospace;
