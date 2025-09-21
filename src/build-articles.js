@@ -17,12 +17,19 @@ function generateBlogPost(markdownFile) {
 
   // retrieve metadata and dirty html from yaml file
   const { metadata, content } = parseYamlFile(markdownContent);
-  const htmlContent = marked.parse(content);
+  // replace dev.to articles links
+  const contentWithLinks = content.replace(
+    /{%\s*link\s+(https?:\/\/[^\s%]+)\s*%}/g,
+    '<a href="$1" target="_blank" rel="noopener" class="external-article-link">↪ Read article</a>'
+  );
+  const htmlContent = marked.parse(contentWithLinks);
 
   // sanitize html
   const window = new JSDOM("").window;
   const DOMPurify = createDOMPurify(window);
-  const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
+  const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent, {
+    ADD_ATTR: ["target", "rel", "class"]
+  });
 
   metadata.readTime = getReadTimeEstimation(sanitizedHtmlContent);
 
