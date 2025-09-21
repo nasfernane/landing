@@ -144,7 +144,7 @@ function generateBlogIndex(articles) {
       <div class="article-card">
         <div class="article-card-content">
           <div class="article-card-header">
-            <a>
+            <a target="_blank" rel="noopener" href="https://github.com/${coreContributor.github}">
               <img class="authorImg" src="${imgSource}" alt="Thomas">
             </a>
             <div class="article-card-header-infos">
