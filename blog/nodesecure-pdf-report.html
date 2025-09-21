@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <link rel="stylesheet" href="../css/blog.css" />
+  <title>NodeSecure - Blog</title>
+</head>
+
+<body>
+  <canvas id="network-bg"></canvas>
+
+  <header class="blogHeader">
+    <div class="header-background"></div>
+    <div class="header-content centered-content">
+      <img src="https://avatars.githubusercontent.com/u/85318671?s=200&v=4" alt="NodeSecure Logo"
+        style="width:80px;height:80px;border-radius:20px;background:#fff2;box-shadow:0 2px 8px #0002;margin-bottom:1.2rem;">
+      <h1>
+        NodeSecure Blog
+      </h1>
+      <p class="subtitle">
+        Building a safer Node.js and JavaScript ecosystem
+      </p>
+      <p class="description">We are a community of developers building free open source tools to secure the Node.js & JavaScript ecosystem. Our area of expertise is <b>SCA</b> (Software Composition Analysis).</p>
+      <div class="header-buttons">
+        <a href="https://github.com/NodeSecure" target="_blank" title="NodeSecure on GitHub" class="view-on-github">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>View on GitHub</span>
+        </a>
+        <a href="https://discord.gg/4Wn8rjAtB4" target="_blank" title="Join our Discord" class="view-on-discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>Join Discord</span>
+        </a>
+        <a href="./index.html" title="Visit our blog" class="view-on-discord">
+          <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/circled-left-2.png"   style="width:28px;height:28px;filter:invert(1) brightness(2);" alt="Back to blog"/>
+          <span>Back to blog</span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">NodeSecure PDF Report</h1>
+        <p>Hello,</p>
+<p>I had promised a little while ago to write an article about a <a href="https://github.com/SlimIO/Security">SlimIO project</a> that allows the generation of HTML &amp; PDF security reports. It uses the <a href="https://github.com/ES-Community/nsecure">Node-secure</a> project API under the hood to fetch security data of npm packages and git repositories!</p>
+<p>The initial objective was obviously to be able to automate the regular sending of a report on a set of projects (especially for our SlimIO agent packages and git). This provides an overview of the status of several projects on a regular basis.</p>
+<p>The project is completely open-source and works with any npm/github organization. The git support has only been tested with github but it most likely works for gitlab as well.</p>
+<p>What's the report look like?</p>
+<p><img src="https://i.imgur.com/EBFE3d4.jpg" alt="">
+<img src="https://i.imgur.com/zmymlke.jpg" alt="">
+<img src="https://i.imgur.com/MbTssTg.jpg" alt=""></p>
+<h1>Data</h1>
+<p>All the data displayed in the report comes from Node-secure. The analysis is separated into two parts: npm packages and git repositories.</p>
+<p>For each of them, the report will give you an assessment of:</p>
+<ul>
+<li>The size (external, internal, all).</li>
+<li>The dependency list.</li>
+<li>The list of dependency with <a href="https://snyk.io/blog/78-of-vulnerabilities-are-found-in-indirect-dependencies-making-remediation-complex/">transitive (deep)</a> dependencies.</li>
+<li>The list of Node.js core modules used in these projects.</li>
+<li>The list of authors (with their gravatar if available).</li>
+<li>Charts about extensions, licenses, warnings and flags.</li>
+</ul>
+<blockquote>
+<p>At the moment I am not satisfied with the granularity of the information in graphics. I will work in the future to get a more accurate overview...</p>
+</blockquote>
+<h1>Configuration</h1>
+<p>You just need to edit the configuration at <code>data/config.json</code> and run the project with the <code>npm start</code> command to go!</p>
+<pre><code class="language-json">{
+    "theme": "dark",
+    "report_title": "SlimIO Security Report",
+    "report_logo": "https://avatars0.githubusercontent.com/u/29552883?s=200&amp;v=4",
+    "npm_org_prefix": "@slimio",
+    "npm_packages": [
+        "@slimio/addon",
+        "@slimio/scheduler",
+        "@slimio/config",
+        "@slimio/core",
+        "@slimio/arg-parser",
+        "@slimio/profiles",
+        "@slimio/queue",
+        "@slimio/sqlite-transaction",
+        "@slimio/alert",
+        "@slimio/metrics",
+        "@slimio/units",
+        "@slimio/ipc",
+        "@slimio/safe-emitter"
+    ],
+    "git_url": "https://github.com/SlimIO",
+    "git_repositories": [
+        "Aggregator",
+        "Alerting",
+        "Socket",
+        "Gate",
+        "ihm"
+    ],
+    "charts": [
+        {
+            "name": "Extensions",
+            "display": true,
+            "interpolation": "d3.interpolateRainbow"
+        },
+        {
+            "name": "Licenses",
+            "display": true,
+            "interpolation": "d3.interpolateCool"
+        },
+        {
+            "name": "Warnings",
+            "display": true,
+            "type": "horizontalBar",
+            "interpolation": "d3.interpolateInferno"
+        },
+        {
+            "name": "Flags",
+            "display": true,
+            "type": "horizontalBar",
+            "interpolation": "d3.interpolateSinebow"
+        }
+    ]
+}
+</code></pre>
+<p> The theme can be either <code>dark</code> or <code>light</code>. Themes are editable/extendable at <strong>public/css/themes</strong>. (feel free to PR new themes etc).</p>
+<p>The <code>npm_org_prefix</code> is only useful to determine whether or not the package is internal or external.</p>
+<hr>
+<p>Charts only have four properties: <code>name</code>, <code>display</code>, <code>type</code> and <code>interpolation</code>. Interpolation is the function used for the chart background colors (all possible interpolation can be found <a href="https://github.com/d3/d3-scale-chromatic/blob/master/README.md">on the D3 doc</a>).</p>
+<p>The <code>type</code> is by default equal to <strong>bar</strong>. You can configure it at <strong>horizontalBar</strong> or <strong>pie</strong>. (note: not worked much on pie support).</p>
+<h1>What's next?</h1>
+<p>I'm already pretty happy with the initial result but there's still a lot of work to be done. Some of the improvements I have in mind include:</p>
+<ul>
+<li>A more complete and flexible configuration.</li>
+<li>A better PDF generation (There are a lot of problems between the HTML and PDF versions).</li>
+<li>Continue to improve the design of the report (both UI and UX).</li>
+<li>Enhance the GIT config (allow local path and complete GIT url).</li>
+<li>Add some modules to forward the report to an email or anything else (slack, discord etc.).</li>
+</ul>
+<p>All contributions are of course welcome!</p>
+<h1>Conclusion</h1>
+<p><img src="https://s7.gifyu.com/images/nsecure_report.gif" alt=""></p>
+<p>As usual a great pleasure for me to extend the use of Node-secure and to be able to collect a set of statistics on my projects (it's always exciting to discover hidden things.).</p>
+<p>I'm also quite happy that this project can be used by different companies (even if for the moment there is still some work to be done).</p>
+<p><a href="https://github.com/SlimIO/Security">https://github.com/SlimIO/Security</a></p>
+<p>Thank you for taking the time to read!</p>
+<p>Best Regards,
+Thomas</p>
+
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="../src/particules.js"></script>
+</body>
+
+</html>

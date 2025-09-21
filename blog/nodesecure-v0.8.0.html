@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <link rel="stylesheet" href="../css/blog.css" />
+  <title>NodeSecure - Blog</title>
+</head>
+
+<body>
+  <canvas id="network-bg"></canvas>
+
+  <header class="blogHeader">
+    <div class="header-background"></div>
+    <div class="header-content centered-content">
+      <img src="https://avatars.githubusercontent.com/u/85318671?s=200&v=4" alt="NodeSecure Logo"
+        style="width:80px;height:80px;border-radius:20px;background:#fff2;box-shadow:0 2px 8px #0002;margin-bottom:1.2rem;">
+      <h1>
+        NodeSecure Blog
+      </h1>
+      <p class="subtitle">
+        Building a safer Node.js and JavaScript ecosystem
+      </p>
+      <p class="description">We are a community of developers building free open source tools to secure the Node.js & JavaScript ecosystem. Our area of expertise is <b>SCA</b> (Software Composition Analysis).</p>
+      <div class="header-buttons">
+        <a href="https://github.com/NodeSecure" target="_blank" title="NodeSecure on GitHub" class="view-on-github">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>View on GitHub</span>
+        </a>
+        <a href="https://discord.gg/4Wn8rjAtB4" target="_blank" title="Join our Discord" class="view-on-discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>Join Discord</span>
+        </a>
+        <a href="./index.html" title="Visit our blog" class="view-on-discord">
+          <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/circled-left-2.png"   style="width:28px;height:28px;filter:invert(1) brightness(2);" alt="Back to blog"/>
+          <span>Back to blog</span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">NodeSecure v0.8.0</h1>
+        <p>Hello,</p>
+<p>It's been a while since I've had the opportunity to write an article here (Slightly less free time for open-source at the moment).</p>
+<p>Today I released the version 0.8.0 of Node-secure (not a pre-release this time).</p>
+<p>Let's dive directly into what's new since the last article;</p>
+<h1>JS-X-Ray 2.3.0</h1>
+<p>A lot of improvement has been made on the static analysis. The number of "encoded-literals" warnings has been reduced by <strong>50%</strong>!</p>
+<p>The analysis is also capable to detect <a href="https://www.bleepingcomputer.com/news/security/new-phishing-attack-uses-morse-code-to-hide-malicious-urls/">Morse code</a> 😆 (not a joke).
+<img src="https://cdn.discordapp.com/attachments/605589188309680141/812779263496290314/unknown.png" alt=""></p>
+<h1>Verify command on a local project</h1>
+<p>It is now possible to run the verify command on a local project. You just have to omit the package name (as for the auto command).</p>
+<pre><code class="language-bash">$ nsecure verify
+</code></pre>
+<h1>Search packages by size</h1>
+<p>The search bar now allows you to filter packages by their size. Example with express:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wfqsdyx5187zb4dtcwhz.png" alt="image"></p>
+<p>Under the hood it use a package i created: <a href="https://github.com/fraxken/size-satisfies">size-satisfies</a></p>
+<h1>Inspect and show warning code</h1>
+<p>This new version add an "inspect" column to the warnings popup. If you make a click it will load and display the code in a little block.</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ntxxzz8d2xcws9a64ccp.png" alt="image"></p>
+<blockquote>
+<p>Thanks to tony for his work on the feature. It took us several weeks to get a result we were happy with.</p>
+</blockquote>
+<h1>Replacing webpack with esbuild</h1>
+<p>The UI build with esbuild instead of webpack. Now the build is done in about 200ms and we have removed all dependencies related to webpack.</p>
+<h1>New flag for native addons 🐲</h1>
+<p>We added the flag hasNativeCode 🐲 if the package contains anything related to a native addon:</p>
+<ul>
+<li>.c, .cpp, .gyp file extensions</li>
+<li>a dependency known to be useful for native addon (node-gyp, node-addon-api, prebuildify... things like this).</li>
+<li>"gypfile" property is true in the package.json</li>
+</ul>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/lqdw5au64s6oiowg96z5.png" alt="image"></p>
+<h1>Summary command</h1>
+<p>A new "beta" command we added to show a summary for a given Nsecure JSON payload (as we do in the interface).</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mvqch6bvsuw5pu4r6vap.png" alt="image"></p>
+<blockquote>
+<p>Thanks again to tony who worked on the feature. ⚠️ There are still missing elements that will certainly be added in the next version.</p>
+</blockquote>
+<p>The github issue is available <a href="https://github.com/ES-Community/nsecure/issues/60">here</a>.</p>
+<h1>Other contributions</h1>
+<ul>
+<li>Global warnings are now also displayed at CLI runtime so that they don't go unnoticed.</li>
+<li>Global warnings are also part of the i18n.</li>
+<li>Use Github actions instead of Travis.</li>
+<li>Add the version of Node-secure in the JSON payload.</li>
+<li>Enhance flags description (HTML).</li>
+</ul>
+<p>Thanks to <a href="https://github.com/tony-go">Tony</a>, <a href="https://github.com/targos">Targos</a>, <a href="https://github.com/CroquetMickael">Mickeal</a> and <a href="https://github.com/kecsou">kecsou</a> for all the contributions.</p>
+<p>Release available <a href="https://github.com/ES-Community/nsecure/releases">here</a>.</p>
+<h1>What's next ?</h1>
+<ul>
+<li>Adding support for Snyk and Npm audit to detect and fetch CVE.</li>
+<li>Taking into account the compatibility of the version when loading the json - <a href="https://github.com/ES-Community/nsecure/pull/71">PR open by Tony</a>.</li>
+<li>Rework part of the UI with web component (i'm already working on a POC).</li>
+<li>Use D3.js instead of Vis.js (no POC on how we will do this yet).</li>
+<li>Working a lot to enhance JS-X-Ray and the static analysis.</li>
+</ul>
+<p>If you think you have ideas don't hesitate to come talk and contribute.</p>
+<h1>Conclusion</h1>
+<p>A version that took a long time to be published but in the end I am still satisfied with the progress made. </p>
+<p>Thanks for reading!</p>
+<p>Best Regards,
+Thomas</p>
+
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="../src/particules.js"></script>
+</body>
+
+</html>

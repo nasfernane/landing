@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <link rel="stylesheet" href="../css/blog.css" />
+  <title>NodeSecure - Blog</title>
+</head>
+
+<body>
+  <canvas id="network-bg"></canvas>
+
+  <header class="blogHeader">
+    <div class="header-background"></div>
+    <div class="header-content centered-content">
+      <img src="https://avatars.githubusercontent.com/u/85318671?s=200&v=4" alt="NodeSecure Logo"
+        style="width:80px;height:80px;border-radius:20px;background:#fff2;box-shadow:0 2px 8px #0002;margin-bottom:1.2rem;">
+      <h1>
+        NodeSecure Blog
+      </h1>
+      <p class="subtitle">
+        Building a safer Node.js and JavaScript ecosystem
+      </p>
+      <p class="description">We are a community of developers building free open source tools to secure the Node.js & JavaScript ecosystem. Our area of expertise is <b>SCA</b> (Software Composition Analysis).</p>
+      <div class="header-buttons">
+        <a href="https://github.com/NodeSecure" target="_blank" title="NodeSecure on GitHub" class="view-on-github">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>View on GitHub</span>
+        </a>
+        <a href="https://discord.gg/4Wn8rjAtB4" target="_blank" title="Join our Discord" class="view-on-discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>Join Discord</span>
+        </a>
+        <a href="./index.html" title="Visit our blog" class="view-on-discord">
+          <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/circled-left-2.png"   style="width:28px;height:28px;filter:invert(1) brightness(2);" alt="Back to blog"/>
+          <span>Back to blog</span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">JS-X-Ray 3.0</h1>
+        <p>Hello!</p>
+<p>I have been working every night of the week on a new major version of my open-source JavaScript SAST <a href="https://github.com/fraxken/js-x-ray">JS-X-Ray</a>. I've been looking forward to making significant changes to the code for several months now...</p>
+<h1>Why ?</h1>
+<p>Because I'm still learning every day and the project has grown quite large since 2.0.0. Also when I started the project I lacked a certain rigor in the way I documented the code (and also on some speculations).</p>
+<p>It became necessary to make changes in order to continue to evolve the project.</p>
+<h1>So what's new ?</h1>
+<h2>sec-literal</h2>
+<pre><code class="language-bash">npm i sec-literal
+</code></pre>
+<p>I started to work on a <a href="https://github.com/fraxken/sec-literal">package</a> to analyze ESTree Literals and JavaScript strings. This is a very important part that could be separated in its own package (which simplifies my documentation and testing).</p>
+<p>Some of the features of this package:</p>
+<ul>
+<li>Detect Hexadecimal, Base64 and Unicode sequences.</li>
+<li>Detect patterns (prefix, suffix) on groups of identifiers.</li>
+<li>Detect suspicious string and return advanced metrics on it (with char diversity etc).</li>
+</ul>
+<p>It's a start... I plan to extend the features of the package in the coming months (but also to re-invest some time in documentation and testing).</p>
+<h2>new project structure</h2>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/266m254j98n81l2tiofa.png" alt="image"></p>
+<p>Still very far from the perfection I imagine but it's a good start. The code had become messy and it was almost impossible to reason properly.</p>
+<p>The new version is now much easier to maintain and evolve. I will surely continue to improve it for the next major release.</p>
+<h2>More documentation, more tests</h2>
+<p>I took advantage of the refacto to reinsert a whole set of documentation and unit tests. It also allowed me to fix a number of issues that had not been resolved in version 2.3.</p>
+<h2>Obfuscation detection is hard</h2>
+<p>I knew it! But I swear to you that it is much more complex than anyone can imagine. I had to rewind my steps several times.</p>
+<p>But if there were no challenges it wouldn't be fun.</p>
+<h2>ESM Import evaluation</h2>
+<p>Version 3 now throw an unsafe-import for import with javascript code evaluation.</p>
+<pre><code class="language-js">import 'data:text/javascript;base64,Y29uc29sZS5sb2coJ2hlbGxvIHdvcmxkJyk7Cg==';
+</code></pre>
+<p>For more info: <a href="https://2ality.com/2019/10/eval-via-import.html">https://2ality.com/2019/10/eval-via-import.html</a></p>
+<h1>Conclusion</h1>
+<p>Nothing incredible for this new version. But the project continues to progress step by step and I hope to be able to add a whole bunch of new detections by the end of the year.</p>
+<p>Best Regards,
+Thomas</p>
+
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="../src/particules.js"></script>
+</body>
+
+</html>

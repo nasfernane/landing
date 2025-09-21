@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <link rel="stylesheet" href="../css/blog.css" />
+  <title>NodeSecure - Blog</title>
+</head>
+
+<body>
+  <canvas id="network-bg"></canvas>
+
+  <header class="blogHeader">
+    <div class="header-background"></div>
+    <div class="header-content centered-content">
+      <img src="https://avatars.githubusercontent.com/u/85318671?s=200&v=4" alt="NodeSecure Logo"
+        style="width:80px;height:80px;border-radius:20px;background:#fff2;box-shadow:0 2px 8px #0002;margin-bottom:1.2rem;">
+      <h1>
+        NodeSecure Blog
+      </h1>
+      <p class="subtitle">
+        Building a safer Node.js and JavaScript ecosystem
+      </p>
+      <p class="description">We are a community of developers building free open source tools to secure the Node.js & JavaScript ecosystem. Our area of expertise is <b>SCA</b> (Software Composition Analysis).</p>
+      <div class="header-buttons">
+        <a href="https://github.com/NodeSecure" target="_blank" title="NodeSecure on GitHub" class="view-on-github">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>View on GitHub</span>
+        </a>
+        <a href="https://discord.gg/4Wn8rjAtB4" target="_blank" title="Join our Discord" class="view-on-discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord"
+            style="width:28px;height:28px;filter:invert(1) brightness(2);">
+          <span>Join Discord</span>
+        </a>
+        <a href="./index.html" title="Visit our blog" class="view-on-discord">
+          <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/circled-left-2.png"   style="width:28px;height:28px;filter:invert(1) brightness(2);" alt="Back to blog"/>
+          <span>Back to blog</span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">NodeSecure release v0.5.0</h1>
+        <p>Hello ! </p>
+<p>The "new" release v0.5.0 of <a href="https://github.com/ES-Community/nsecure">node-secure</a> has been published few hours ago. This release includes new features and a lot of UI improvement.</p>
+<p>Do not hesitate to check the article on the <a href="https://dev.to/fraxken/node-secure-release-v0-4-0-2oih">v0.4.0</a> (which include a presentation of the project too).</p>
+<p>I have made a little video to show the new UI and some of the new features (click on the image).
+<a href="https://www.youtube.com/watch?v=yPUG9nndg8E&amp;feature=youtu.be">
+  <img src="https://i.imgur.com/3xnTGBl.png">
+</a></p>
+<h1>Release v0.5.0</h1>
+<h2>💀 isDead flag</h2>
+<p>This is a new activity flag. This means that the dependency (the package) has not received any updates from at least one year and has at least one dependency that need to be updated.</p>
+<blockquote>
+<p>The condition and the period of one year is still experimental.</p>
+</blockquote>
+<p>In the payload the real name of the flag is <strong>hasOutdatedDependency</strong>. isDead is the composition of hasOutdatedDependency and the new metadata <strong>hasReceivedUpdateInOneYear</strong>.</p>
+<h2>New metadata in the payload</h2>
+<p>The payload has brand-new metadata that has been useful to create the new 💀 flag.</p>
+<ul>
+<li>dependencyCount (Number of dependencies of the package)</li>
+<li>hasReceivedUpdateInOneYear</li>
+</ul>
+<h2>🎭 Emoji on the network graph</h2>
+<p>This emoji is not a real flag and is only added in the UI to indicate that the package is already somewhere else in the dependency tree (with different versions).</p>
+<p><img src="https://i.imgur.com/70ynftT.png" alt=""></p>
+<h2>New searchbar</h2>
+<p>The new search bar is still a prototype (the goal is to build a search bar with real query API like Discord or Github.). The complete search bar will land in v0.6.0 ! </p>
+<p><img src="https://i.imgur.com/823qvpQ.png" alt=""></p>
+<p>And it is even possible to filter:</p>
+<p><img src="https://i.imgur.com/0Tv4lLk.png" alt=""></p>
+<p>Available filters are:</p>
+<ul>
+<li>package (default)</li>
+<li>version</li>
+<li>license</li>
+<li>ext</li>
+<li>builtin (allow to search for usage of a given Node.js core dependency)</li>
+<li>author</li>
+<li>flag (the complete flag name)</li>
+</ul>
+<h2>Clickable list items</h2>
+<p>Some of the list items in the left menu are now clickable (showed in the presentation video). Depending on the kind of items, the action will be different:</p>
+<ul>
+<li>Node.js dependencies (Open the Node.js documentation)</li>
+<li>Third-party dependencies (Open and move to the dependency in the network graph)</li>
+<li>Required Files (Open the file on github.. when possible).</li>
+</ul>
+<h2>Show more / Show less for list items</h2>
+<p>Only the first 5 rows are now displayed by default. Before this feature this was a nightmare to navigate when a given package had a LOT of dependencies and required files.</p>
+<p><img src="https://i.imgur.com/H6Xr7tI.png" alt=""></p>
+<h2>License popup</h2>
+<p>This version allows to click on the License field in the left menu.</p>
+<p><img src="https://i.imgur.com/hrYODeC.png" alt=""></p>
+<p>This will open a popup with a table of all licenses used in the project with their conformance information.</p>
+<p><img src="https://i.imgur.com/UdM8C1z.png" alt=""></p>
+<h2>New warnings</h2>
+<p>Warnings emoji has been refactored and has a new meaning. Now the payload can contain a list of warnings. These warnings are:</p>
+<ul>
+<li>unsafe-import (the AST analysis has failed to retrieve the required/imported package/file name).</li>
+<li>unsafe-regex (a vulnerable regex can lead to a <a href="https://medium.com/@liran.tal/node-js-pitfalls-how-a-regex-can-bring-your-system-down-cbf1dc6c4e02">ReDos attack</a>).</li>
+<li>ast-error (when an error occur in the AST analysis of the package).</li>
+</ul>
+<p>Unsafe-import and unsafe-regex are related to a file with the exact position of the problem. Like licenses these warnings are available in a popup:</p>
+<p><img src="https://i.imgur.com/mLkZf7k.png" alt=""></p>
+<p>In the JSON it will produce an object like the following one</p>
+<pre><code class="language-json">"warnings": [{
+    "kind": "unsafe-regex",
+    "start": {
+        "line": 81,
+        "column": 20
+    },
+    "end": {
+        "line": 81,
+        "column": 76
+    },
+    "file": "old.js"
+}]
+</code></pre>
+<h2>Improved flags: 👀 and 🔬</h2>
+<p>The AST analysis has been updated to support new patterns:</p>
+<ul>
+<li>exclude dependency required in a try statement</li>
+<li>exclude the package itself from the dependency list (case detected on ajv).</li>
+<li>exclude one line CJS require from being detected as "minified" file.</li>
+</ul>
+<p>Example</p>
+<pre><code class="language-js">modules.exports = require("./src/file.js");
+</code></pre>
+<h2>Better CLI</h2>
+<p>The CLI will now give you a clear state of what is going on under the hood with some new lazy spinners!</p>
+<p><img src="https://i.imgur.com/Zsxv92Z.gif" alt=""></p>
+<h2>--keep for nsecure auto command</h2>
+<p>By default the .json file will be removed when the CLI is closed with the auto command. This can be disabled with the --keep (-k) flag.</p>
+<p>This makes the default behavior of auto more consistent.</p>
+<pre><code class="language-bash">nsecure auto express --keep
+</code></pre>
+<h2>A lot more...</h2>
+<p>A lot of refactoring has been done and new tests has been added to the project!</p>
+<h1>What's next ?</h1>
+<p>The next release will "surely" include:</p>
+<ul>
+<li>The final search-bar prototype with a complete query API.</li>
+<li>A new CLI command to run an AST analysis on a given npm package.</li>
+<li>New warnings ? (I want to implement a secrets detection.. not sure "how" yet).</li>
+<li>More tests, more stability etc.</li>
+</ul>
+<p>One of the next major features to implement is the support of <strong>package-lock.json</strong> (the current analysis may not match the current locked project dependency tree).</p>
+<p>And surely more with the feedbacks of those who use the tool.</p>
+<h1>Bonus</h1>
+<p>With my team we are working on a customizable open-source Security report that use node-secure under the hood to analyze a given list of packages and git repositories. I will write a complete article when the project will be done (soon).</p>
+<p>The project on github: <a href="https://github.com/SlimIO/Security">https://github.com/SlimIO/Security</a></p>
+<p>Preview of the design report (white theme available too).</p>
+<p><img src="https://i.imgur.com/1Rwhe5a.png" alt="">
+<img src="https://i.imgur.com/GlIwTGT.png" alt=""></p>
+<hr>
+<p>Thanks for reading me and see you for the next release :)</p>
+
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="../src/particules.js"></script>
+</body>
+
+</html>
