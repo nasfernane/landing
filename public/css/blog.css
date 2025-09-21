@@ -223,3 +223,8 @@ h1.article-title {
 .article-card-header-infos > span:last-child  {
   font-size: 12px;
 }
+
+
+.external-article-link:hover {
+  text-decoration: underline;
+}
