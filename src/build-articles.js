@@ -215,10 +215,10 @@ function getReadTimeEstimation(content) {
   // remove HTML tags to get plain text, regroup white spaces
   const text = content.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 
-  // get words count filtering empty elements out
+  // get words count, filtering empty elements out
   const wordCount = text.split(" ").filter(Boolean).length;
 
-  // calculate minutes, round up to nearest integer - min is one minute
+  // calculate minutes, round up to nearest integer - one minute min
   return Math.max(1, Math.ceil(wordCount / 200));
 }
 
