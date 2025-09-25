@@ -147,24 +147,14 @@ function generateBlogIndex(articles, authors) {
   const articlesList = articles
     .sort((articleA, articleB) => articleB.date - articleA.date)
     .map((article) => {
-      const coreContributor = authors.filter(
+      const author = authors.filter(
         (c) => c.github === article.author
       )?.[0];
 
-      const authorImgSource = coreContributor?.github
-        ? `https://github.com/${coreContributor.github}.png`
-        : "https://img.icons8.com/ios-glyphs/30/test-account.png";
-
       return `
         <article-card 
-          title="${article.title}"  
-          path="${article.path}"
-          date="${formatDate(article.date)}"  
-          readtime="${article.readTime}"  
-          description="${formatDate(article.description)}" 
-          authorname="${coreContributor?.name || article.author}" 
-          authorgithub="${coreContributor?.github}" 
-          authorimgsrc="${authorImgSource}" 
+          article="${JSON.stringify(article).replace(/"/g, "&quot;")}"
+          author="${JSON.stringify(author).replace(/"/g, "&quot;")}"
         >
         </article-card>
         `;
@@ -186,18 +176,6 @@ function generateBlogIndex(articles, authors) {
 
   const indexPath = path.join(outputDir, "index.html");
   fs.writeFileSync(indexPath, indexTemplate);
-}
-
-function formatDate(date) {
-  if (!(date instanceof Date)) {
-    return date;
-  }
-
-  const day = date.getDate();
-  const month = date.toLocaleString("en-US", { month: "short" });
-  const year = date.getFullYear();
-
-  return `${month} ${day}, ${year}`;
 }
 
 function getReadTimeEstimation(content) {

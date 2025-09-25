@@ -1,16 +1,20 @@
 // Import Third-party Dependencies
 import { LitElement, html, css } from "lit";
 
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "short" });
+  const year = date.getFullYear();
+
+  return `${month} ${day}, ${year}`;
+}
+
 export class ArticleCard extends LitElement {
   static properties = {
-    title: { type: String },
-    path: { type: String },
-    date: { type: String },
-    readtime: { type: String },
-    description: { type: String },
-    authorname: { type: String },
-    authorgithub: { type: String },
-    authorimgsrc: { type: String }
+    article: { type: Object },
+    author: { type: Object }
   };
 
   static styles = css`
@@ -108,17 +112,21 @@ export class ArticleCard extends LitElement {
   `;
 
   render() {
-    const { title, path, date, readtime, description, authorname, authorgithub, authorimgsrc } = this;
+    const { article, author } = this;
+
+    const authorImgSrc = author?.github
+      ? `https://github.com/${author.github}.png`
+      : "https://img.icons8.com/ios-glyphs/30/test-account.png";
 
     return html`
       <div class="article-card">
         <div class="article-card-content">
           <div class="article-card-header">
-            <a target="_blank" rel="noopener" href="https://github.com/${authorgithub}">
-              <img class="authorImg" src="${authorimgsrc}" alt="Author">
+            <a target="_blank" rel="noopener" href="https://github.com/${author.github}">
+              <img class="authorImg" src="${authorImgSrc}" alt="Author">
             </a>
             <div class="article-card-header-infos">
-              <span>${authorname}</span>
+              <span>${author?.name || article.author}</span>
               <span style="display: flex; align-items: center; gap: 10px;">
                 <span style="display: flex; align-items: center; gap: 5px;">
                   <img 
@@ -126,7 +134,7 @@ export class ArticleCard extends LitElement {
                     alt="calendar" 
                     style="width:18px;height:18px;filter:invert(1) brightness(2);"
                   />
-                  <span>${date}</span>
+                  <span>${formatDate(article.date)}</span>
                 </span>
                 <span style="display: flex; align-items: center; gap: 5px;"> 
                   <img 
@@ -134,18 +142,18 @@ export class ArticleCard extends LitElement {
                     alt="clock" 
                     style="width:18px;height:18px;filter:invert(1) brightness(2);"
                   />
-                  <span>${readtime} min read</span>
+                  <span>${article.readTime} min read</span>
                 </span>
               </span>
             </div>
           </div>
           <a 
-            href="${path}" 
-            title="${title}" 
+            href="${article.path}" 
+            title="${article.title}" 
             class="article-link">
-            <span>${title}</span>
+            <span>${article.title}</span>
           </a>
-          <p>${description}</p>
+          <p>${article.description}</p>
         </div>
       </div>
     `;
