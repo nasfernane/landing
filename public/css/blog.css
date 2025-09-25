@@ -139,11 +139,11 @@ h1.article-title {
 }
 
 .article-content > pre code.language-yml::before {
-  content: 'YAML'
+  content: "YAML"
 }
 
 .article-content > pre code.language-bash::before {
-  content: 'BASH'
+  content: "BASH"
 }
 
 .article-content code {

@@ -21,7 +21,7 @@ export function convertAllMarkdownArticles(authors) {
   const articles = files.map((file) => {
     const filePath = path.join(inputDir, file);
 
-    return generateBlogPost(filePath, outputDir);
+    return generateBlogPost(filePath);
   });
 
   // Generate index page
@@ -113,7 +113,7 @@ function parseYamlFile(content) {
     return { metadata: {}, content };
   }
 
-  // extract frontformatter
+  // extract frontmatter
   const frontmatterLines = lines.slice(1, endLineIndex);
   const markdownLines = lines.slice(endLineIndex + 1);
 
