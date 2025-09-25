@@ -151,49 +151,23 @@ function generateBlogIndex(articles, authors) {
         (c) => c.github === article.author
       )?.[0];
 
-      const imgSource = coreContributor?.github
+      const authorImgSource = coreContributor?.github
         ? `https://github.com/${coreContributor.github}.png`
         : "https://img.icons8.com/ios-glyphs/30/test-account.png";
 
       return `
-      <div class="article-card">
-        <div class="article-card-content">
-          <div class="article-card-header">
-            <a target="_blank" rel="noopener" href="https://github.com/${coreContributor.github}">
-              <img class="authorImg" src="${imgSource}" alt="Thomas">
-            </a>
-            <div class="article-card-header-infos">
-              <span>${coreContributor?.name || article.author}</span>
-              <span style="display: flex; align-items: center; gap: 10px;">
-                <span style="display: flex; align-items: center; gap: 5px;">
-                  <img 
-                    src="https://img.icons8.com/material-rounded/24/calendar--v1.png" 
-                    alt="calendar" 
-                    style="width:18px;height:18px;filter:invert(1) brightness(2);"
-                  />
-                  <span>${formatDate(article.date)}</span>
-                </span>
-                <span style="display: flex; align-items: center; gap: 5px;"> 
-                  <img 
-                    src="https://img.icons8.com/forma-regular/24/clock.png" 
-                    alt="clock" 
-                    style="width:18px;height:18px;filter:invert(1) brightness(2);"
-                  />
-                  <span>${article.readTime} min read</span>
-                </span>
-              </span>
-            </div>
-          </div>
-          <a 
-            href="${article.path}" 
-            title="${article.title}" 
-            class="article-link">
-            <span>${article.title}</span>
-          </a>
-          <p>${article.description}</p>
-      </div>
-      </div>
-      `;
+        <article-card 
+          title="${article.title}"  
+          path="${article.path}"
+          date="${formatDate(article.date)}"  
+          readtime="${article.readTime}"  
+          description="${formatDate(article.description)}" 
+          authorname="${coreContributor?.name || article.author}" 
+          authorgithub="${coreContributor?.github}" 
+          authorimgsrc="${authorImgSource}" 
+        >
+        </article-card>
+        `;
     })
     .join("\n    ");
 
