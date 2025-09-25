@@ -50,28 +50,26 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">NodeSecure Vuln-era</h1>
-        <p>Hello 👋,</p>
-<p>Back for a little article about the rebranding of one of the NodeSecure tools: <a href="https://github.com/NodeSecure/vuln">Vulnera</a> (previously <em>vuln</em>, the <strong>vuln-era</strong> has begun!).</p>
+    <article-content 
+        title="NodeSecure Vuln-era" 
+        content="<p>Hello 👋,</p>
+<p>Back for a little article about the rebranding of one of the NodeSecure tools: <a href=&quot;https://github.com/NodeSecure/vuln&quot;>Vulnera</a> (previously <em>vuln</em>, the <strong>vuln-era</strong> has begun!).</p>
 <p>An opportunity for me to also write about this wonderful project that was born with the redesign of the back-end less than a year ago ⌚. If you don't remember I wrote an article:</p>
-<p><a href="https://dev.to/fraxken/announcing-new-node-secure-back-end-1dp9" target="_blank" rel="noopener" class="external-article-link">↪ Read article</a></p>
+<p><a href=&quot;https://dev.to/fraxken/announcing-new-node-secure-back-end-1dp9&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;external-article-link&quot;>↪ Read article</a></p>
 <p>Don't wait and dive in 🌊 with me to discover this tool 💃.</p>
 <h2>What is Vulnera ? 👀</h2>
 <p>Vulnera is a package that allows you to <strong>programmatically</strong> fetch your Node.js project vulnerabilities from <strong>multiple sources or strategies</strong>:</p>
 <ul>
-<li>NPM Audit (<a href="https://github.com/advisories">Github Advisory Database</a>)</li>
-<li><a href="https://ossindex.sonatype.org/">Sonatype OSS Index</a></li>
-<li><code>deprecated</code> <a href="https://github.com/nodejs/security-wg/tree/main/vuln">Node.js Security WG Database</a></li>
+<li>NPM Audit (<a href=&quot;https://github.com/advisories&quot;>Github Advisory Database</a>)</li>
+<li><a href=&quot;https://ossindex.sonatype.org/&quot;>Sonatype OSS Index</a></li>
+<li><code>deprecated</code> <a href=&quot;https://github.com/nodejs/security-wg/tree/main/vuln&quot;>Node.js Security WG Database</a></li>
 <li>Snyk</li>
 </ul>
 <blockquote>
-<p>📢 Feel free to push new sources (we have <a href="https://github.com/NodeSecure/vuln/blob/main/docs/adding_new_strategy.md">a guide</a> on how to add/contribute one).</p>
+<p>📢 Feel free to push new sources (we have <a href=&quot;https://github.com/NodeSecure/vuln/blob/main/docs/adding_new_strategy.md&quot;>a guide</a> on how to add/contribute one).</p>
 </blockquote>
-<p>The code was originally designed for vulnerability management within the <a href="https://github.com/NodeSecure/scanner">Scanner</a>. Yet, its API is <strong>evolving</strong> with the objective of making it a <strong>full-fledged project</strong>.</p>
-<pre><code class="language-js">import * as vulnera from "@nodesecure/vulnera";
+<p>The code was originally designed for vulnerability management within the <a href=&quot;https://github.com/NodeSecure/scanner&quot;>Scanner</a>. Yet, its API is <strong>evolving</strong> with the objective of making it a <strong>full-fledged project</strong>.</p>
+<pre><code class=&quot;language-js&quot;>import * as vulnera from &quot;@nodesecure/vulnera&quot;;
 
 const def = await vulnera.setStrategy(
   vulnera.strategies.NPM_AUDIT
@@ -84,7 +82,7 @@ console.log(vulnerabilities);
 </code></pre>
 <h3>Standard vulnerability format 👯</h3>
 <p>We have created a standard format to reconcile the different sources.</p>
-<pre><code class="language-ts">export interface StandardVulnerability {
+<pre><code class=&quot;language-ts&quot;>export interface StandardVulnerability {
   /** Unique identifier for the vulnerability **/
   id?: string;
   /** Vulnerability origin, either Snyk, NPM or NodeSWG **/
@@ -116,10 +114,10 @@ console.log(vulnerabilities);
 }
 </code></pre>
 <p>You can always use the original formats of each source of course 😊. We have implemented and exposed <strong>TypeScript interfaces</strong> for each of them.</p>
-<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0eqb67gqp772iawr10gp.png" alt="NodeSecure types"></p>
+<p><img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0eqb67gqp772iawr10gp.png&quot; alt=&quot;NodeSecure types&quot;></p>
 <h2>Usage in Scanner 🔬</h2>
-<p>On the scanner we have all the necessary information because we go through the dependency tree 🎄. At <a href="https://github.com/NodeSecure/scanner/blob/master/src/depWalker.js#L297">the end of the process</a>, we recover all vulnerabilities by iterating <strong>spec</strong> by <strong>spec</strong> within the <strong>hydratePayloadDependencies</strong> strategy method.</p>
-<pre><code class="language-js">const {
+<p>On the scanner we have all the necessary information because we go through the dependency tree 🎄. At <a href=&quot;https://github.com/NodeSecure/scanner/blob/master/src/depWalker.js#L297&quot;>the end of the process</a>, we recover all vulnerabilities by iterating <strong>spec</strong> by <strong>spec</strong> within the <strong>hydratePayloadDependencies</strong> strategy method.</p>
+<pre><code class=&quot;language-js&quot;>const {
   hydratePayloadDependencies,
   strategy
 } = await vulnera.setStrategy(
@@ -133,38 +131,39 @@ await hydratePayloadDependencies(dependencies, {
 payload.vulnerabilityStrategy = strategy;
 </code></pre>
 <p>The following diagram explains the overall behavior and interactions between the Scanner and Vulnera.
-<img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6x76ry38w7qcitdulayh.png" alt="NodeSecure"></p>
-<p>If you want to learn more about the Payload you can check the TypeScript interface <a href="https://github.com/NodeSecure/scanner/blob/master/types/scanner.d.ts#L132">here</a>.</p>
+<img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6x76ry38w7qcitdulayh.png&quot; alt=&quot;NodeSecure&quot;></p>
+<p>If you want to learn more about the Payload you can check the TypeScript interface <a href=&quot;https://github.com/NodeSecure/scanner/blob/master/types/scanner.d.ts#L132&quot;>here</a>.</p>
 <h2>What's next ? 🚀</h2>
-<p>Some sources are more difficult to exploit than others (for NPM we use <a href="https://www.npmjs.com/package/@npmcli/arborist">Arborist</a> which simplifies our lives).</p>
-<pre><code class="language-js">const { vulnerabilities } = (await arborist.audit()).toJSON();
+<p>Some sources are more difficult to exploit than others (for NPM we use <a href=&quot;https://www.npmjs.com/package/@npmcli/arborist&quot;>Arborist</a> which simplifies our lives).</p>
+<pre><code class=&quot;language-js&quot;>const { vulnerabilities } = (await arborist.audit()).toJSON();
 </code></pre>
 <p>However, we have to think and create mechanics to exploit sources like Sonatype 😨. This is required for API like <code>getVulnerabilities()</code>.</p>
 <p>Among the major subjects and <strong>ideas</strong> we are working on:</p>
 <ul>
-<li>Create a <strong>private</strong> database to benchmark the sources between them (see <a href="https://github.com/NodeSecure/vulnera/issues/29">#29</a>).</li>
-<li>Merging multiple sources in one (see <a href="https://github.com/NodeSecure/vulnera/issues/25">#25</a>).</li>
-<li>Fetch vulnerabilities of a given remote package (with support for private registry like <a href="https://verdaccio.org/">verdaccio</a>). At the moment we only support the analysis of a local manifest or a payload of the scanner.</li>
+<li>Create a <strong>private</strong> database to benchmark the sources between them (see <a href=&quot;https://github.com/NodeSecure/vulnera/issues/29&quot;>#29</a>).</li>
+<li>Merging multiple sources in one (see <a href=&quot;https://github.com/NodeSecure/vulnera/issues/25&quot;>#25</a>).</li>
+<li>Fetch vulnerabilities of a given remote package (with support for private registry like <a href=&quot;https://verdaccio.org/&quot;>verdaccio</a>). At the moment we only support the analysis of a local manifest or a payload of the scanner.</li>
 </ul>
 <h2>Credits 🙇</h2>
-<p>This project owes much to our core collaborator <a href="https://www.linkedin.com/in/antoine-coulon-b29934153/">Antoine COULON</a> who invested a lot of energy to improve it 💪.</p>
+<p>This project owes much to our core collaborator <a href=&quot;https://www.linkedin.com/in/antoine-coulon-b29934153/&quot;>Antoine COULON</a> who invested a lot of energy to improve it 💪.</p>
 <blockquote>
-<p><strong>Fun fact:</strong> <a href="https://github.com/NodeSecure/cli/commit/236c7333720b14878b5f620f3a814c045a375a45">its first contribution</a> 🐤 on NodeSecure was also on the old version of the code Scanner that managed vulnerabilities.</p>
+<p><strong>Fun fact:</strong> <a href=&quot;https://github.com/NodeSecure/cli/commit/236c7333720b14878b5f620f3a814c045a375a45&quot;>its first contribution</a> 🐤 on NodeSecure was also on the old version of the code Scanner that managed vulnerabilities.</p>
 </blockquote>
 <p>But I don't forget individual contributions 👏</p>
 <ul>
-<li><a href="https://www.linkedin.com/in/mathieu-kahlaoui-0887a1158/">Mathieu Kahlaoui</a> for adding <a href="https://github.com/NodeSecure/vuln/pull/33">the getVulnerabilities() API</a></li>
-<li><a href="https://www.linkedin.com/in/oleh-sych-41245116a/">Oleh Sych</a> for adding <a href="https://github.com/NodeSecure/vuln/pull/11">Snyk strategy</a></li>
+<li><a href=&quot;https://www.linkedin.com/in/mathieu-kahlaoui-0887a1158/&quot;>Mathieu Kahlaoui</a> for adding <a href=&quot;https://github.com/NodeSecure/vuln/pull/33&quot;>the getVulnerabilities() API</a></li>
+<li><a href=&quot;https://www.linkedin.com/in/oleh-sych-41245116a/&quot;>Oleh Sych</a> for adding <a href=&quot;https://github.com/NodeSecure/vuln/pull/11&quot;>Snyk strategy</a></li>
 <li>Medhi for his work on the logo</li>
 </ul>
 <hr>
 <p>Thanks 🙏 for reading me and see you soon for another article!</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>

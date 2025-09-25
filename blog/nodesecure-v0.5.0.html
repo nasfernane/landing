@@ -50,16 +50,14 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">NodeSecure release v0.5.0</h1>
-        <p>Hello ! </p>
-<p>The "new" release v0.5.0 of <a href="https://github.com/ES-Community/nsecure">node-secure</a> has been published few hours ago. This release includes new features and a lot of UI improvement.</p>
-<p>Do not hesitate to check the article on the <a href="https://dev.to/fraxken/node-secure-release-v0-4-0-2oih">v0.4.0</a> (which include a presentation of the project too).</p>
+    <article-content 
+        title="NodeSecure release v0.5.0" 
+        content="<p>Hello ! </p>
+<p>The &quot;new&quot; release v0.5.0 of <a href=&quot;https://github.com/ES-Community/nsecure&quot;>node-secure</a> has been published few hours ago. This release includes new features and a lot of UI improvement.</p>
+<p>Do not hesitate to check the article on the <a href=&quot;https://dev.to/fraxken/node-secure-release-v0-4-0-2oih&quot;>v0.4.0</a> (which include a presentation of the project too).</p>
 <p>I have made a little video to show the new UI and some of the new features (click on the image).
-<a href="https://www.youtube.com/watch?v=yPUG9nndg8E&amp;feature=youtu.be">
-  <img src="https://i.imgur.com/3xnTGBl.png">
+<a href=&quot;https://www.youtube.com/watch?v=yPUG9nndg8E&amp;feature=youtu.be&quot;>
+  <img src=&quot;https://i.imgur.com/3xnTGBl.png&quot;>
 </a></p>
 <h1>Release v0.5.0</h1>
 <h2>💀 isDead flag</h2>
@@ -76,12 +74,12 @@
 </ul>
 <h2>🎭 Emoji on the network graph</h2>
 <p>This emoji is not a real flag and is only added in the UI to indicate that the package is already somewhere else in the dependency tree (with different versions).</p>
-<p><img src="https://i.imgur.com/70ynftT.png" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/70ynftT.png&quot; alt=&quot;&quot;></p>
 <h2>New searchbar</h2>
 <p>The new search bar is still a prototype (the goal is to build a search bar with real query API like Discord or Github.). The complete search bar will land in v0.6.0 ! </p>
-<p><img src="https://i.imgur.com/823qvpQ.png" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/823qvpQ.png&quot; alt=&quot;&quot;></p>
 <p>And it is even possible to filter:</p>
-<p><img src="https://i.imgur.com/0Tv4lLk.png" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/0Tv4lLk.png&quot; alt=&quot;&quot;></p>
 <p>Available filters are:</p>
 <ul>
 <li>package (default)</li>
@@ -101,33 +99,33 @@
 </ul>
 <h2>Show more / Show less for list items</h2>
 <p>Only the first 5 rows are now displayed by default. Before this feature this was a nightmare to navigate when a given package had a LOT of dependencies and required files.</p>
-<p><img src="https://i.imgur.com/H6Xr7tI.png" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/H6Xr7tI.png&quot; alt=&quot;&quot;></p>
 <h2>License popup</h2>
 <p>This version allows to click on the License field in the left menu.</p>
-<p><img src="https://i.imgur.com/hrYODeC.png" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/hrYODeC.png&quot; alt=&quot;&quot;></p>
 <p>This will open a popup with a table of all licenses used in the project with their conformance information.</p>
-<p><img src="https://i.imgur.com/UdM8C1z.png" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/UdM8C1z.png&quot; alt=&quot;&quot;></p>
 <h2>New warnings</h2>
 <p>Warnings emoji has been refactored and has a new meaning. Now the payload can contain a list of warnings. These warnings are:</p>
 <ul>
 <li>unsafe-import (the AST analysis has failed to retrieve the required/imported package/file name).</li>
-<li>unsafe-regex (a vulnerable regex can lead to a <a href="https://medium.com/@liran.tal/node-js-pitfalls-how-a-regex-can-bring-your-system-down-cbf1dc6c4e02">ReDos attack</a>).</li>
+<li>unsafe-regex (a vulnerable regex can lead to a <a href=&quot;https://medium.com/@liran.tal/node-js-pitfalls-how-a-regex-can-bring-your-system-down-cbf1dc6c4e02&quot;>ReDos attack</a>).</li>
 <li>ast-error (when an error occur in the AST analysis of the package).</li>
 </ul>
 <p>Unsafe-import and unsafe-regex are related to a file with the exact position of the problem. Like licenses these warnings are available in a popup:</p>
-<p><img src="https://i.imgur.com/mLkZf7k.png" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/mLkZf7k.png&quot; alt=&quot;&quot;></p>
 <p>In the JSON it will produce an object like the following one</p>
-<pre><code class="language-json">"warnings": [{
-    "kind": "unsafe-regex",
-    "start": {
-        "line": 81,
-        "column": 20
+<pre><code class=&quot;language-json&quot;>&quot;warnings&quot;: [{
+    &quot;kind&quot;: &quot;unsafe-regex&quot;,
+    &quot;start&quot;: {
+        &quot;line&quot;: 81,
+        &quot;column&quot;: 20
     },
-    "end": {
-        "line": 81,
-        "column": 76
+    &quot;end&quot;: {
+        &quot;line&quot;: 81,
+        &quot;column&quot;: 76
     },
-    "file": "old.js"
+    &quot;file&quot;: &quot;old.js&quot;
 }]
 </code></pre>
 <h2>Improved flags: 👀 and 🔬</h2>
@@ -135,45 +133,46 @@
 <ul>
 <li>exclude dependency required in a try statement</li>
 <li>exclude the package itself from the dependency list (case detected on ajv).</li>
-<li>exclude one line CJS require from being detected as "minified" file.</li>
+<li>exclude one line CJS require from being detected as &quot;minified&quot; file.</li>
 </ul>
 <p>Example</p>
-<pre><code class="language-js">modules.exports = require("./src/file.js");
+<pre><code class=&quot;language-js&quot;>modules.exports = require(&quot;./src/file.js&quot;);
 </code></pre>
 <h2>Better CLI</h2>
 <p>The CLI will now give you a clear state of what is going on under the hood with some new lazy spinners!</p>
-<p><img src="https://i.imgur.com/Zsxv92Z.gif" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/Zsxv92Z.gif&quot; alt=&quot;&quot;></p>
 <h2>--keep for nsecure auto command</h2>
 <p>By default the .json file will be removed when the CLI is closed with the auto command. This can be disabled with the --keep (-k) flag.</p>
 <p>This makes the default behavior of auto more consistent.</p>
-<pre><code class="language-bash">nsecure auto express --keep
+<pre><code class=&quot;language-bash&quot;>nsecure auto express --keep
 </code></pre>
 <h2>A lot more...</h2>
 <p>A lot of refactoring has been done and new tests has been added to the project!</p>
 <h1>What's next ?</h1>
-<p>The next release will "surely" include:</p>
+<p>The next release will &quot;surely&quot; include:</p>
 <ul>
 <li>The final search-bar prototype with a complete query API.</li>
 <li>A new CLI command to run an AST analysis on a given npm package.</li>
-<li>New warnings ? (I want to implement a secrets detection.. not sure "how" yet).</li>
+<li>New warnings ? (I want to implement a secrets detection.. not sure &quot;how&quot; yet).</li>
 <li>More tests, more stability etc.</li>
 </ul>
 <p>One of the next major features to implement is the support of <strong>package-lock.json</strong> (the current analysis may not match the current locked project dependency tree).</p>
 <p>And surely more with the feedbacks of those who use the tool.</p>
 <h1>Bonus</h1>
 <p>With my team we are working on a customizable open-source Security report that use node-secure under the hood to analyze a given list of packages and git repositories. I will write a complete article when the project will be done (soon).</p>
-<p>The project on github: <a href="https://github.com/SlimIO/Security">https://github.com/SlimIO/Security</a></p>
+<p>The project on github: <a href=&quot;https://github.com/SlimIO/Security&quot;>https://github.com/SlimIO/Security</a></p>
 <p>Preview of the design report (white theme available too).</p>
-<p><img src="https://i.imgur.com/1Rwhe5a.png" alt="">
-<img src="https://i.imgur.com/GlIwTGT.png" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/1Rwhe5a.png&quot; alt=&quot;&quot;>
+<img src=&quot;https://i.imgur.com/GlIwTGT.png&quot; alt=&quot;&quot;></p>
 <hr>
 <p>Thanks for reading me and see you for the next release :)</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>

@@ -50,21 +50,19 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">Everything you need to know: package managers</h1>
-        <p>Welcome everyone! This article is the first one of the <strong>Everything you need to know</strong>, a Software Engineering series.</p>
+    <article-content 
+        title="Everything you need to know: package managers" 
+        content="<p>Welcome everyone! This article is the first one of the <strong>Everything you need to know</strong>, a Software Engineering series.</p>
 <p>In this series, I will try to give you a solid basic understanding about Software Engineering concepts I consider important.</p>
 <p>All modern computer systems include tools that automate the process of installing, uninstalling and updating software.</p>
 <p>This responsibility is that of a package manager and several can intervene within the same computer system.</p>
 <h3>Operating system</h3>
 <p>The majority of Unix-based operating systems embed a package manager as standard, providing a multitude of different packages very simply.</p>
 <p>If you have ever used a Linux distribution such as Ubuntu or Debian, you've probably used a package manager before. If I say <code>apt-get update</code> does that ring a bell?</p>
-<p>This command tells APT to update all versions of packages installed. <a href="https://en.wikipedia.org/wiki/APT_(software)">APT (Advanced Packaging Tool)</a> is a package manager embedded very widely as standard on Linux operating systems. To install a package, you can for example enter the command <code>apt-get install &lt;package&gt;</code>.</p>
+<p>This command tells APT to update all versions of packages installed. <a href=&quot;https://en.wikipedia.org/wiki/APT_(software)&quot;>APT (Advanced Packaging Tool)</a> is a package manager embedded very widely as standard on Linux operating systems. To install a package, you can for example enter the command <code>apt-get install &lt;package&gt;</code>.</p>
 <h3>Programming language</h3>
 <p>Most programming languages ​​can embed their own with package managers, either natively or provided within their respective ecosystem.</p>
-<p>Take for example <a href="https://www.npmjs.com">npm</a>, the default package manager for Node.js. We can also mention <a href="https://pip.pypa.io/en/stable/getting-started/">pip</a> for Python, <a href="https://www.nuget.org/">NuGet</a> for C#, <a href="https://getcomposer.org/">Composer</a> for PHP, etc. Similar to APT, npm makes it easy to install packages using the <code>npm install &lt;package&gt;</code> command.</p>
+<p>Take for example <a href=&quot;https://www.npmjs.com&quot;>npm</a>, the default package manager for Node.js. We can also mention <a href=&quot;https://pip.pypa.io/en/stable/getting-started/&quot;>pip</a> for Python, <a href=&quot;https://www.nuget.org/&quot;>NuGet</a> for C#, <a href=&quot;https://getcomposer.org/&quot;>Composer</a> for PHP, etc. Similar to APT, npm makes it easy to install packages using the <code>npm install &lt;package&gt;</code> command.</p>
 <blockquote>
 <p>For this article, I decided to take npm as an example.
 npm is indeed a very good support to highlight the advantages but also the disadvantages that a package manager can have.
@@ -75,7 +73,7 @@ The advantages and disadvantages listed in the following part are valid for all 
 </blockquote>
 <p>In four parts, we will see what are the main reasons for such an expansion of package managers to all layers of a computer system.</p>
 <p><strong>1.  Ease of use and maintenance of packages</strong></p>
-<p>The main interest of a package manager is obviously to simplify the installation of dependencies external to our application. Before the rise of npm in January 2010, the dependencies of a JavaScript application were mostly installed manually. By "manual installation" I mean:</p>
+<p>The main interest of a package manager is obviously to simplify the installation of dependencies external to our application. Before the rise of npm in January 2010, the dependencies of a JavaScript application were mostly installed manually. By &quot;manual installation&quot; I mean:</p>
 <ul>
 <li>downloading a zip archive from a remote server</li>
 <li>unzipping the archive in the project</li>
@@ -93,40 +91,40 @@ The advantages and disadvantages listed in the following part are valid for all 
 </blockquote>
 <p><strong>1.1. Install</strong></p>
 <p>In order for a package to be installed, we first need a name which is in most cases used as a unique identifier. Naming conventions can differ from one ecosystem to another.</p>
-<pre><code class="language-bash">$ npm install rxjs 
+<pre><code class=&quot;language-bash&quot;>$ npm install rxjs 
 </code></pre>
 <p>With this command, the package manager will search within the registry for a package that has the name <strong>rxjs</strong>. When the version is not specified, the package manager will usually install the latest available version.</p>
 <p><strong>1.2. Use</strong></p>
-<pre><code class="language-javascript">// ECMAScript Modules (ESM)
-import { of } from "rxjs";
+<pre><code class=&quot;language-javascript&quot;>// ECMAScript Modules (ESM)
+import { of } from &quot;rxjs&quot;;
 // CommonJS
-const { of } = require("rxjs");
+const { of } = require(&quot;rxjs&quot;);
 </code></pre>
-<p>The module systems integrated into the programming languages ​​make it possible to import a library installed locally and sometimes remotely (like Go or Deno for example). In this case with Node.js, the package must be installed locally in a node_modules folder. With Node.js, <a href="https://nodejs.org/api/modules.html#all-together">the module resolution algorithm</a> allows the dependency to be in a node_modules folder either adjacent to the source code or in a parent folder (which sometimes leads to an unexpected behavior).</p>
+<p>The module systems integrated into the programming languages ​​make it possible to import a library installed locally and sometimes remotely (like Go or Deno for example). In this case with Node.js, the package must be installed locally in a node_modules folder. With Node.js, <a href=&quot;https://nodejs.org/api/modules.html#all-together&quot;>the module resolution algorithm</a> allows the dependency to be in a node_modules folder either adjacent to the source code or in a parent folder (which sometimes leads to an unexpected behavior).</p>
 <h3>2. Managing the consistency of installed packages</h3>
 <p>Now, let's dive into a little more detail on one very important aspect that a package manager must manage: <strong>state consistency between installed packages</strong>. So far, installing a package looks like a trivial task, which is just to automate downloading a package of a certain version and making it available in a conventional folder that the application has access to.</p>
 <p>However this management of consistency between packages turns out to be relatively difficult and the way of modeling the dependency tree varies according to the ecosystems. Most of the time, we talk about a dependency tree, but we can also talk about a dependency graph, in particular a directed graph.</p>
-<p>If you are not familiar with the concept of directed graphs, I invite you <a href="https://dev.to/antoinecoulon/master-directed-graphs-by-example-with-javascript-4oef">to read the series of articles I wrote about it on dev.to with examples in JavaScript</a>.</p>
+<p>If you are not familiar with the concept of directed graphs, I invite you <a href=&quot;https://dev.to/antoinecoulon/master-directed-graphs-by-example-with-javascript-4oef&quot;>to read the series of articles I wrote about it on dev.to with examples in JavaScript</a>.</p>
 <p>The implementations of these data structures can be drastically different depending on the ecosystem of a package manager, but also between package managers of the same ecosystem (npm, yarn, pnpm for Node.js for example).</p>
 <blockquote>
 <p>How to ensure that all developers share the same dependencies and therefore the same versions of each underlying library?</p>
 </blockquote>
 <p>Still in the context of npm, let's take for example a very simple list of dependencies, expressed as an object in the <em>package.json</em> file:</p>
 <p><strong>package.json</strong></p>
-<pre><code class="language-json">{ 
-  "dependencies": {
-    "myDependencyA": "&lt;0.1.0"
+<pre><code class=&quot;language-json&quot;>{ 
+  &quot;dependencies&quot;: {
+    &quot;myDependencyA&quot;: &quot;&lt;0.1.0&quot;
   }
 }
 </code></pre>
-<p>This object describes a dependency of our project on the <em>myDependencyA</em> library downloadable from the npm registry. <a href="https://semver.org/">Semantic Versioning</a> here constrains the version of the library to be installed (here lower than 0.1.0). </p>
+<p>This object describes a dependency of our project on the <em>myDependencyA</em> library downloadable from the npm registry. <a href=&quot;https://semver.org/&quot;>Semantic Versioning</a> here constrains the version of the library to be installed (here lower than 0.1.0). </p>
 <blockquote>
-<p>Semantic version management (commonly known as SemVer) is the application of a very precise specification to characterize the version of software. For more information on this subject, I invite you to take a look at the official specification <a href="https://semver.org/lang/fr/">https://semver.org/lang/fr/</a></p>
+<p>Semantic version management (commonly known as SemVer) is the application of a very precise specification to characterize the version of software. For more information on this subject, I invite you to take a look at the official specification <a href=&quot;https://semver.org/lang/fr/&quot;>https://semver.org/lang/fr/</a></p>
 </blockquote>
-<p>In our case, by remaining on the classic <code>&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</code> scheme, we express the possibility of installing all the versions of <em>myDependencyA</em> from "0.0.1" to "0.0.9". This therefore means that any version of the dependency that respects the range is considered valid. On the other hand, this also means that if a developer A installs the dependency at 2 p.m. and a developer B installs the dependency at 5 p.m., they may both not have the same dependency tree if ever a new version of <em>myDependencyA</em> is released in the meantime.</p>
-<p>The npm dependency resolution algorithm will by default favor the installation of the most recent dependency that respects the semantic management described in the <em>package.json</em>. By specifying <code>npm install myDependencyA</code>, the most recent version of <em>myDependencyA</em> will be installed respecting the constraint "&lt;1.0.0" (version strictly lower than "1.0.0").</p>
+<p>In our case, by remaining on the classic <code>&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</code> scheme, we express the possibility of installing all the versions of <em>myDependencyA</em> from &quot;0.0.1&quot; to &quot;0.0.9&quot;. This therefore means that any version of the dependency that respects the range is considered valid. On the other hand, this also means that if a developer A installs the dependency at 2 p.m. and a developer B installs the dependency at 5 p.m., they may both not have the same dependency tree if ever a new version of <em>myDependencyA</em> is released in the meantime.</p>
+<p>The npm dependency resolution algorithm will by default favor the installation of the most recent dependency that respects the semantic management described in the <em>package.json</em>. By specifying <code>npm install myDependencyA</code>, the most recent version of <em>myDependencyA</em> will be installed respecting the constraint &quot;&lt;1.0.0&quot; (version strictly lower than &quot;1.0.0&quot;).</p>
 <p>The major problem with this approach <strong>is the lack of stability and reproducibility of the dependency tree from one computer to another</strong>, for example between developers or even on the machine used in production. Imagine that version 0.0.9 of <em>myDependencyA</em> has just been released with a bug and your production machine is about to do an <code>npm install</code> on Friday at 5:59 PM…</p>
-<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/i9f9zvaod4ox4y7eru1k.png" alt="Production deployment on friday night"></p>
+<p><img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/i9f9zvaod4ox4y7eru1k.png&quot; alt=&quot;Production deployment on friday night&quot;></p>
 <p>The very simple example is often referred as <code>version drift</code>. This is why a single description file (in this case package.json) <strong>cannot be enough to guarantee an identical and reproducible representation of a dependency tree</strong>.</p>
 <p>Other reasons include:</p>
 <ul>
@@ -138,20 +136,20 @@ const { of } = require("rxjs");
 <p>To ensure the reproducibility of a dependency tree, we therefore need more information that <strong>would ideally describe the current state of our dependency tree</strong>. This is exactly what lockfiles do. These are files created and updated when the dependencies of a project are modified.</p>
 <p>A lockfile is generally written in <em>JSON</em> or <em>YAML</em> format to simplify the readability and understanding of the dependency tree by a human. A lockfile makes it possible to describe the dependency tree in a very precise way and <strong>therefore to make it deterministic and reproducible from one environment to another</strong>. So it's important to commit this file to Git and make sure everyone is sharing the same lockfile.</p>
 <p><strong>package-lock.json</strong></p>
-<pre><code class="language-json">{
-  "name": "myProject",
-  "version": "1.0.0",
-  "dependencies": {
-    "myDependencyA": {
-      "version": "0.0.5",
-      "resolved": "https://registry.npmjs.org/myDependencyA/-/myDependencyA-0.0.5.tgz",
-      "integrity": "sha512-DeAdb33F+"
-      "dependencies": {
-        "B": {
-          "version": "0.0.1",
-          "resolved": "https://registry.npmjs.org/B/-/B-0.0.1.tgz",
-          "integrity": "sha512-DeAdb33F+"
-          "dependencies": {
+<pre><code class=&quot;language-json&quot;>{
+  &quot;name&quot;: &quot;myProject&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;dependencies&quot;: {
+    &quot;myDependencyA&quot;: {
+      &quot;version&quot;: &quot;0.0.5&quot;,
+      &quot;resolved&quot;: &quot;https://registry.npmjs.org/myDependencyA/-/myDependencyA-0.0.5.tgz&quot;,
+      &quot;integrity&quot;: &quot;sha512-DeAdb33F+&quot;
+      &quot;dependencies&quot;: {
+        &quot;B&quot;: {
+          &quot;version&quot;: &quot;0.0.1&quot;,
+          &quot;resolved&quot;: &quot;https://registry.npmjs.org/B/-/B-0.0.1.tgz&quot;,
+          &quot;integrity&quot;: &quot;sha512-DeAdb33F+&quot;
+          &quot;dependencies&quot;: {
             // dependencies of B
           }
         }
@@ -162,49 +160,49 @@ const { of } = require("rxjs");
 </code></pre>
 <p>For npm, the basic lockfile is called <em>package-lock.json</em>. In the snippet above, we can precisely see several important information:</p>
 <ul>
-<li>The version of myDependencyA is fixed at "0.0.5" so even if a new version is released, npm will install "0.0.5" no matter what.</li>
+<li>The version of myDependencyA is fixed at &quot;0.0.5&quot; so even if a new version is released, npm will install &quot;0.0.5&quot; no matter what.</li>
 <li>Each indirect dependency describes its set of dependencies with versions that also describe their own versioning constraints.</li>
 <li>In addition to the version, the contents of the dependencies can be checked with the comparison of hashes which can vary according to the registers used.</li>
 </ul>
 <p>A lockfile therefore tries to accurately describes the dependency tree, which allows it to remain consistent and reproducible over time at each installation.</p>
 <p>⚠️ <strong>But...</strong></p>
-<p>Lockfiles don't solve all inconsistency problems! Package managers implementations of the dependency graph can sometimes lead to inconsistencies. For a long time, npm's implementation introduced <a href="https://rushjs.io/pages/advanced/phantom_deps/">Phantom Dependencies</a> and also <a href="https://rushjs.io/pages/advanced/npm_doppelgangers/">NPM doppelgangers</a> which are very well explained on the <a href="https://rushjs.io/">Rush.js</a> documentation website (advanced topics that are out of the scope of this blog post).</p>
+<p>Lockfiles don't solve all inconsistency problems! Package managers implementations of the dependency graph can sometimes lead to inconsistencies. For a long time, npm's implementation introduced <a href=&quot;https://rushjs.io/pages/advanced/phantom_deps/&quot;>Phantom Dependencies</a> and also <a href=&quot;https://rushjs.io/pages/advanced/npm_doppelgangers/&quot;>NPM doppelgangers</a> which are very well explained on the <a href=&quot;https://rushjs.io/&quot;>Rush.js</a> documentation website (advanced topics that are out of the scope of this blog post).</p>
 <h3>3. Provision of distributed and transparent databases via open-source</h3>
 <p><strong>Distributed registries</strong></p>
 <p>A package manager is a client that acts as a gateway to a distributed database (often called a registry). This allows in particular to share an infinite number of open-source libraries around the world. It is also possible to define company-wide private registries in a secured network, within which libraries would be accessible. </p>
 <blockquote>
-<p><a href="https://github.com/verdaccio/verdaccio">Verdaccio</a> allows to setup a private proxy registry for Node.js</p>
+<p><a href=&quot;https://github.com/verdaccio/verdaccio&quot;>Verdaccio</a> allows to setup a private proxy registry for Node.js</p>
 </blockquote>
 <p>The availability of registries has greatly changed the way software is developed by facilitating access to millions of libraries.</p>
 <p><strong>Transparent access to resources</strong></p>
 <p>The other benefit of open-source package managers is that they most often expose platforms or tools that allow browsing through published packages. Accessing source code and documentation has been trivialized and made very transparent. It is therefore possible for each developer to have an overview or even to fully investigate the code base of a published library.</p>
 <h2>4. Security and integrity</h2>
 <p>Using open-source registries with millions of publicly exposed libraries is pretty convenient, but what about <em>security</em>?</p>
-<p>It is true that open-source registries represent ideal targets for hackers: <a href="https://therecord.media/malware-found-in-npm-package-with-millions-of-weekly-downloads/">all you have to do is take control of a widely used library (downloaded millions of times a week) and inject malicious code into it, and no one will realize!</a></p>
+<p>It is true that open-source registries represent ideal targets for hackers: <a href=&quot;https://therecord.media/malware-found-in-npm-package-with-millions-of-weekly-downloads/&quot;>all you have to do is take control of a widely used library (downloaded millions of times a week) and inject malicious code into it, and no one will realize!</a></p>
 <p>In this part, we will see the solutions implemented by package managers and registries to deal with these attacks and limit the risks.</p>
 <p><strong>Integrity safety for each installed package</strong></p>
 <p>Given that a package can be installed from any registry, it is important to implement verification mechanisms at the level of the content of the downloaded package, to ensure that no malicious code has been injected during the download, regardless of its origin.</p>
 <p>For this, integrity metadata is associated with each installed package. For example with npm, an integrity property is associated with each package in the lockfile. This property contains a cryptographic hash which is used to accurately represent the resource the user expects to receive. This allows any program to verify that the content of the resource matches what was downloaded. For example for <code>@babel/core</code>, this is how integrity is represented in package-lock.json:</p>
-<pre><code class="language-json">"@babel/core": {
-   "version": "7.16.10",
-   "resolved": "https://registry.npmjs.org/@babel/core/-/core-7.16.10.tgz",  
-   "integrity": "sha512 pbiIdZbCiMx/MM6toR+OfXarYix3uz0oVsnNtfdAGTcCTu3w/JGF8JhirevXLBJUu0WguSZI12qpKnx7EeMyLA=="
+<pre><code class=&quot;language-json&quot;>&quot;@babel/core&quot;: {
+   &quot;version&quot;: &quot;7.16.10&quot;,
+   &quot;resolved&quot;: &quot;https://registry.npmjs.org/@babel/core/-/core-7.16.10.tgz&quot;,  
+   &quot;integrity&quot;: &quot;sha512 pbiIdZbCiMx/MM6toR+OfXarYix3uz0oVsnNtfdAGTcCTu3w/JGF8JhirevXLBJUu0WguSZI12qpKnx7EeMyLA==&quot;
 }
 </code></pre>
 <p>Let's take a closer look at how integrity can drastically reduce the risk of injecting malicious code by hashing source code.</p>
 <p>As a reminder:</p>
 <blockquote>
-<p>We call hash function, a particular function which, from a datum supplied as input, calculates a digital fingerprint used to quickly identify the initial datum, in the same way as a signature to identify a person. <a href="https://en.wikipedia.org/wiki/Hash_function">Wikipedia</a></p>
+<p>We call hash function, a particular function which, from a datum supplied as input, calculates a digital fingerprint used to quickly identify the initial datum, in the same way as a signature to identify a person. <a href=&quot;https://en.wikipedia.org/wiki/Hash_function&quot;>Wikipedia</a></p>
 </blockquote>
 <p>Let's take for example a simple case:</p>
-<pre><code class="language-javascript">// my-library
+<pre><code class=&quot;language-javascript&quot;>// my-library
 function someJavaScriptCode() {
   addUser();
 }
 </code></pre>
 <p>Let's imagine that this JavaScript code represents a resource that a user might want to download. Using the <em>SHA1</em> hash function, we get the hash <code>7677152af4ef8ca57fcb50bf4f71f42c28c772be</code>.
 If ever malicious code is injected, the library's fingerprint will by definition change because the input (source code here) to the hash function will have changed:</p>
-<pre><code class="language-javascript">// my-library
+<pre><code class=&quot;language-javascript&quot;>// my-library
 function someJavaScriptCode() {
   processMaliciousCode(); // this is injected, the user is not  expecting that
   addUser();
@@ -216,37 +214,38 @@ So we get as results:</p>
 <li>Original code = <code>7677152af4ef8ca57fcb50bf4f71f42c28c772be</code></li>
 <li>Malicious code = <code>28d32d30caddaaaafbde0debfcd8b3300862cc24</code></li>
 </ul>
-<p>All package managers implement strict specifications on this approach to integrity. For example, npm respects the W3C's "Subresource Integrity or SRI" specification, which describes the mechanisms to be implemented to reduce the risk of malicious code injection.
-You can jump directly <a href="https://w3c.github.io/webappsec-subresource-integrity/">here</a> to the specification document if you want to dig deeper.</p>
+<p>All package managers implement strict specifications on this approach to integrity. For example, npm respects the W3C's &quot;Subresource Integrity or SRI&quot; specification, which describes the mechanisms to be implemented to reduce the risk of malicious code injection.
+You can jump directly <a href=&quot;https://w3c.github.io/webappsec-subresource-integrity/&quot;>here</a> to the specification document if you want to dig deeper.</p>
 <p><strong>Security constraints at the author level</strong></p>
-<p>To strengthen security at the level of open-source packages, more and more constraints are emerging on the side of project authors and maintainers. Recently, GitHub, which owns npm, announced that it is <a href="https://github.blog/2022-02-01-top-100-npm-package-maintainers-require-2fa-additional-security/">forcing two-factor authentication (2FA) for contributors to the 100 most popular packages</a>. The main idea around these actions is to secure resources upstream by limiting write access to open-source packages and identifying people more precisely.</p>
+<p>To strengthen security at the level of open-source packages, more and more constraints are emerging on the side of project authors and maintainers. Recently, GitHub, which owns npm, announced that it is <a href=&quot;https://github.blog/2022-02-01-top-100-npm-package-maintainers-require-2fa-additional-security/&quot;>forcing two-factor authentication (2FA) for contributors to the 100 most popular packages</a>. The main idea around these actions is to secure resources upstream by limiting write access to open-source packages and identifying people more precisely.</p>
 <p>It's important to also mention that there are tools that can be used to perform automatically scans and audits continuously. </p>
 <p><strong>Built-in tools</strong></p>
-<p>In order to automate the detection of vulnerabilities, many package managers natively integrate tools allowing to scan the installed libraries. Typically, these package managers communicate with databases that list all known and referenced vulnerabilities. For example, <a href="https://github.com/advisories">GitHub Advisory Database</a> is an open-source database that references thousands of vulnerabilities across multiple ecosystems (Go, Rust, Maven, NuGet, etc) e.g. <code>npm audit</code> command uses this database.</p>
+<p>In order to automate the detection of vulnerabilities, many package managers natively integrate tools allowing to scan the installed libraries. Typically, these package managers communicate with databases that list all known and referenced vulnerabilities. For example, <a href=&quot;https://github.com/advisories&quot;>GitHub Advisory Database</a> is an open-source database that references thousands of vulnerabilities across multiple ecosystems (Go, Rust, Maven, NuGet, etc) e.g. <code>npm audit</code> command uses this database.</p>
 <p><strong>Third-party tools</strong></p>
-<p><a href="https://github.com/NodeSecure">NodeSecure</a></p>
+<p><a href=&quot;https://github.com/NodeSecure&quot;>NodeSecure</a></p>
 <p>At <strong>NodeSecure</strong> we are building free open source tools to secure the Node.js &amp; JavaScript ecosystem. Our biggest area of expertise is in package and code analysis.</p>
 <p>Here are some example of the available tools:</p>
 <ul>
-<li><a href="https://github.com/NodeSecure/cli">@nodesecure/cli</a>, a CLI that allow you to deeply analyze the dependency tree of a given package or local Node.js project</li>
-<li><a href="https://github.com/NodeSecure/js-x-ray">@nodesecure/js-x-ray</a>, a SAST scanner (A static analyser for detecting most common malicious patterns)</li>
-<li><a href="https://github.com/NodeSecure/vulnera">@nodesecure/vulnera</a>, a Software Component Analysis (SCA) tool</li>
-<li><a href="https://github.com/NodeSecure/ci">@nodesecure/ci</a>, a tool allowing to run SAST, SCA and many more analysis in CI/CDs or in a local environment</li>
+<li><a href=&quot;https://github.com/NodeSecure/cli&quot;>@nodesecure/cli</a>, a CLI that allow you to deeply analyze the dependency tree of a given package or local Node.js project</li>
+<li><a href=&quot;https://github.com/NodeSecure/js-x-ray&quot;>@nodesecure/js-x-ray</a>, a SAST scanner (A static analyser for detecting most common malicious patterns)</li>
+<li><a href=&quot;https://github.com/NodeSecure/vulnera&quot;>@nodesecure/vulnera</a>, a Software Component Analysis (SCA) tool</li>
+<li><a href=&quot;https://github.com/NodeSecure/ci&quot;>@nodesecure/ci</a>, a tool allowing to run SAST, SCA and many more analysis in CI/CDs or in a local environment</li>
 </ul>
-<p><a href="https://snyk.io/">Snyk</a> </p>
-<p>Snyk is the most popular all-around solution for securing applications or cloud-based infrastructures. Snyk <a href="https://snyk.io/plans/">offers a free-tier</a> with SAST and SCA analysis.</p>
+<p><a href=&quot;https://snyk.io/&quot;>Snyk</a> </p>
+<p>Snyk is the most popular all-around solution for securing applications or cloud-based infrastructures. Snyk <a href=&quot;https://snyk.io/plans/&quot;>offers a free-tier</a> with SAST and SCA analysis.</p>
 <p>To ensure continuous detection of vulnerabilities, it is recommended to run scans each time packages are installed/modified.</p>
 <p><strong>Conclusion</strong></p>
 <p>There you go, you now know what issues are addressed and solved by package managers!</p>
 <p>Package managers are complex tools that aim to make life easier for us as developers, but can quickly become problematic if misused.</p>
 <p>It is therefore important to understand the issues they deal with and the solutions provided in order to be able to put into perspective several package managers of the same ecosystem. In the end, it's a tool like any other and it must mobilize thinking in the same way as when libraries/frameworks/programming languages ​​are used.</p>
 <p>Don't also forget to take into account security issues and use automated tools which can drastically reduce the attack surface!</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>

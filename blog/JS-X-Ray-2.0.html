@@ -50,11 +50,9 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">NodeSecure v0.7.0 and v0.8.0@next</h1>
-        <p>Hello,</p>
+    <article-content 
+        title="NodeSecure v0.7.0 and v0.8.0@next" 
+        content="<p>Hello,</p>
 <p>It's been a few weeks now that I've been working on a new major release for JS-X-Ray. This new version brings a lot of important changes including:</p>
 <ul>
 <li>New warnings names (I've taken the time to think of consistent names).</li>
@@ -64,28 +62,28 @@
 <li>Improvement of the code as a whole (it is much more maintainable).</li>
 <li>Improvement of unit tests.</li>
 </ul>
-<p>The project is completely open-source and accessible on github: <a href="https://github.com/fraxken/js-x-ray">https://github.com/fraxken/js-x-ray</a> (Remember to star 💖).</p>
+<p>The project is completely open-source and accessible on github: <a href=&quot;https://github.com/fraxken/js-x-ray&quot;>https://github.com/fraxken/js-x-ray</a> (Remember to star 💖).</p>
 <h1>What is JS-X-Ray?</h1>
 <p>I'll make a summary for the latecomers. (Also feel free to read the other articles in the series to better understand.)</p>
-<p>JS-X-Ray is a free and open-source JavaScript/Node.js SAST scanner. It was mainly built to meet the needs of the <a href="https://github.com/ES-Community/nsecure">Node-secure</a> project but gradually became independent.</p>
-<p>The project as a whole analyzes JavaScript SourceCode on format AST (Abstract Syntax Tree) and provides a set of information on it including "security" warnings.</p>
+<p>JS-X-Ray is a free and open-source JavaScript/Node.js SAST scanner. It was mainly built to meet the needs of the <a href=&quot;https://github.com/ES-Community/nsecure&quot;>Node-secure</a> project but gradually became independent.</p>
+<p>The project as a whole analyzes JavaScript SourceCode on format AST (Abstract Syntax Tree) and provides a set of information on it including &quot;security&quot; warnings.</p>
 <p>The goal is to quickly identify dangerous patterns (in the given code) for Developers and Security researchers. </p>
 <h1>For who ?</h1>
 <p>As previously mentioned, the project is currently being used as a dependency of other security projects  (Like Node-secure).</p>
 <p>This tool is not magic and still requires basic security knowledge to tell the difference between a real problem and a false positive..</p>
 <p>The target of the project is mainly security researchers as well as developers interested in the development of security tools.</p>
 <h1>An example?</h1>
-<p>Let's take a look at one of the previous incidents in the ecosystem (npm). For example the event-stream incident where malicious codes are still accessible <a href="https://badjs.org/posts/event-stream/">here on badjs</a>.</p>
-<p>We're going to run an analysis on the <a href="https://badjs.org/posts/event-stream/#heading-payload-c">Payload C</a>.</p>
-<pre><code class="language-js">const { runASTAnalysis } = require("js-x-ray");
-const { readFileSync } = require("fs");
-const { inspect } = require("util");
+<p>Let's take a look at one of the previous incidents in the ecosystem (npm). For example the event-stream incident where malicious codes are still accessible <a href=&quot;https://badjs.org/posts/event-stream/&quot;>here on badjs</a>.</p>
+<p>We're going to run an analysis on the <a href=&quot;https://badjs.org/posts/event-stream/#heading-payload-c&quot;>Payload C</a>.</p>
+<pre><code class=&quot;language-js&quot;>const { runASTAnalysis } = require(&quot;js-x-ray&quot;);
+const { readFileSync } = require(&quot;fs&quot;);
+const { inspect } = require(&quot;util&quot;);
 
 const log = (str) =&gt; console.log(inspect(str, { compact: false, colors: true }));
-const code = readFileSync("./event-stream-payloadc.js", "utf-8");
+const code = readFileSync(&quot;./event-stream-payloadc.js&quot;, &quot;utf-8&quot;);
 log(runASTAnalysis(code));
 </code></pre>
-<pre><code class="language-js">{
+<pre><code class=&quot;language-js&quot;>{
   dependencies: ASTDeps {
     dependencies: [Object: null prototype] {
       http: [Object],
@@ -121,9 +119,9 @@ log(runASTAnalysis(code));
 <li>A warning telling us that identifiers in the code are too short (below an average of 1.5).</li>
 </ul>
 <p>What might give us a clue here is the nature of the warnings and the used dependencies...Of course tools such as Node-secure will give you a much better view when the need is to analyse a complete project.</p>
-<p><img src="https://media.discordapp.net/attachments/605589188309680141/715966402393014313/unknown.png" alt=""></p>
+<p><img src=&quot;https://media.discordapp.net/attachments/605589188309680141/715966402393014313/unknown.png&quot; alt=&quot;&quot;></p>
 <h1>Warnings</h1>
-<p>All warnings are explained on the README of the github. Advanced documentation on how they work and how they are implemented can be found <a href="https://github.com/fraxken/js-x-ray/blob/master/WARNINGS.md">here</a>.</p>
+<p>All warnings are explained on the README of the github. Advanced documentation on how they work and how they are implemented can be found <a href=&quot;https://github.com/fraxken/js-x-ray/blob/master/WARNINGS.md&quot;>here</a>.</p>
 <table>
 <thead>
 <tr>
@@ -145,7 +143,7 @@ log(runASTAnalysis(code));
 </tr>
 <tr>
 <td>unsafe-stmt</td>
-<td>Usage of dangerous statement like <code>eval()</code> or <code>Function("")</code>.</td>
+<td>Usage of dangerous statement like <code>eval()</code> or <code>Function(&quot;&quot;)</code>.</td>
 </tr>
 <tr>
 <td>unsafe-assign</td>
@@ -170,7 +168,7 @@ log(runASTAnalysis(code));
 </tbody></table>
 <h2>unsafe-import</h2>
 <p>What do we mean when it is impossible to follow an expression or statement? Let's take the following example:</p>
-<pre><code class="language-js">function boo() {
+<pre><code class=&quot;language-js&quot;>function boo() {
   // something is going on here!
 }
 
@@ -180,21 +178,21 @@ require(boo());
 <h2>unsafe-assign</h2>
 <p>A fairly common pattern among hackers is to assign global variables to new variables to hide the use of a require or eval. JS-X-Ray is able to trace the use of these variables and will consider this pattern as dangerous.</p>
 <p>Example:</p>
-<pre><code class="language-js">const g = global.process;
+<pre><code class=&quot;language-js&quot;>const g = global.process;
 const r = g.mainModule;
 const c = r.require;
-c("http");
-r.require("fs");
+c(&quot;http&quot;);
+r.require(&quot;fs&quot;);
 </code></pre>
 <h2>obfuscated-code</h2>
 <p>He's the new kid. However the results are not yet perfect and a lot of work will be necessary in the coming months to allow the detection of more obfuscated codes.</p>
 <ul>
-<li><a href="https://twitter.com/fraxken/status/1290850085442670593/photo/1">One of my recent tweet on this feature</a>. </li>
-<li><a href="https://docs.google.com/document/d/11ZrfW0bDQ-kd7Gr_Ixqyk8p3TGvxckmhFH3Z8dFoPhY/edit?usp=sharing">The Google Drive document on JavaScript obfuscated patterns</a>.</li>
+<li><a href=&quot;https://twitter.com/fraxken/status/1290850085442670593/photo/1&quot;>One of my recent tweet on this feature</a>. </li>
+<li><a href=&quot;https://docs.google.com/document/d/11ZrfW0bDQ-kd7Gr_Ixqyk8p3TGvxckmhFH3Z8dFoPhY/edit?usp=sharing&quot;>The Google Drive document on JavaScript obfuscated patterns</a>.</li>
 </ul>
 <h1>On the future</h1>
 <p>I wish I could iterate over the entire npm registry. I think that this project could provide us valuable insight on packages and maybe even prevent a lot of malicious code to reach npm users.</p>
-<p>This is already what I do personally with Node-secure which allows me to secure and improve the <a href="https://github.com/SlimIO">SlimIO</a> solution.</p>
+<p>This is already what I do personally with Node-secure which allows me to secure and improve the <a href=&quot;https://github.com/SlimIO&quot;>SlimIO</a> solution.</p>
 <p>Beyond the security aspect, this project allows to detect and understand the use of a set of bad patterns/practices. We could also eventually guide and prevent these practices to improve the ecosystem as a whole.</p>
 <p>At the moment I'm investing my free time to work on this project... But I would obviously like to invest myself professionally in it!</p>
 <h1>Conclusion</h1>
@@ -204,12 +202,13 @@ r.require("fs");
 <p>Thank you for reading this series and see you soon for an article on Node-secure :)</p>
 <p>Best Regards,
 Thomas</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>

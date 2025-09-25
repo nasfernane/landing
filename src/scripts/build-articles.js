@@ -75,14 +75,23 @@ function generateBlogPost(markdownFile) {
 
   const articleTemplate = baseArticleTemplate.replace(
     "<article></article>",
-    `
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">${metadata.title}</h1>
-        ${sanitizedHtmlContent}
-      </div>
-    </article>`
+    `<article-content 
+        title="${metadata.title}" 
+        content="${sanitizedHtmlContent.replace(/"/g, "&quot;")}"
+      >
+      <article-content/>`
   );
+
+  // const articleTemplate = baseArticleTemplate.replace(
+  //   "<article></article>",
+  //   `
+  //   <article>
+  //     <div class="article-content">
+  //       <h1 class="article-title">${metadata.title}</h1>
+  //       ${sanitizedHtmlContent}
+  //     </div>
+  //   </article>`
+  // );
 
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });

@@ -50,43 +50,41 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">A technical tale of NodeSecure - Chapter 2</h1>
-        <p>Hello 👋,</p>
-<p>I'm back at writing for a new technical article on <a href="https://github.com/NodeSecure">NodeSecure</a>. This time I want to focus on the SAST <a href="https://github.com/NodeSecure/js-x-ray">JS-X-Ray</a> 🔬.</p>
+    <article-content 
+        title="A technical tale of NodeSecure - Chapter 2" 
+        content="<p>Hello 👋,</p>
+<p>I'm back at writing for a new technical article on <a href=&quot;https://github.com/NodeSecure&quot;>NodeSecure</a>. This time I want to focus on the SAST <a href=&quot;https://github.com/NodeSecure/js-x-ray&quot;>JS-X-Ray</a> 🔬.</p>
 <p>I realized very recently that the project on Github was already more than two years old. It's amazing how time flies 😵.</p>
 <p>It's been a long time since I wanted to share my experience and feelings about AST analysis. So let's jump in 😉</p>
 <h2>💃 How it started</h2>
-<p>When I started the NodeSecure project I had almost no experience 🐤 with AST (Abstract Syntax Tree). My first time was on the <a href="https://github.com/SlimIO">SlimIO</a> project to generate codes dynamically with the <a href="https://www.npmjs.com/package/astring">astring</a> package (and I had also looked at the <a href="https://github.com/estree/estree">ESTree</a> specification).</p>
+<p>When I started the NodeSecure project I had almost no experience 🐤 with AST (Abstract Syntax Tree). My first time was on the <a href=&quot;https://github.com/SlimIO&quot;>SlimIO</a> project to generate codes dynamically with the <a href=&quot;https://www.npmjs.com/package/astring&quot;>astring</a> package (and I had also looked at the <a href=&quot;https://github.com/estree/estree&quot;>ESTree</a> specification).</p>
 <p>One of my first goals for my tool was to be able to retrieve the dependencies in each JavaScript file contained within an NPM tarball (By this I mean able to retrieve any dependencies imported in CJS or ESM). </p>
 <p>I started the subject a bit naively 😏 and very quickly I set myself a challenge to achieve with my AST analyser:</p>
-<pre><code class="language-js">function unhex(r) {
-   return Buffer.from(r, "hex").toString();
+<pre><code class=&quot;language-js&quot;>function unhex(r) {
+   return Buffer.from(r, &quot;hex&quot;).toString();
 }
 
-const g = Function("return this")();
-const p = g["pro" + "cess"];
+const g = Function(&quot;return this&quot;)();
+const p = g[&quot;pro&quot; + &quot;cess&quot;];
 
-const evil = p["mainMod" + "ule"][unhex("72657175697265")];
-evil(unhex("68747470")).request
+const evil = p[&quot;mainMod&quot; + &quot;ule&quot;][unhex(&quot;72657175697265&quot;)];
+evil(unhex(&quot;68747470&quot;)).request
 </code></pre>
 <p>The goal is to be able to output accurate information for the above code. At the time I didn't really know what I was getting into 😂 (But I was passionate about it and I remain excited about it today).</p>
 <blockquote>
-<p>I thank <a href="https://twitter.com/targos89">Targos</a> who at the time submitted a lot of code and ideas.</p>
+<p>I thank <a href=&quot;https://twitter.com/targos89&quot;>Targos</a> who at the time submitted a lot of code and ideas.</p>
 </blockquote>
 <p>To date the SAST is able to follow this kind of code without any difficulties 😎... But it wasn't always that simple.</p>
 <h2>🐤 Baby steps</h2>
 <p>One of the first things I learned was to browse the tree. Even for me today this seems rather obvious, but it wasn't necessarily so at the time 😅.</p>
-<p>I discovered the package <a href="https://github.com/Rich-Harris/estree-walker#readme">estree-walker</a> from Rich Harris which was compatible with the <a href="https://github.com/estree/estree">EStree</a> spec. Combined with the <a href="https://github.com/meriyah/meriyah">meriyah</a> package this allows me to convert a JavaScript source into an ESTree compliant AST.</p>
-<pre><code class="language-ts">import { readFile } from "node:fs/promises";
+<p>I discovered the package <a href=&quot;https://github.com/Rich-Harris/estree-walker#readme&quot;>estree-walker</a> from Rich Harris which was compatible with the <a href=&quot;https://github.com/estree/estree&quot;>EStree</a> spec. Combined with the <a href=&quot;https://github.com/meriyah/meriyah&quot;>meriyah</a> package this allows me to convert a JavaScript source into an ESTree compliant AST.</p>
+<pre><code class=&quot;language-ts&quot;>import { readFile } from &quot;node:fs/promises&quot;;
 
-import { walk } from "estree-walker";
-import * as meriyah from "meriyah";
+import { walk } from &quot;estree-walker&quot;;
+import * as meriyah from &quot;meriyah&quot;;
 
 export async function scanFile(location: string) {
-  const strToAnalyze = await readFile(location, "utf-8");
+  const strToAnalyze = await readFile(location, &quot;utf-8&quot;);
 
   const { body } = meriyah.parseScript(strToAnalyze, {
     next: true, loc: true, raw: true, module: true
@@ -104,31 +102,31 @@ export async function scanFile(location: string) {
   });
 }
 </code></pre>
-<p>I also quickly became familiar with the tool <a href="https://astexplorer.net/">ASTExplorer</a> which allows you to analyze the tree and properties for a specific code.</p>
-<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/jl41utklnepxf154tvlp.png" alt="nodesecure"></p>
+<p>I also quickly became familiar with the tool <a href=&quot;https://astexplorer.net/&quot;>ASTExplorer</a> which allows you to analyze the tree and properties for a specific code.</p>
+<p><img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/jl41utklnepxf154tvlp.png&quot; alt=&quot;nodesecure&quot;></p>
 <p>As a beginner, you can be quickly scared by the size and complexity of an AST. This tool is super important to better cut out and focus on what is important.</p>
 <blockquote>
-<p>I also had fun <a href="https://github.com/fraxken/Node-Estree">re-implementing</a> the ESTree Specification in TypeScript. It helped me a lot to be more confident and comfortable with different concepts that were unknown to me until then.</p>
+<p>I also had fun <a href=&quot;https://github.com/fraxken/Node-Estree&quot;>re-implementing</a> the ESTree Specification in TypeScript. It helped me a lot to be more confident and comfortable with different concepts that were unknown to me until then.</p>
 </blockquote>
 <p>At the beginning of 2021 I also had the opportunity to do a talk for the French JS community (it's one more opportunity to study).</p>
-<p><a href="https://www.youtube.com/watch?v=zSYrEbggqWA" target="_blank" rel="noopener" class="external-article-link">
+<p><a href=&quot;https://www.youtube.com/watch?v=zSYrEbggqWA&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;external-article-link&quot;>
         ▶ Watch on YouTube
       </a></p>
 <h2>😫 MemberExpression</h2>
 <p>JavaScript member expression can be quite complicated to deal with at first. You must be comfortable with recursion and be ready to face a lot of possibilities.</p>
 <p>Here is an example of possible code:</p>
-<pre><code class="language-js">const myVar = "test";
-foo.bar["hel" + "lo"].test[myVar]();
+<pre><code class=&quot;language-js&quot;>const myVar = &quot;test&quot;;
+foo.bar[&quot;hel&quot; + &quot;lo&quot;].test[myVar]();
 </code></pre>
-<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vp3f2ls3eshnlml3xdv0.png" alt="nodesecure"></p>
+<p><img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vp3f2ls3eshnlml3xdv0.png&quot; alt=&quot;nodesecure&quot;></p>
 <p>Computed property, Binary expression, Call expression etc. The order in which the tree is built seemed unintuitive to me at first (and I had a hard time figuring out how to use the <code>object</code> and <code>property</code> properties).</p>
-<p>Since i created my own set of AST utilities including <a href="https://github.com/NodeSecure/estree-ast-utils/blob/main/src/getMemberExpressionIdentifier.js">getMemberExpressionIdentifier</a>.</p>
+<p>Since i created my own set of AST utilities including <a href=&quot;https://github.com/NodeSecure/estree-ast-utils/blob/main/src/getMemberExpressionIdentifier.js&quot;>getMemberExpressionIdentifier</a>.</p>
 <h2>🚀 A new package (with its own API)</h2>
-<p>When NodeSecure was a single project the AST analysis was at most a <a href="https://github.com/NodeSecure/cli/blob/60b52b1a60f9ac2ddc85f3cbad009adad590e56a/src/ast/index.js">few hundred lines in two or three JavaScript files</a>. All the logic was coded with if and else conditions directly in the walker 🙈.</p>
-<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rn9hoqpzqvzjgzwe4m91.png" alt="nodesecure"></p>
+<p>When NodeSecure was a single project the AST analysis was at most a <a href=&quot;https://github.com/NodeSecure/cli/blob/60b52b1a60f9ac2ddc85f3cbad009adad590e56a/src/ast/index.js&quot;>few hundred lines in two or three JavaScript files</a>. All the logic was coded with if and else conditions directly in the walker 🙈.</p>
+<p><img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rn9hoqpzqvzjgzwe4m91.png&quot; alt=&quot;nodesecure&quot;></p>
 <p>To evolve and maintain the project, it became necessary to separate the code and make it a standalone package with its own API 👀.</p>
 <p>I wrote an article at the time that <strong>I invite you to read</strong>. It contains some nice little explanations:
-<a href="https://dev.to/fraxken/node-secure-js-x-ray-4jk0" target="_blank" rel="noopener" class="external-article-link">↪ Read article</a></p>
+<a href=&quot;https://dev.to/fraxken/node-secure-js-x-ray-4jk0&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;external-article-link&quot;>↪ Read article</a></p>
 <p>The thing to remember here is that you probably shouldn't be afraid to start small and grow into something bigger later. Stay pragmatic.</p>
 <h2>Easy to write, hard to scale 😭</h2>
 <p>It's easy to write a little prototype, but it's really hard to make it scale when you have to handle dozens or hundreds of possibilities. It requires a mastery and understanding of the language that is just crazy 😵. This is really what makes creating a SAST a complicated task.</p>
@@ -143,17 +141,17 @@ foo.bar["hel" + "lo"].test[myVar]();
 </blockquote>
 <p>But as far as I'm concerned, it's really what I find exciting 😍. I've learned so much in three years. All this also allowed me to approach the language from an angle that I had never experienced or seen 👀.</p>
 <h3>Probes</h3>
-<p>On JS-X-Ray I brought the notion of "probe" into the code which will collect information on one or more specific node. The goal is to separate the AST analysis into lots of smaller pieces that are easier to understand, document and test.</p>
+<p>On JS-X-Ray I brought the notion of &quot;probe&quot; into the code which will collect information on one or more specific node. The goal is to separate the AST analysis into lots of smaller pieces that are easier to understand, document and test.</p>
 <blockquote>
 <p>Very far from perfection 😞. However, it is much better than before and the team is now helping me to improve all this (by adding documentation and tests).</p>
 </blockquote>
 <p>It was for JS-X-Ray 3.0.0 and at the time i have written the following article (which includes many more details if you are interested).
-<a href="https://dev.to/fraxken/js-x-ray-3-0-0-3ddn" target="_blank" rel="noopener" class="external-article-link">↪ Read article</a></p>
+<a href=&quot;https://dev.to/fraxken/js-x-ray-3-0-0-3ddn&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;external-article-link&quot;>↪ Read article</a></p>
 <h3>VariableTracer</h3>
-<p>This is one of the <a href="https://github.com/NodeSecure/estree-ast-utils/blob/main/src/utils/VariableTracer.js">new killer feature</a> coming to JS-X-Ray soon. A code able to follow the declarations, assignment, destructuration, importating of any identifiers or member expression.</p>
+<p>This is one of the <a href=&quot;https://github.com/NodeSecure/estree-ast-utils/blob/main/src/utils/VariableTracer.js&quot;>new killer feature</a> coming to JS-X-Ray soon. A code able to follow the declarations, assignment, destructuration, importating of any identifiers or member expression.</p>
 <p>In my experience being able to keep track of assignments has been one of the most complex tasks (and I've struggled with it).</p>
 <p>This new implementation/API will offer a new spectrum of tools to develop really cool new features.</p>
-<pre><code class="language-js">const tracer = new VariableTracer().trace("crypto.createHash", {
+<pre><code class=&quot;language-js&quot;>const tracer = new VariableTracer().trace(&quot;crypto.createHash&quot;, {
   followConsecutiveAssignment: true
 });
 
@@ -162,11 +160,11 @@ tracer.walk(node);
 </code></pre>
 <p>This simple code will allow us, for example, to know each time the method createHash is used. We can use this for information purposes, for example to warn on the usage of a deprecated hash algorithm like md5.</p>
 <p>Here an example:</p>
-<pre><code class="language-js">const myModule = require("crypto");
+<pre><code class=&quot;language-js&quot;>const myModule = require(&quot;crypto&quot;);
 
-const myMethodName = "createHash";
+const myMethodName = &quot;createHash&quot;;
 const callMe = myModule[myMethodName];
-callMe("md5");
+callMe(&quot;md5&quot;);
 </code></pre>
 <blockquote>
 <p>The goal is not necessarily to track or read malicious code. The idea is to handle enough cases because developers use JavaScript in many ways.</p>
@@ -181,12 +179,13 @@ callMe("md5");
 <h2>✨ Conclusion</h2>
 <p>Unfortunately, I could not cover everything as the subject is so vast. One piece of advice I would give to anyone starting out on a similar topic would be to be much more rigorous about documentation and testing. It can be very easy to get lost and not know why we made a choice X or Y.</p>
 <p>Thanks for reading this new technical article. See you soon for a new article (something tells me that it will arrive soon 😏).</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>

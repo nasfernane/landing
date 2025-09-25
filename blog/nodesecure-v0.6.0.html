@@ -50,38 +50,36 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">NodeSecure release v0.6.0</h1>
-        <p>Hello world!</p>
-<p>I recently published the release v0.6.0 of <a href="https://github.com/ES-Community/nsecure">Node-secure</a>. If you missed the previous articles:</p>
+    <article-content 
+        title="NodeSecure release v0.6.0" 
+        content="<p>Hello world!</p>
+<p>I recently published the release v0.6.0 of <a href=&quot;https://github.com/ES-Community/nsecure&quot;>Node-secure</a>. If you missed the previous articles:</p>
 <ul>
-<li><a href="https://dev.to/fraxken/node-secure-release-v0-5-0-16o6">Release v0.5.0</a></li>
-<li><a href="https://dev.to/fraxken/node-secure-release-v0-4-0-2oih">Release v0.4.0</a> (<strong>include a presentation of the project</strong>).</li>
+<li><a href=&quot;https://dev.to/fraxken/node-secure-release-v0-5-0-16o6&quot;>Release v0.5.0</a></li>
+<li><a href=&quot;https://dev.to/fraxken/node-secure-release-v0-4-0-2oih&quot;>Release v0.4.0</a> (<strong>include a presentation of the project</strong>).</li>
 </ul>
-<p>These past weeks I have worked hard on exporting the AST Analysis in is own npm package <strong>js-x-ray</strong>. I have <a href="https://dev.to/fraxken/node-secure-js-x-ray-4jk0">written an article on this</a> subject recently if you want to know more.</p>
+<p>These past weeks I have worked hard on exporting the AST Analysis in is own npm package <strong>js-x-ray</strong>. I have <a href=&quot;https://dev.to/fraxken/node-secure-js-x-ray-4jk0&quot;>written an article on this</a> subject recently if you want to know more.</p>
 <p>As usual we will review the new features that version 0.6.0 brings.</p>
 <h1>New features</h1>
 <hr>
 <h2>no more AST analysis and more coverage</h2>
-<p>The AST analysis has been moved to the <a href="https://github.com/fraxken/js-x-ray">js-x-ray</a> package. This notably allowed to reduce the number of tests to maintain.</p>
+<p>The AST analysis has been moved to the <a href=&quot;https://github.com/fraxken/js-x-ray&quot;>js-x-ray</a> package. This notably allowed to reduce the number of tests to maintain.</p>
 <p>Even more tests have been added to enhance the coverage by ten percent (95%).</p>
 <h2>webpack</h2>
 <p>All front-end assets is now bundled with webpack. This slightly improves the maintainability of front assets and codes.</p>
 <p>The configuration is surely not perfect, and a lot of space could surely be saved for the package tarball.</p>
 <h2>i18n</h2>
 <p>This version allows for new languages to be added. The current version support both <strong>English</strong> and <strong>French</strong> (which is my native language).</p>
-<p><img src="https://i.imgur.com/vlI3laN.gif" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/vlI3laN.gif&quot; alt=&quot;&quot;></p>
 <p>The tokens cover all the parts of Node-secure (CLI, API and UI). However, the UI is not entirely finished because a lot of text is added through the JavaScript code (I will work on improving the surface for the next version.).</p>
 <p>Feel free to pull-request your own language (or help with existing one). There is a root <code>i18n</code> directory on the Github.</p>
 <p>The <code>lang</code> command has been added to be able to switch between languages.</p>
-<pre><code class="language-bash">$ nsecure lang
+<pre><code class=&quot;language-bash&quot;>$ nsecure lang
 </code></pre>
 <h2>used by + npm home page</h2>
 <p>Move between parent and children easily with the left menu (used by / third-party dependencies).</p>
 <p>And a new link to open the npm package page.</p>
-<p><img src="https://media.discordapp.net/attachments/605589188309680141/696660709399855114/unknown.png" alt=""></p>
+<p><img src=&quot;https://media.discordapp.net/attachments/605589188309680141/696660709399855114/unknown.png&quot; alt=&quot;&quot;></p>
 <h2>multiple filters searchbar</h2>
 <p>The new searchbar allows to search anything on the tree (graph) by multiple criteria (filters). The current available filters are:</p>
 <ul>
@@ -97,9 +95,9 @@
 <pre><code>version: &gt;=1.2 | 2, ext: .js, builtin: fs
 </code></pre>
 <p>The searchbar and some of the filters still require a huge amount of work to work properly (example: there is missing flags). So don't worry we will work to improve it for the next version!</p>
-<p><img src="https://i.imgur.com/qsJRh00.gif" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/qsJRh00.gif&quot; alt=&quot;&quot;></p>
 <h2>new verify command</h2>
-<pre><code class="language-bash">$ nsecure verify express
+<pre><code class=&quot;language-bash&quot;>$ nsecure verify express
 </code></pre>
 <p>This new command has only been fully implemented as API but not yet full featured for the CLI. I created the command to run complete and advanced analysis on a given npm package.</p>
 <p>Why ?</p>
@@ -108,7 +106,7 @@
 <li>More metadata (which we should normally avoid to not make the json too heavy).</li>
 </ul>
 <p>And maybe more in the future. In CLI the command only print the JSON payload to the terminal.</p>
-<pre><code class="language-ts">interface VerifyPayload {
+<pre><code class=&quot;language-ts&quot;>interface VerifyPayload {
     files: {
         list: string[];
         extensions: string[];
@@ -127,15 +125,15 @@
 </code></pre>
 <h2>global warnings</h2>
 <p>The root of the Node-secure JSON has been completely refactored to allow new metadata to appear in the future.</p>
-<pre><code class="language-json">{
-  "id": "7743b4ef",
-  "rootDepencyName": "express",
-  "warnings": [],
-  "dependencies": {}
+<pre><code class=&quot;language-json&quot;>{
+  &quot;id&quot;: &quot;7743b4ef&quot;,
+  &quot;rootDepencyName&quot;: &quot;express&quot;,
+  &quot;warnings&quot;: [],
+  &quot;dependencies&quot;: {}
 }
 </code></pre>
 <p>And one of the new root metadata is <strong>warnings</strong>. At the moment these are just simple warning messages.</p>
-<p><img src="https://i.imgur.com/BVsiQdN.jpg" alt=""></p>
+<p><img src=&quot;https://i.imgur.com/BVsiQdN.jpg&quot; alt=&quot;&quot;></p>
 <blockquote>
 <p>Example with @scarf/scarf which is a package that collect data <strong>against your will by default</strong>.</p>
 </blockquote>
@@ -143,7 +141,7 @@
 <h2>New warnings</h2>
 <p>New experimental warnings were added by the js-x-ray AST analysis:</p>
 <ul>
-<li><strong>unsafe-stmt</strong> (eval or Function("..."))</li>
+<li><strong>unsafe-stmt</strong> (eval or Function(&quot;...&quot;))</li>
 <li><strong>hexa-value</strong> (An hex value has been detected in a Literal)</li>
 <li><strong>short-ids</strong> (This mean that all identifiers has an average length below 1.5. Only possible if the file contains more than 5 identifiers).</li>
 <li><strong>suspicious-string</strong></li>
@@ -153,20 +151,20 @@
 <p>Please feel free to feedback on these warnings! Making them as precise as possible is essential to achieve the goal of Node-secure.</p>
 </blockquote>
 <h2>Better AST Analysis</h2>
-<p>At least 20 to 30 hours of work have been invested on the <a href="https://github.com/fraxken/js-x-ray">js-x-ray</a> package. The current release detects major security threats in <strong>ALL</strong> Node.js code payload of the precedent attacks and issues (some are hosted on <a href="https://badjs.org/">badjs</a>.).</p>
+<p>At least 20 to 30 hours of work have been invested on the <a href=&quot;https://github.com/fraxken/js-x-ray&quot;>js-x-ray</a> package. The current release detects major security threats in <strong>ALL</strong> Node.js code payload of the precedent attacks and issues (some are hosted on <a href=&quot;https://badjs.org/&quot;>badjs</a>.).</p>
 <blockquote>
 <p>If you think you have a code that is not detected then open an issue (We'll make sure to detect it in the future.).</p>
 </blockquote>
 <p>At the beginning of the project we laughed about how cool it would be to be able to detect what's going on in the following code:</p>
-<pre><code class="language-js">function unhex(r) {
-    return Buffer.from(r, "hex").toString();
+<pre><code class=&quot;language-js&quot;>function unhex(r) {
+    return Buffer.from(r, &quot;hex&quot;).toString();
 }
 
-const g = eval("this");
-const p = g["pro" + "cess"];
+const g = eval(&quot;this&quot;);
+const p = g[&quot;pro&quot; + &quot;cess&quot;];
 
-const evil = p["mainMod" + "ule"][unhex("72657175697265")];
-evil(unhex("68747470")).request
+const evil = p[&quot;mainMod&quot; + &quot;ule&quot;][unhex(&quot;72657175697265&quot;)];
+evil(unhex(&quot;68747470&quot;)).request
 </code></pre>
 <p>But it's no longer a dream...</p>
 <pre><code>required:
@@ -184,7 +182,7 @@ warnings:
 <p><em>(this is a simple log, there a much more available informations like SourceLocation etc)</em></p>
 <h2>New flag ⚔️ hasBannedFile</h2>
 <p><em>No more inspiration for emoji 😅</em></p>
-<p>This new flag uses the API entry of the package <a href="https://github.com/bahmutov/ban-sensitive-files">ban-sensitive-files</a>. This highlight that the project has at least one sensitive file (or a file with sensitive information in it).</p>
+<p>This new flag uses the API entry of the package <a href=&quot;https://github.com/bahmutov/ban-sensitive-files&quot;>ban-sensitive-files</a>. This highlight that the project has at least one sensitive file (or a file with sensitive information in it).</p>
 <p>File like .pem or .key are considered <strong>sensitive</strong>.</p>
 <h2>A lot of fix and improvement</h2>
 <ul>
@@ -201,26 +199,27 @@ warnings:
 <li>Fix all bugs and add translation tokens (searchbar).</li>
 <li>Add the CLI output for <strong>verify</strong> command.</li>
 <li>Add more i18n tokens for the UI.</li>
-<li>Add the list of "sensitive" files in the JSON (and the left menu in the UI).</li>
+<li>Add the list of &quot;sensitive&quot; files in the JSON (and the left menu in the UI).</li>
 </ul>
-<p>One of the next major feature will be to walk the dependency tree by using the package-lock.json (only with the <strong>cwd</strong> command). This feature will bring a lot of new flags to match as possible the usage of <a href="https://github.com/lirantal/lockfile-lint">lockfile-lint</a>.</p>
+<p>One of the next major feature will be to walk the dependency tree by using the package-lock.json (only with the <strong>cwd</strong> command). This feature will bring a lot of new flags to match as possible the usage of <a href=&quot;https://github.com/lirantal/lockfile-lint&quot;>lockfile-lint</a>.</p>
 <h1>How to use it ?</h1>
-<pre><code class="language-bash">$ npm i nsecure -g
+<pre><code class=&quot;language-bash&quot;>$ npm i nsecure -g
 $ nsecure auto express
 </code></pre>
-<p>Please take a look at the complete documentation <a href="https://escommunity.dev/nsecure/">here</a>.</p>
+<p>Please take a look at the complete documentation <a href=&quot;https://escommunity.dev/nsecure/&quot;>here</a>.</p>
 <h1>Conclusion</h1>
 <p>Thank to all of those who give me valuable feedback. Thank you for taking the time to read my articles too!</p>
-<p><a href="https://github.com/ES-Community/nsecure">https://github.com/ES-Community/nsecure</a></p>
+<p><a href=&quot;https://github.com/ES-Community/nsecure&quot;>https://github.com/ES-Community/nsecure</a></p>
 <p><em>Think to put a star on the github!</em></p>
 <p>Best Regards,
 Thomas</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>

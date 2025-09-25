@@ -50,57 +50,55 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">JS-X-Ray 6.0</h1>
-        <p>Hello 👋</p>
+    <article-content 
+        title="JS-X-Ray 6.0" 
+        content="<p>Hello 👋</p>
 <p>It's been a while since the <strong>last article</strong> on JS-X-Ray 😲!</p>
-<p><a href="https://dev.to/nodesecure/js-x-ray-3-0-0-3ddn" target="_blank" rel="noopener" class="external-article-link">↪ Read article</a></p>
+<p><a href=&quot;https://dev.to/nodesecure/js-x-ray-3-0-0-3ddn&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;external-article-link&quot;>↪ Read article</a></p>
 <p>In this article I will present you the latest major version 👀. I didn't do an article on version 4 and 5 because they didn't introduce new features (only breaking changes on the API).</p>
 <h2>📢 What is JS-X-Ray ?</h2>
-<p>If you are new in town, <a href="https://github.com/NodeSecure/js-x-ray">JS-X-Ray</a> is an open source JavaScript SAST (Static Application Security Testing). The tool analyzes your JavaScript sources for patterns that may affect the security and quality of your project 😎.</p>
+<p>If you are new in town, <a href=&quot;https://github.com/NodeSecure/js-x-ray&quot;>JS-X-Ray</a> is an open source JavaScript SAST (Static Application Security Testing). The tool analyzes your JavaScript sources for patterns that may affect the security and quality of your project 😎.</p>
 <p>Among the notable features:</p>
 <ul>
 <li>Retrieving dependencies (CJS &amp; ESM support) and detecting suspicious import/require.</li>
 <li>Detecting unsafe RegEx.</li>
 <li>Detecting obfuscated source (and provide hints on the tool used).</li>
 </ul>
-<p>As well as a lot of <a href="https://github.com/NodeSecure/js-x-ray#warnings-legends">other detections</a>.</p>
+<p>As well as a lot of <a href=&quot;https://github.com/NodeSecure/js-x-ray#warnings-legends&quot;>other detections</a>.</p>
 <h2>Major release 4 and 5</h2>
 <p>These versions introduced changes on warnings (and we improved how we manage them in the codebase). We added new descriptors for each of them:</p>
 <ul>
-<li>i18n (for translation in <a href="https://github.com/NodeSecure/ci">CI</a> or <a href="https://github.com/NodeSecure/cli">CLI</a>).</li>
+<li>i18n (for translation in <a href=&quot;https://github.com/NodeSecure/ci&quot;>CI</a> or <a href=&quot;https://github.com/NodeSecure/cli&quot;>CLI</a>).</li>
 <li>experimental</li>
 <li>severity (Information, Warning, Critical)</li>
 </ul>
-<p>Those information are visible in the <a href="https://github.com/NodeSecure/cli">NodeSecure CLI</a> interface:</p>
-<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0xjxew9sh7xm07wxhkef.png" alt="NodeSecure"></p>
+<p>Those information are visible in the <a href=&quot;https://github.com/NodeSecure/cli&quot;>NodeSecure CLI</a> interface:</p>
+<p><img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0xjxew9sh7xm07wxhkef.png&quot; alt=&quot;NodeSecure&quot;></p>
 <h2>Major release 6</h2>
 <p>🐬 Ok, let's dive into this major release to discover the surprises 🎉 it has in store for us.</p>
 <h3>🚀 Introducing VariableTracer</h3>
-<p>Almost a year of work on this <a href="https://github.com/NodeSecure/estree-ast-utils/blob/main/src/utils/VariableTracer.js">new mechanism / class</a> that brings a whole new dimension to JS-X-Ray.</p>
-<pre><code class="language-js">const tracer = new VariableTracer()
+<p>Almost a year of work on this <a href=&quot;https://github.com/NodeSecure/estree-ast-utils/blob/main/src/utils/VariableTracer.js&quot;>new mechanism / class</a> that brings a whole new dimension to JS-X-Ray.</p>
+<pre><code class=&quot;language-js&quot;>const tracer = new VariableTracer()
   .enableDefaultTracing()
-  .trace("crypto.createHash", {
-    followConsecutiveAssignment: true, moduleName: "crypto"
+  .trace(&quot;crypto.createHash&quot;, {
+    followConsecutiveAssignment: true, moduleName: &quot;crypto&quot;
   });
 
 tracer.walk(node);
 </code></pre>
 <p>This class is able to follow all declarations, assignments and patterns (and those even through very obscure patterns). </p>
-<pre><code class="language-js">const aA = Function.prototype.call;
+<pre><code class=&quot;language-js&quot;>const aA = Function.prototype.call;
 const bB = require;
 
-const crypto = aA.call(bB, bB, "crypto");
+const crypto = aA.call(bB, bB, &quot;crypto&quot;);
 const cr = crypto.createHash;
-cr("md5"); // weak-crypto warning is throw here
+cr(&quot;md5&quot;); // weak-crypto warning is throw here
 </code></pre>
 <p>This allows us to implement Probes in a much simpler way (which makes maintenance and testing much easier).</p>
 <p>Here an example with the <code>isWeakCrypto</code> probe:</p>
-<pre><code class="language-js">function validateNode(node, { tracer }) {
+<pre><code class=&quot;language-js&quot;>function validateNode(node, { tracer }) {
   const id = getCallExpressionIdentifier(node);
-  if (id === null || !tracer.importedModules.has("crypto")) {
+  if (id === null || !tracer.importedModules.has(&quot;crypto&quot;)) {
     return [false];
   }
 
@@ -108,14 +106,14 @@ cr("md5"); // weak-crypto warning is throw here
 
   return [
     data !== null &amp;&amp;
-    data.identifierOrMemberExpr === "crypto.createHash"
+    data.identifierOrMemberExpr === &quot;crypto.createHash&quot;
   ];
 }
 </code></pre>
 <p>By default the Tracer follows all ways of <code>requiring</code> dependencies with CJS and also usage of <code>eval</code> or <code>Function</code>.</p>
 <h3>🚧 Removing unsafe-assign warning</h3>
 <p>This warning was required at the beginning of the project because it was difficult for me to correctly identify some malicious patterns.</p>
-<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wscxxpedjz513w9rtxds.png" alt="NodeSecure"></p>
+<p><img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wscxxpedjz513w9rtxds.png&quot; alt=&quot;NodeSecure&quot;></p>
 <p>However, with the introduction of the new Tracer, which is very complete and precise, this warning no longer makes sense has it only generates unnecessary noise and false positives.</p>
 <h3>📜 Better ESM source parsing</h3>
 <p>We previously had a lot of <code>parsing-error</code> warnings because the NodeSecure scanner failed to detect if the file was using either CJS or ESM. </p>
@@ -130,13 +128,13 @@ cr("md5"); // weak-crypto warning is throw here
 <p>Of the <strong>500</strong> most popular NPM packages, we previously had <strong>24k</strong> warnings with version 5. The latest version brings that number down to approximatively <strong>5k</strong> warnings.</p>
 <h3>🔬 Improving coverage</h3>
 <p>A lot of work has been done to add unit tests on all the probes of the project. We are near 100% of coverage 💪.</p>
-<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/07uejv3fgthptaymwj5j.png" alt="NodeSecure"></p>
+<p><img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/07uejv3fgthptaymwj5j.png&quot; alt=&quot;NodeSecure&quot;></p>
 <p>Thanks to the amazing work of our contributors:</p>
 <ul>
-<li><a href="https://github.com/Kawacrepe">Vincent DHENNIN</a> - @kawacrepe</li>
-<li><a href="https://github.com/PierreDemailly">Pierre DEMAILLY</a></li>
-<li><a href="https://www.linkedin.com/in/mathieu-kahlaoui-0887a1158/">Mathieu KA</a></li>
-<li><a href="https://github.com/M4gie">M4gie</a></li>
+<li><a href=&quot;https://github.com/Kawacrepe&quot;>Vincent DHENNIN</a> - @kawacrepe</li>
+<li><a href=&quot;https://github.com/PierreDemailly&quot;>Pierre DEMAILLY</a></li>
+<li><a href=&quot;https://www.linkedin.com/in/mathieu-kahlaoui-0887a1158/&quot;>Mathieu KA</a></li>
+<li><a href=&quot;https://github.com/M4gie&quot;>M4gie</a></li>
 </ul>
 <h2>👀 What's next ?</h2>
 <p>Here what I'm working for the next major release:</p>
@@ -147,14 +145,15 @@ cr("md5"); // weak-crypto warning is throw here
 </ul>
 <p>I will continue to work to reduce the number of false positives and keep improving obfuscated codes detection.</p>
 <hr>
-<p>Please think to drop a star on <a href="https://github.com/NodeSecure/js-x-ray">github</a> ❤️!</p>
+<p>Please think to drop a star on <a href=&quot;https://github.com/NodeSecure/js-x-ray&quot;>github</a> ❤️!</p>
 <p>That's it for today! Thanks for reading me 😉</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>

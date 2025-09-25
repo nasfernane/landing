@@ -50,14 +50,12 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">JS-X-Ray 1.0</h1>
-        <p>Hi,</p>
-<p>While I was working on the next release (0.6.0) of <a href="https://github.com/ES-Community/nsecure">Node-Secure</a> I thought that the AST analysis was getting bigger and bigger (and much more complicated too).</p>
+    <article-content 
+        title="JS-X-Ray 1.0" 
+        content="<p>Hi,</p>
+<p>While I was working on the next release (0.6.0) of <a href=&quot;https://github.com/ES-Community/nsecure&quot;>Node-Secure</a> I thought that the AST analysis was getting bigger and bigger (and much more complicated too).</p>
 <p>That's why I decided to separate all the analysis from the Node-secure project to allow easier maintenance and future enhancement. This also allows other projects to use my package if they need to!</p>
-<p><a href="https://github.com/fraxken/js-x-ray">https://github.com/fraxken/js-x-ray</a></p>
+<p><a href=&quot;https://github.com/fraxken/js-x-ray&quot;>https://github.com/fraxken/js-x-ray</a></p>
 <p>This is how <strong>JS-X-RAY</strong> was born. I have chosen the word x-ray because in games this is often a feature that allow to see through the walls, I like to imagine my analysis as being able to see through the most common techniques (obfuscation, etc.).</p>
 <h1>The goal</h1>
 <p>One of the primary goals of this package is to be able to find any required Node.js dependencies in a given code. If the analysis is not able to follow a require statement then an <strong>unsafe-import</strong> warning will be throw.</p>
@@ -66,60 +64,60 @@
 <h1>Example</h1>
 <hr>
 <h2><strong>Purescript</strong></h2>
-<p>Take the <a href="https://badjs.org/posts/purescript-installer/">purescript-installer incident</a> and specially the corrupted <a href="https://badjs.org/posts/purescript-installer/#heading-compromised-version-of-rate-map">rate-map code</a>.</p>
+<p>Take the <a href=&quot;https://badjs.org/posts/purescript-installer/&quot;>purescript-installer incident</a> and specially the corrupted <a href=&quot;https://badjs.org/posts/purescript-installer/#heading-compromised-version-of-rate-map&quot;>rate-map code</a>.</p>
 <blockquote>
 <p>One of the objectives of node-secure is to be able to quickly identify code with warnings and give a bunch of very useful informations to the developer.</p>
 </blockquote>
 <p>In this case node-secure was able to detect the following dependencies:
 <code>append-type</code>, <code>fs</code>, <code>dl-tar</code>.</p>
-<pre><code class="language-js">const px = require.resolve(
+<pre><code class=&quot;language-js&quot;>const px = require.resolve(
 Buffer.from([100, 108, 45, 116, 97, 114]).toString()
 );
 </code></pre>
 <p>My AST analysis has detected a Buffer.from and as converted the value to <code>dl-tar</code> itself. In this case an <strong>unsafe-import</strong> will be throw with the file name and the Source Location.</p>
 <hr>
 <h2><strong>Event-stream</strong></h2>
-<p>Take the <a href="https://badjs.org/posts/event-stream/">Payload A</a> in the event-stream incident.</p>
+<p>Take the <a href=&quot;https://badjs.org/posts/event-stream/&quot;>Payload A</a> in the event-stream incident.</p>
 <p>So what's going on here?</p>
 <ul>
 <li><ol>
 <li>assign of process and require into new variables.</li>
 </ol>
 </li>
-<li><ol start="2">
+<li><ol start=&quot;2&quot;>
 <li>hexa value.</li>
 </ol>
 </li>
-<li><ol start="3">
+<li><ol start=&quot;3&quot;>
 <li>code obfuscated (all identifiers have a length of 1).</li>
 </ol>
 </li>
 </ul>
 <p>I'm working on a bench of experimental analysis and warnings to be able to detect similar cases to event-stream incident.</p>
-<pre><code class="language-json">[
+<pre><code class=&quot;language-json&quot;>[
   {
-    "kind": "unsafe-assign",
-    "start": { "line": 3, "column": 12 },
-    "end": { "line": 3, "column": 23 },
-    "value": "require"      
+    &quot;kind&quot;: &quot;unsafe-assign&quot;,
+    &quot;start&quot;: { &quot;line&quot;: 3, &quot;column&quot;: 12 },
+    &quot;end&quot;: { &quot;line&quot;: 3, &quot;column&quot;: 23 },
+    &quot;value&quot;: &quot;require&quot;      
   },
   {
-    "kind": "unsafe-assign",
-    "start": { "line": 4, "column": 12 },
-    "end": { "line": 4, "column": 23 },
-    "value": "process"
+    &quot;kind&quot;: &quot;unsafe-assign&quot;,
+    &quot;start&quot;: { &quot;line&quot;: 4, &quot;column&quot;: 12 },
+    &quot;end&quot;: { &quot;line&quot;: 4, &quot;column&quot;: 23 },
+    &quot;value&quot;: &quot;process&quot;
   },
   {
-    "kind": "hexa-value",
-    "start": { "line": 9, "column": 20 },
-    "end": { "line": 9, "column": 44 },
-    "value": "./test/data"
+    &quot;kind&quot;: &quot;hexa-value&quot;,
+    &quot;start&quot;: { &quot;line&quot;: 9, &quot;column&quot;: 20 },
+    &quot;end&quot;: { &quot;line&quot;: 9, &quot;column&quot;: 44 },
+    &quot;value&quot;: &quot;./test/data&quot;
   },
   {
-    "kind": "short-ids",
-    "start": { "line": 0, "column": 0 },
-    "end": { "line": 0,"column": 0 },
-    "value": 1
+    &quot;kind&quot;: &quot;short-ids&quot;,
+    &quot;start&quot;: { &quot;line&quot;: 0, &quot;column&quot;: 0 },
+    &quot;end&quot;: { &quot;line&quot;: 0,&quot;column&quot;: 0 },
+    &quot;value&quot;: 1
   }
 ]
 </code></pre>
@@ -133,12 +131,13 @@ Buffer.from([100, 108, 45, 116, 97, 114]).toString()
 <p>Thanks for reading!</p>
 <p>Best Regards,
 Thomas</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>

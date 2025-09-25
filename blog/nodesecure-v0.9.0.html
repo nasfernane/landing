@@ -50,76 +50,74 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">NodeSecure v0.9.0</h1>
-        <p>Hello 👋,</p>
-<p>After more than ten long months of work we are finally there 😵! <a href="https://github.com/ES-Community/nsecure/releases/tag/v0.9.0">Version 0.9.0</a> has been released on npm 🚀.</p>
+    <article-content 
+        title="NodeSecure v0.9.0" 
+        content="<p>Hello 👋,</p>
+<p>After more than ten long months of work we are finally there 😵! <a href=&quot;https://github.com/ES-Community/nsecure/releases/tag/v0.9.0&quot;>Version 0.9.0</a> has been released on npm 🚀.</p>
 <p>This is a version that required a lot of effort. Thank you to everyone who contributed and made this possible 🙏.</p>
 <p>So what are the features of this new release v0.9.0? This is what we will discover in this article 👀.</p>
 <blockquote>
-<p>For newcomers you can learn more about NodeSecure <a href="https://github.com/NodeSecure/.github/blob/master/profile/README.md">here</a> or by reading the series.</p>
+<p>For newcomers you can learn more about NodeSecure <a href=&quot;https://github.com/NodeSecure/.github/blob/master/profile/README.md&quot;>here</a> or by reading the series.</p>
 </blockquote>
 <h2>V0.9.0 💪</h2>
-<p>This new version uses the new back-end and especially <a href="https://github.com/NodeSecure/scanner/releases/tag/v3.0.0">version 3 of the scanner</a>.</p>
+<p>This new version uses the new back-end and especially <a href=&quot;https://github.com/NodeSecure/scanner/releases/tag/v3.0.0&quot;>version 3 of the scanner</a>.</p>
 <h3>ESM instead of CJS</h3>
-<p>This is a choice we explained in <a href="https://dev.to/fraxken/announcing-new-node-secure-back-end-1dp9">a previous article</a>. This version has been completely rewritten in ESM.</p>
-<p>We also made the choice to abandon Jest which causes too many problems 😟. We now use <a href="https://github.com/substack/tape">tape</a>.</p>
+<p>This is a choice we explained in <a href=&quot;https://dev.to/fraxken/announcing-new-node-secure-back-end-1dp9&quot;>a previous article</a>. This version has been completely rewritten in ESM.</p>
+<p>We also made the choice to abandon Jest which causes too many problems 😟. We now use <a href=&quot;https://github.com/substack/tape&quot;>tape</a>.</p>
 <h3>Better CLI</h3>
 <p>All commands are now separated by file and the <code>bin/index.js</code> file has been cleaned of all unnecessary code.</p>
-<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rpbgg7n9vtzy6ix7hqri.png" alt="CLI"></p>
+<p><img src=&quot;https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rpbgg7n9vtzy6ix7hqri.png&quot; alt=&quot;CLI&quot;></p>
 <p>We are also working on adding UT for each command (which should avoid regressions and allow better contributions).</p>
 <h3>New front-end network management</h3>
 <p>This release heavily improves the front-end code with the addition of a package dedicated to vis-network management.</p>
-<p><a href="https://github.com/NodeSecure/vis-network" target="_blank" rel="noopener" class="external-article-link">🔗 GitHub: NodeSecure/vis-network</a></p>
+<p><a href=&quot;https://github.com/NodeSecure/vis-network&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;external-article-link&quot;>🔗 GitHub: NodeSecure/vis-network</a></p>
 <p>This should also allow us to migrate more easily to D3.js in 2022 🚀.</p>
 <h3>Better resolver support</h3>
 <p>The new version of the scanner has support for <code>github:</code> and <code>git:</code> spec.</p>
 <p>The scanner is now able to analyze the following dependencies:</p>
-<pre><code class="language-json">"dependencies": {
-  "zen-observable": "^0.8.15",
-  "nanoid": "github:ai/nanoid",
-  "js-x-ray": "git://github.com/NodeSecure/js-x-ray.git",
-  "nanodelay": "git+ssh://git@github.com:ai/nanodelay.git",
-  "nanoevents": "git+https://github.com/ai/nanoevents.git"
+<pre><code class=&quot;language-json&quot;>&quot;dependencies&quot;: {
+  &quot;zen-observable&quot;: &quot;^0.8.15&quot;,
+  &quot;nanoid&quot;: &quot;github:ai/nanoid&quot;,
+  &quot;js-x-ray&quot;: &quot;git://github.com/NodeSecure/js-x-ray.git&quot;,
+  &quot;nanodelay&quot;: &quot;git+ssh://git@github.com:ai/nanodelay.git&quot;,
+  &quot;nanoevents&quot;: &quot;git+https://github.com/ai/nanoevents.git&quot;
 }
 </code></pre>
 <h3>Better payload structure</h3>
 <p>The structure of JSON has been improved to be more consistent (especially on the management of versions by dependency).</p>
 <p>The latest version of the scanner also corrects many inconsistencies in the management of authors and maintainers.</p>
-<pre><code class="language-json">"author": {
-  "name": "GENTILHOMME Thomas",
-  "email": "gentilhomme.thomas@gmail.com"
+<pre><code class=&quot;language-json&quot;>&quot;author&quot;: {
+  &quot;name&quot;: &quot;GENTILHOMME Thomas&quot;,
+  &quot;email&quot;: &quot;gentilhomme.thomas@gmail.com&quot;
 },
-"publishers": [
+&quot;publishers&quot;: [
   {
-    "name": "fraxken",
-    "email": "gentilhomme.thomas@gmail.com",
-    "version": "2.2.0",
-    "at": "2021-11-11T18:18:06.891Z"
+    &quot;name&quot;: &quot;fraxken&quot;,
+    &quot;email&quot;: &quot;gentilhomme.thomas@gmail.com&quot;,
+    &quot;version&quot;: &quot;2.2.0&quot;,
+    &quot;at&quot;: &quot;2021-11-11T18:18:06.891Z&quot;
   }
 ],
-"maintainers": [
+&quot;maintainers&quot;: [
   {
-    "name": "kawacrepe",
-    "email": "vincent.dhennin@viacesi.fr"
+    &quot;name&quot;: &quot;kawacrepe&quot;,
+    &quot;email&quot;: &quot;vincent.dhennin@viacesi.fr&quot;
   },
   {
-    "name": "fraxken",
-    "email": "gentilhomme.thomas@gmail.com"
+    &quot;name&quot;: &quot;fraxken&quot;,
+    &quot;email&quot;: &quot;gentilhomme.thomas@gmail.com&quot;
   },
   {
-    "name": "tonygo",
-    "email": "gorez.tony@gmail.com"
+    &quot;name&quot;: &quot;tonygo&quot;,
+    &quot;email&quot;: &quot;gorez.tony@gmail.com&quot;
   }
 ]
 </code></pre>
 <h3>Brand new vulnerabilities management</h3>
 <p>We have already presented it, but now we use our own package that allows to recover vulnerabilities using several strategies (Security WG, NPM Audit etc..).</p>
-<p><a href="https://github.com/NodeSecure/vuln" target="_blank" rel="noopener" class="external-article-link">🔗 GitHub: NodeSecure/vuln</a></p>
+<p><a href=&quot;https://github.com/NodeSecure/vuln&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;external-article-link&quot;>🔗 GitHub: NodeSecure/vuln</a></p>
 <p>This is just the beginning and I think it will soon be a fully featured project. Among the new features there is a new standard format dedicated for NodeSecure:</p>
-<pre><code class="language-ts">export interface StandardVulnerability {
+<pre><code class=&quot;language-ts&quot;>export interface StandardVulnerability {
     id?: string;
     origin: Origin;
     package: string;
@@ -137,28 +135,29 @@
 }
 </code></pre>
 <h3>Trojan source detection with JS-X-Ray 4.2.0</h3>
-<p>The new backend implements the version 4 of JS-X-Ray. In this latest release we added a warning for <a href="https://www.trojansource.codes/">Trojan source</a>.</p>
+<p>The new backend implements the version 4 of JS-X-Ray. In this latest release we added a warning for <a href=&quot;https://www.trojansource.codes/&quot;>Trojan source</a>.</p>
 <h3>Documentation and tests</h3>
 <p>A lot of effort has been put into adding documentation and unit testing to all of the projects.</p>
 <p>There is still a long way to go to make this even more accessible and you are welcome to help us.</p>
 <h2>What's next ?</h2>
 <p>We are now working as a group on different topics. We have many ongoing projects/subjects:</p>
 <ul>
-<li><a href="https://github.com/NodeSecure/rc/issues/1">Specification of a configuration</a> file for our projects.</li>
-<li>Better analysis and identification of authors and maintainers. See <a href="https://github.com/NodeSecure/authors">NodeSecure/authors</a>.</li>
+<li><a href=&quot;https://github.com/NodeSecure/rc/issues/1&quot;>Specification of a configuration</a> file for our projects.</li>
+<li>Better analysis and identification of authors and maintainers. See <a href=&quot;https://github.com/NodeSecure/authors&quot;>NodeSecure/authors</a>.</li>
 <li>Creating new tools to be executed in CI.</li>
-<li>Working on the next Web UI (TypeScript + <a href="https://github.github.io/catalyst/">Catalyst</a>).</li>
+<li>Working on the next Web UI (TypeScript + <a href=&quot;https://github.github.io/catalyst/&quot;>Catalyst</a>).</li>
 </ul>
 <h2>Conclusion 🙏</h2>
 <p>We should be able to produce more frequent releases until the new UI comes.</p>
 <p>Thanks again to the core contributors of the project without whom we would not have arrived here today! </p>
 <p>See you soon for the release v0.10.0 💃.</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>

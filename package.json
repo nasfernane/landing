@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "npm run build:articles && vite build",
     "preview": "vite preview",
-    "build:articles": "node src/build-articles.js"
+    "build:articles": "node src/scripts/build-articles.js"
   },
   "repository": {
     "type": "git",

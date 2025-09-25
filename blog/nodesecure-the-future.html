@@ -50,12 +50,10 @@
     </div>
   </header>
   <main>
-    
-    <article>
-      <div class="article-content">
-        <h1 class="article-title">NodeSecure - The future</h1>
-        <p>Hello 👋</p>
-<p>Today I'm writing to tell you about <strong>the future of <a href="https://github.com/ES-Community/nsecure">NodeSecure</a></strong> 👀.</p>
+    <article-content 
+        title="NodeSecure - The future" 
+        content="<p>Hello 👋</p>
+<p>Today I'm writing to tell you about <strong>the future of <a href=&quot;https://github.com/ES-Community/nsecure&quot;>NodeSecure</a></strong> 👀.</p>
 <p>I have not been very active in the last few months because of my job which has taken up a lot of my time. But I'm back 😊.</p>
 <p>Moving forward and updating the project has become much more complicated 😵. <strong>So it was time to announce and make major changes</strong>.</p>
 <h2>What is node-secure (or nsecure) ?</h2>
@@ -64,7 +62,7 @@
 <h2>🏫 Creating an organization</h2>
 <p>NodeSecure is not only one tool anymore. The project is now a set of tools and packages that need to be maintained and extended. The project has also gained contributors on its way and many developers pushed me to go even further 🚀.</p>
 <p>That's why I decided to <strong>gather</strong> these different projects in the <strong>same github organization</strong> (and same for <strong>npm</strong> with <code>@nodesecure</code>). It will also be easier to integrate new collaborators into the project.</p>
-<p>The URL to our new home: <a href="https://github.com/NodeSecure">https://github.com/NodeSecure</a></p>
+<p>The URL to our new home: <a href=&quot;https://github.com/NodeSecure&quot;>https://github.com/NodeSecure</a></p>
 <h2>📋 Roadmap</h2>
 <p>Well, that's all very nice, but what is the objective in concrete terms? The goal is to release a version 1.0 with the following roadmap:</p>
 <h3>Move all the packages in the org</h3>
@@ -74,7 +72,7 @@
 <li>size-satisfies</li>
 <li>npm-tarball-license-parser</li>
 <li>Migrating SlimIO/Security into the org and rename it <strong>@nodesecure/report</strong>.</li>
-<li>Rewriting <a href="https://github.com/SlimIO/Npm-registry">SlimIO/npm-registry</a> from zero in the org (with <a href="https://github.com/nodejs/undici">undici</a> as http client).</li>
+<li>Rewriting <a href=&quot;https://github.com/SlimIO/Npm-registry&quot;>SlimIO/npm-registry</a> from zero in the org (with <a href=&quot;https://github.com/nodejs/undici&quot;>undici</a> as http client).</li>
 </ul>
 <p>We will update these packages and they will use ESM by default.</p>
 <h3>Split Nsecure into three parts</h3>
@@ -82,13 +80,13 @@
 <p>We will focus our efforts initially <strong>on the scanner</strong>. The objective is above all to simplify maintenance by separating the project into minimal parts that can be more easily documented, evolved and tested.</p>
 <p>This should also reduce the number of dependencies for tools that only want to use the scanner without the CLI and UI.</p>
 <blockquote>
-<p>⚠️ We will update the current <a href="https://github.com/ES-Community/nsecure">nsecure</a> package with the new components until the new version arrives.</p>
+<p>⚠️ We will update the current <a href=&quot;https://github.com/ES-Community/nsecure&quot;>nsecure</a> package with the new components until the new version arrives.</p>
 </blockquote>
 <h3>New UI</h3>
-<p>The NodeSecure web interface will be rewritten from scratch. This new project will use <strong><a href="https://d3js.org/">D3.js</a></strong> to generate the network graph.</p>
+<p>The NodeSecure web interface will be rewritten from scratch. This new project will use <strong><a href=&quot;https://d3js.org/&quot;>D3.js</a></strong> to generate the network graph.</p>
 <p>It will also be a good opportunity to discuss what we will use for the new interface.</p>
 <h2>👥 The team</h2>
-<p>I am pleased to announce that I am launching this initiative with <a href="https://www.linkedin.com/in/tonygorez/">Tony Gorez</a> who, as you know, has contributed a lot to the project in recent months.</p>
+<p>I am pleased to announce that I am launching this initiative with <a href=&quot;https://www.linkedin.com/in/tonygorez/&quot;>Tony Gorez</a> who, as you know, has contributed a lot to the project in recent months.</p>
 <p>Several developers have indicated their intention to actively participate... so the team will grow very quickly.</p>
 <p>This is just the beginning and you are welcome to join us if you want to contribute.</p>
 <blockquote>
@@ -99,12 +97,13 @@
 <p>However those changes should allow us to release a 0.9 and 0.10 version very quickly in the coming weeks.</p>
 <p>Best Regards,
 Thomas</p>
-
-      </div>
-    </article>
+"
+      >
+      <article-content/>
   </main>
 
-  <script type="module" src="../src/particules.js"></script>
+  <script type="module" src="./../src/components/index.js"></script>
+  <script type="module" src="../src/scripts/particules.js"></script>
 </body>
 
 </html>
